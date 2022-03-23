@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
-const User = require("../models/userModels");
+const User = require("../models/userModel");
+const jwt = require("jsonwebtoken");
 
 //@desc Register a new user
 //@route /api/users
@@ -37,7 +38,13 @@ const registerUser = async (req, res) => {
   });
 
   const user = await newUser.save();
-  res.status(201).json(user);
+  res.status(201).json({
+    _id: user._id,
+    username: user.username,
+    name: user.name,
+    email: user.email,
+    token: generateToken(user._id),
+  });
 };
 
 //@desc Login user
@@ -53,13 +60,31 @@ const loginUser = async (req, res) => {
 
   //check user and password match
   if (user && (await bcrypt.compare(password, user.password))) {
-    res.status(200).json(user);
+    res.status(200).json({
+      _id: user._id,
+      username: user.username,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user._id),
+    });
   } else {
     res.status(401).json("Invalid credentials");
   }
 };
 
+//Generate token
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
+};
+
+const getCurrentUserInfo = async (req, res) => {
+  res.status(200).json(req.user);
+};
+
 module.exports = {
   registerUser,
   loginUser,
+  getCurrentUserInfo,
 };
