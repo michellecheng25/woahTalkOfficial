@@ -79,9 +79,24 @@ const generateToken = (id) => {
   });
 };
 
+//@desc Get Current user
+//@route /api/users/me
+//@access Private
 const getCurrentUserInfo = async (req, res) => {
   res.status(200).json(req.user);
 };
+
+//@desc update current user
+
+//@desc delete current user
+
+//@desc get a user
+
+//@desc get all users
+
+//@desc follow a user
+
+//@unfollow a user
 
 module.exports = {
   registerUser,

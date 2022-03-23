@@ -6,6 +6,9 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add a name"],
     },
+    foreignName: {
+      type: String,
+    },
     username: {
       type: String,
       required: [true, "Please add a username"],
