@@ -8,6 +8,7 @@ const {
   getUser,
   updateUser,
   deleteUser,
+  followUser,
 } = require("../controllers/userController");
 const { authenticateToken } = require("../middleware/authMiddleware");
 
@@ -19,5 +20,7 @@ router
   .route("/:username")
   .put(authenticateToken, updateUser)
   .delete(authenticateToken, deleteUser);
+
+router.post("/:username/follow", authenticateToken, followUser);
 
 module.exports = router;

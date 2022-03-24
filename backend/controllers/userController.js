@@ -129,6 +129,7 @@ const getUser = async (req, res) => {
 //@route PUT /api/users/:id
 //@access PRIVATE
 const updateUser = async (req, res) => {
+  console.log(req.params.username);
   //if update password
   if (req.body.password) {
     try {
@@ -145,15 +146,13 @@ const updateUser = async (req, res) => {
 
     if (!user) return res.status(401).json("User not found");
 
-    const updatedUser = await User.findByIdAndUpdate(
-      req.user.id,
-      {
+    if (user.username === req.params.username) {
+      await user.updateOne({
         $set: req.body,
-      },
-      { new: true }
-    );
-
-    return res.status(200).json(updatedUser);
+      });
+    } else {
+      res.status(403).json("You can only edit your own user info");
+    }
   } catch (error) {
     return res.status(500).json("Could not update");
   }
@@ -169,20 +168,57 @@ const deleteUser = async (req, res) => {
 
     if (!user) return res.status(401).json("User not found");
 
-    await User.findByIdAndDelete(req.user.id);
-    res.status(200).json("deleted user");
+    if (user.username === req.params.username) {
+      await user.deleteOne();
+      res.status(200).json("deleted user");
+    } else {
+      res.status(403).json("you can only delete your own user");
+    }
   } catch (error) {
     return res.status(500).json("Could not delete");
   }
 };
 
-//@desc follow a user
+//@desc follow and unfollow a user
 //@route PUT /api/users/:id/follow
 //@access PRIVATE
+const followUser = async (req, res) => {
+  const { action } = req.body;
 
-//@unfollow a user
-//@route PUT /api/users/:id/unfollow
-//@access PRIVATE
+  const username = req.params.username;
+  let user;
+  let currentUser;
+
+  try {
+    user = await User.findOne({ username });
+    currentUser = await User.findById(req.user.id);
+  } catch (error) {
+    return res.status(401).json("user not found");
+  }
+
+  if (user._id.equals(currentUser._id))
+    return res.status(403).json("cannot follow/unfollow yourself");
+
+  try {
+    switch (action) {
+      case "follow":
+        await user.updateOne({ $push: { followers: currentUser._id } });
+        await currentUser.updateOne({ $push: { following: user._id } });
+
+        return res.status(200).json("following user");
+
+      case "unfollow":
+        await user.updateOne({ $pull: { followers: currentUser._id } });
+        await currentUser.updateOne({ $pull: { following: user._id } });
+
+        return res.status(200).json("unfollowed user");
+      default:
+        break;
+    }
+  } catch (error) {
+    res.status(500).json("could not follow user");
+  }
+};
 
 module.exports = {
   registerUser,
@@ -192,4 +228,5 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  followUser,
 };

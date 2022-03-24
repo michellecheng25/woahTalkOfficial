@@ -52,6 +52,10 @@ const userSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
+    courses: {
+      type: Array,
+      default: [],
+    },
     location: {
       type: String,
     },
