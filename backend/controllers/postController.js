@@ -5,7 +5,7 @@ const User = require("../models/userModel");
 //@route GET /api/posts/
 //@acess Private
 const getPosts = async (req, res) => {
-  res.status(200).json("get post");
+  res.status(200).json("get timeline posts");
 };
 
 //@desc Create a post
@@ -47,11 +47,15 @@ const editPost = async (req, res) => {
     const user = await User.findById(req.user.id);
     const post = await Post.findById(req.params.id);
     if (user._id.equals(post.userId)) {
-      await post.updateOne({ $set: req.body });
-      return res.status(201).json("updated post");
+      const updatedPost = await Post.findByIdAndUpdate(
+        req.params.id,
+        { $set: req.body },
+        { new: true }
+      );
+      return res.status(201).json(updatedPost);
     } else return res.status(403).json("you cannot edit someone else's post");
   } catch (error) {
-    return res.status(500).json("Could not edit Post");
+    return res.status(500).json("Could not edit post");
   }
 };
 
@@ -75,7 +79,32 @@ const deletePost = async (req, res) => {
 //@route POST /api/posts/:id/like
 //@acess Private
 const likePost = async (req, res) => {
-  res.status(200).json("like a post");
+  const { action } = req.body;
+
+  let user;
+  let post;
+  try {
+    user = await User.findById(req.user.id);
+    post = await Post.findById(req.params.id);
+  } catch (error) {
+    return res.status(500).json("Could not retrive post/data");
+  }
+
+  try {
+    switch (action) {
+      case "like":
+        await post.updateOne({ $push: { likes: user._id } });
+        return res.status(200).json("liked post");
+
+      case "unlike":
+        await post.updateOne({ $pull: { likes: user._id } });
+        return res.status(200).json("unliked post");
+      default:
+        break;
+    }
+  } catch (error) {
+    return res.status(500).json("Could not like/unlike post");
+  }
 };
 
 module.exports = {

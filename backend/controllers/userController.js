@@ -148,10 +148,14 @@ const updateUser = async (req, res) => {
     if (!user) return res.status(401).json("User not found");
 
     if (user.username === req.params.username) {
-      await user.updateOne({
-        $set: req.body,
-      });
-      return res.status(200).json("updated user info");
+      const updatedUser = await User.findByIdAndUpdate(
+        req.user.id,
+        {
+          $set: req.body,
+        },
+        { new: true }
+      );
+      return res.status(200).json(updatedUser);
     } else {
       res.status(403).json("You can only edit your own user info");
     }
