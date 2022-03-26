@@ -5,7 +5,23 @@ const User = require("../models/userModel");
 //@route GET /api/posts/
 //@acess Private
 const getPosts = async (req, res) => {
-  res.status(200).json("get timeline posts");
+  try {
+    const user = await User.findById(req.user.id, "following");
+
+    if (!user) return res.status(401).json("users could not be found");
+
+    posts = await Post.find({
+      userId: {
+        $in: [req.user.id, ...user.following],
+      },
+    })
+      .limit(10)
+      .sort({ createdAt: -1 })
+      .populate("userId", { name: 1, profilePicture: 1 });
+    return res.status(200).json(posts);
+  } catch (error) {
+    return res.status(500).json("no posts retrieved.");
+  }
 };
 
 //@desc Create a post

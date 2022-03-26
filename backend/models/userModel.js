@@ -6,9 +6,6 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add a name"],
     },
-    foreignName: {
-      type: String,
-    },
     username: {
       type: String,
       required: [true, "Please add a username"],
@@ -22,6 +19,9 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add a password"],
     },
+    foreignName: {
+      type: String,
+    },
     navtiveLanguage: {
       type: String,
     },
@@ -30,15 +30,16 @@ const userSchema = mongoose.Schema(
     },
     nativeProficiency: {
       type: Number,
-      enum: [1, 2, 3],
+      enum: ["novice", "intermediate", "advannced"],
     },
     foreignProficiency: {
       type: Number,
-      enum: [1, 2, 3],
+      enum: ["novice", "intermediate", "advannced"],
     },
     profilePicture: {
       type: String,
       default: "",
+      required: true,
     },
     coverPicture: {
       type: String,
@@ -46,13 +47,13 @@ const userSchema = mongoose.Schema(
     },
     followers: {
       type: Array,
-      default: [],
+      userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     },
     following: {
       type: Array,
-      default: [],
+      userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     },
-    type: {
+    role: {
       type: String,
     },
     courses: {

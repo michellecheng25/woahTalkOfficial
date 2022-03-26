@@ -16,7 +16,9 @@ const registerUser = async (req, res) => {
   try {
     // check if user already exist
     // Validate if user exist in our database
-    const usernameExists = await User.findOne({ username });
+    const usernameExists = await User.findOne({
+      username: username.toLowerCase(),
+    });
 
     if (usernameExists) {
       return res.status(409).json("User Already Exist. Please Login");
@@ -29,9 +31,10 @@ const registerUser = async (req, res) => {
     //create new user
     const newUser = new User({
       name,
-      username,
-      email,
+      username: username.toLowerCase(),
+      email: email.toLowerCase(),
       password: hashedPassword,
+      profilePicture: req.body.profilePicURl || "https://picsum.photos/200/300",
     });
 
     const user = await newUser.save();
@@ -40,6 +43,7 @@ const registerUser = async (req, res) => {
       username: user.username,
       name: user.name,
       email: user.email,
+      profilePicture: user.profilePicture,
       token: generateToken(user._id),
     });
   } catch (error) {
@@ -57,7 +61,7 @@ const loginUser = async (req, res) => {
   }
 
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username: username.toLowerCase() });
 
     //check user and password match
     if (user && (await bcrypt.compare(password, user.password))) {
