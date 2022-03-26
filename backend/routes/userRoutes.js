@@ -15,9 +15,10 @@ const { authenticateToken } = require("../middleware/authMiddleware");
 router.route("/").get(getAllUsers).post(registerUser);
 router.post("/login", loginUser);
 router.get("/me", authenticateToken, getCurrentUserInfo);
-router.get("/:username", getUser);
+
 router
   .route("/:username")
+  .get(getUser)
   .put(authenticateToken, updateUser)
   .delete(authenticateToken, deleteUser);
 

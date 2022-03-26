@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const postSchema = mongoose.Schema(
   {
-    username: {
-      type: String,
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
     post: {
@@ -12,7 +12,7 @@ const postSchema = mongoose.Schema(
     upload: {
       type: String,
     },
-    post: {
+    likes: {
       type: Array,
       default: [],
     },

@@ -13,40 +13,38 @@ const registerUser = async (req, res) => {
     return res.status(400).json("Fill in all fields");
   }
 
-  // check if user already exist
-  // Validate if user exist in our database
-  const usernameExists = await User.findOne({ username });
-  if (usernameExists) {
-    return res.status(409).json("User Already Exist. Please Login");
+  try {
+    // check if user already exist
+    // Validate if user exist in our database
+    const usernameExists = await User.findOne({ username });
+
+    if (usernameExists) {
+      return res.status(409).json("User Already Exist. Please Login");
+    }
+
+    //generage hashed password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    //create new user
+    const newUser = new User({
+      name,
+      username,
+      email,
+      password: hashedPassword,
+    });
+
+    const user = await newUser.save();
+    res.status(201).json({
+      _id: user._id,
+      username: user.username,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user._id),
+    });
+  } catch (error) {
+    return res.status(500).json("Could not register user");
   }
-
-  /*
-  const emailExists = await User.findOne({ email });
-  if (emailExists) {
-    return res.status(409).json("Email Already Exist. Please Login");
-  }
-  */
-
-  //generage hashed password
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-
-  //create new user
-  const newUser = new User({
-    name,
-    username,
-    email,
-    password: hashedPassword,
-  });
-
-  const user = await newUser.save();
-  res.status(201).json({
-    _id: user._id,
-    username: user.username,
-    name: user.name,
-    email: user.email,
-    token: generateToken(user._id),
-  });
 };
 
 //@desc Login user
@@ -58,19 +56,23 @@ const loginUser = async (req, res) => {
     res.status(400).json("Fill in all fields");
   }
 
-  const user = await User.findOne({ username });
+  try {
+    const user = await User.findOne({ username });
 
-  //check user and password match
-  if (user && (await bcrypt.compare(password, user.password))) {
-    res.status(200).json({
-      _id: user._id,
-      username: user.username,
-      name: user.name,
-      email: user.email,
-      token: generateToken(user._id),
-    });
-  } else {
-    res.status(401).json("Invalid credentials");
+    //check user and password match
+    if (user && (await bcrypt.compare(password, user.password))) {
+      res.status(200).json({
+        _id: user._id,
+        username: user.username,
+        name: user.name,
+        email: user.email,
+        token: generateToken(user._id),
+      });
+    } else {
+      res.status(401).json("Invalid credentials");
+    }
+  } catch (error) {
+    return res.status(500).json("Could not login");
   }
 };
 
@@ -104,7 +106,7 @@ const getAllUsers = async (req, res) => {
       })
     );
   } catch (error) {
-    return res.status(401).json("Users cannot be found");
+    return res.status(500).json("Could not get Users");
   }
 };
 
@@ -121,7 +123,7 @@ const getUser = async (req, res) => {
       name: user.name,
     });
   } catch (error) {
-    return res.status(401).json("User not found");
+    return res.status(401).json("Could not find user");
   }
 };
 
@@ -129,14 +131,13 @@ const getUser = async (req, res) => {
 //@route PUT /api/users/:id
 //@access PRIVATE
 const updateUser = async (req, res) => {
-  console.log(req.params.username);
   //if update password
   if (req.body.password) {
     try {
       const salt = await bcrypt.genSalt(10);
       req.body.password = await bcrypt.hash(req.body.password, salt);
     } catch (error) {
-      return res.status(500).json("could not hash password");
+      return res.status(500).json("Could not update password");
     }
   }
 
@@ -150,11 +151,12 @@ const updateUser = async (req, res) => {
       await user.updateOne({
         $set: req.body,
       });
+      return res.status(200).json("updated user info");
     } else {
       res.status(403).json("You can only edit your own user info");
     }
   } catch (error) {
-    return res.status(500).json("Could not update");
+    return res.status(500).json("Could not update user info");
   }
 };
 
@@ -175,12 +177,12 @@ const deleteUser = async (req, res) => {
       res.status(403).json("you can only delete your own user");
     }
   } catch (error) {
-    return res.status(500).json("Could not delete");
+    return res.status(500).json("Could not delete user");
   }
 };
 
 //@desc follow and unfollow a user
-//@route PUT /api/users/:id/follow
+//@route PUT /api/users/:username/follow
 //@access PRIVATE
 const followUser = async (req, res) => {
   const { action } = req.body;
@@ -193,7 +195,7 @@ const followUser = async (req, res) => {
     user = await User.findOne({ username });
     currentUser = await User.findById(req.user.id);
   } catch (error) {
-    return res.status(401).json("user not found");
+    return res.status(404).json("Could not find user(s)");
   }
 
   if (user._id.equals(currentUser._id))
@@ -216,7 +218,7 @@ const followUser = async (req, res) => {
         break;
     }
   } catch (error) {
-    res.status(500).json("could not follow user");
+    return res.status(500).json("Could not follow user");
   }
 };
 
