@@ -15,7 +15,14 @@ const postSchema = mongoose.Schema(
     },
     likes: {
       type: Array,
-      users: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    },
+    comments: {
+      type: Array,
+      _id: { type: String, required: true },
+      userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      comment: { type: String, required: true },
+      date: { type: Date, default: Date.now },
     },
   },
   {

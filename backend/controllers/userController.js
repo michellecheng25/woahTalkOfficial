@@ -127,7 +127,7 @@ const getUser = async (req, res) => {
       name: user.name,
     });
   } catch (error) {
-    return res.status(401).json("Could not find user");
+    return res.status(404).json("Could not find user");
   }
 };
 
@@ -149,7 +149,7 @@ const updateUser = async (req, res) => {
     //Get the user id in the JWT token
     const user = await User.findById(req.user.id);
 
-    if (!user) return res.status(401).json("User not found");
+    if (!user) return res.status(404).json("User not found");
 
     if (user.username === req.params.username) {
       const updatedUser = await User.findByIdAndUpdate(
@@ -176,7 +176,7 @@ const deleteUser = async (req, res) => {
     //Get the user id in the JWT token
     const user = await User.findById(req.user.id);
 
-    if (!user) return res.status(401).json("User not found");
+    if (!user) return res.status(404).json("User not found");
 
     if (user.username === req.params.username) {
       await user.deleteOne();

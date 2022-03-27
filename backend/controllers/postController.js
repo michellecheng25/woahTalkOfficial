@@ -1,5 +1,7 @@
 const Post = require("../models/postModel");
 const User = require("../models/userModel");
+const { v4: uuidv4 } = require("uuid");
+const e = require("express");
 
 //@desc Get user timeline posts
 //@route GET /api/posts/
@@ -8,7 +10,7 @@ const getPosts = async (req, res) => {
   try {
     const user = await User.findById(req.user.id, "following");
 
-    if (!user) return res.status(401).json("users could not be found");
+    if (!user) return res.status(404).json("users could not be found");
 
     posts = await Post.find({
       userId: {
@@ -17,7 +19,12 @@ const getPosts = async (req, res) => {
     })
       .limit(10)
       .sort({ createdAt: -1 })
-      .populate("userId", { name: 1, profilePicture: 1 });
+      .populate("userId", { name: 1, profilePicture: 1 })
+      .populate({
+        path: "comments.userId",
+        model: "User",
+        select: { name: 1, profilePicture: 1 },
+      });
     return res.status(200).json(posts);
   } catch (error) {
     return res.status(500).json("no posts retrieved.");
@@ -48,7 +55,16 @@ const createPost = async (req, res) => {
 //@acess Private
 const getPost = async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id)
+      .populate("userId", {
+        name: 1,
+        profilePicture: 1,
+      })
+      .populate({
+        path: "comments.userId",
+        model: "User",
+        select: { name: 1, profilePicture: 1 },
+      });
     res.status(201).json(post);
   } catch (error) {
     return res.status(500).json("Could not get Post");
@@ -123,6 +139,58 @@ const likePost = async (req, res) => {
   }
 };
 
+//@desc Create a comment
+//@route POST /api/posts/:id/comment
+//@acess Private
+const createComment = async (req, res) => {
+  const comment = req.body.comment;
+
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json("post not found");
+
+    if (comment.trim().length > 0) {
+      const newComment = {
+        _id: uuidv4(),
+        comment,
+        userId: req.user.id,
+        date: Date.now(),
+      };
+      await post.comments.unshift(newComment);
+      await post.save();
+    } else return res.status(400).json("create a comment");
+
+    return res.status(200).json("saved comment");
+  } catch (error) {
+    return res.status(500).json("Could not comment post");
+  }
+};
+
+//@desc Delete a comment
+//@route POST /api/posts/:id/comment/:commentId
+//@acess Private
+const deleteComment = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json("user not found");
+
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json("post not found");
+
+    const comment = post.comments.find(
+      (comment) => comment._id === req.params.commentId
+    );
+    if (!comment) return res.status(404).json("comment not found");
+
+    if (user._id.equals(comment.userId)) {
+      await post.updateOne({ $pull: { comments: { _id: comment._id } } });
+      return res.status(201).json("deleted comment");
+    } else return res.status(403).json("you can only delete your own comments");
+  } catch (error) {
+    return res.status(500).json("Could not delete comment");
+  }
+};
+
 module.exports = {
   getPosts,
   createPost,
@@ -130,4 +198,6 @@ module.exports = {
   editPost,
   deletePost,
   likePost,
+  createComment,
+  deleteComment,
 };
