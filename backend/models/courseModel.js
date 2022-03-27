@@ -24,11 +24,7 @@ const courseSchema = mongoose.Schema(
       type: String,
       enum: ["novice", "intermediate", "advanced"],
     },
-    teachersId: {
-      type: Array,
-      userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    },
-    studentsId: {
+    participants: {
       type: Array,
       userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     },

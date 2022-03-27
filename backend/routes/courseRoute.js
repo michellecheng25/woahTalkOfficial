@@ -5,6 +5,7 @@ const {
   getCourse,
   editCourse,
   deleteCourse,
+  joinCourse,
 } = require("../controllers/courseController");
 const { authenticateToken } = require("../middleware/authMiddleware");
 
@@ -15,5 +16,7 @@ router
   .get(getCourse)
   .put(authenticateToken, editCourse)
   .delete(authenticateToken, deleteCourse);
+
+router.post("/:courseId/join", authenticateToken, joinCourse);
 
 module.exports = router;

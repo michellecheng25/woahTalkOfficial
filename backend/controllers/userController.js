@@ -226,7 +226,7 @@ const followUser = async (req, res) => {
         break;
     }
   } catch (error) {
-    return res.status(500).json("Could not follow user");
+    return res.status(500).json("Could not follow/unfollow user");
   }
 };
 

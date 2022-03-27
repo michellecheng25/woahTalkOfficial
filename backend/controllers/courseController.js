@@ -3,10 +3,10 @@ const User = require("../models/userModel");
 const { v4: uuidv4 } = require("uuid");
 
 /*
-//@desc Get courses
+//@desc Get courses of a specific language (Move to explore route?)
 //@route GET /api/courses/
 //@acess Public
-const getAllCourses = async (req, res) => {
+const getLanguageCourses = async (req, res) => {
   try {
     const courses = await Course.find({ language: req.query.language });
     return res.status(200).json(courses);
@@ -44,7 +44,7 @@ const createCourse = async (req, res) => {
   }
 };
 
-//@desc Get specific language courses
+//@desc Get a courses
 //@route GET /api/courses/:courseId
 //@acess Public
 const getCourse = async (req, res) => {
@@ -56,7 +56,7 @@ const getCourse = async (req, res) => {
   }
 };
 
-//@desc Edit specific language courses
+//@desc Edit a courses
 //@route PUT /api/courses/:courseId
 //@acess Private
 const editCourse = async (req, res) => {
@@ -76,7 +76,7 @@ const editCourse = async (req, res) => {
   }
 };
 
-//@desc Edit specific language courses
+//@desc Delete a  course
 //@route DELETE /api/courses/:courseId
 //@acess Private
 const deleteCourse = async (req, res) => {
@@ -93,12 +93,46 @@ const deleteCourse = async (req, res) => {
   }
 };
 
-//join class
+//@desc Join or leave a specific courses
+//@route POST /api/courses/:courseId/join
+//@acess Private
+const joinCourse = async (req, res) => {
+  const { action } = req.body;
 
-//leave class
+  let user;
+  let course;
+  try {
+    user = await User.findById(req.user.id);
+    course = await Course.findById(req.params.courseId);
+  } catch (error) {
+    return res.status(404).json("Could not find user/course");
+  }
+
+  try {
+    switch (action) {
+      case "join":
+        await user.updateOne({ $push: { courses: user._id } });
+        await course.updateOne({ $push: { participants: user._id } });
+
+        return res.status(200).json("joined course");
+
+      case "leave":
+        await user.updateOne({ $pull: { courses: user._id } });
+        await course.updateOne({ $pull: { participants: user._id } });
+
+        return res.status(200).json("leave course");
+      default:
+        break;
+    }
+  } catch (error) {
+    return res.status(500).json("Could not join/leave course");
+  }
+};
+
 module.exports = {
   createCourse,
   getCourse,
   editCourse,
   deleteCourse,
+  joinCourse,
 };
