@@ -29,12 +29,12 @@ const userSchema = mongoose.Schema(
       type: String,
     },
     nativeProficiency: {
-      type: Number,
-      enum: ["novice", "intermediate", "advannced"],
+      type: String,
+      enum: ["novice", "intermediate", "advanced"],
     },
     foreignProficiency: {
-      type: Number,
-      enum: ["novice", "intermediate", "advannced"],
+      type: String,
+      enum: ["novice", "intermediate", "advanced"],
     },
     profilePicture: {
       type: String,
@@ -58,7 +58,7 @@ const userSchema = mongoose.Schema(
     },
     courses: {
       type: Array,
-      default: [],
+      courseId: { type: mongoose.Schema.Types.ObjectId, ref: "Course" },
     },
     location: {
       type: String,

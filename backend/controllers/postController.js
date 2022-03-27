@@ -1,7 +1,6 @@
 const Post = require("../models/postModel");
 const User = require("../models/userModel");
 const { v4: uuidv4 } = require("uuid");
-const e = require("express");
 
 //@desc Get user timeline posts
 //@route GET /api/posts/
@@ -19,11 +18,11 @@ const getPosts = async (req, res) => {
     })
       .limit(10)
       .sort({ createdAt: -1 })
-      .populate("userId", { name: 1, profilePicture: 1 })
+      .populate("userId", { username: 1, name: 1, profilePicture: 1 })
       .populate({
         path: "comments.userId",
         model: "User",
-        select: { name: 1, profilePicture: 1 },
+        select: { username: 1, name: 1, profilePicture: 1 },
       });
     return res.status(200).json(posts);
   } catch (error) {
@@ -57,13 +56,14 @@ const getPost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
       .populate("userId", {
+        username: 1,
         name: 1,
         profilePicture: 1,
       })
       .populate({
         path: "comments.userId",
         model: "User",
-        select: { name: 1, profilePicture: 1 },
+        select: { username: 1, name: 1, profilePicture: 1 },
       });
     res.status(201).json(post);
   } catch (error) {

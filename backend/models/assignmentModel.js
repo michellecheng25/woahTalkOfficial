@@ -1,27 +1,27 @@
 const mongoose = require("mongoose");
 
-const postSchema = mongoose.Schema(
+const assignmentSchema = mongoose.Schema(
   {
+    assignmentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Course",
+    },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
-    post: {
+    description: {
       type: String,
     },
     upload: {
       type: String,
     },
-    likes: {
-      type: Array,
-      userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "User",
-      },
+    totalPoints: {
+      type: Number,
     },
-    comments: {
+    submissions: {
       type: Array,
       _id: { type: String, required: true },
       userId: {
@@ -29,7 +29,10 @@ const postSchema = mongoose.Schema(
         required: true,
         ref: "User",
       },
-      comment: { type: String, required: true },
+      content: { type: String },
+      upload: { type: String },
+      grade: { type: Number },
+      feedback: { type: String },
       date: { type: Date, default: Date.now },
     },
   },
@@ -38,4 +41,4 @@ const postSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Post", postSchema);
+module.exports = mongoose.model("Assignment", assignmentSchema);
