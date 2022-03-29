@@ -2,20 +2,6 @@ const Course = require("../models/courseModel");
 const User = require("../models/userModel");
 const { v4: uuidv4 } = require("uuid");
 
-/*
-//@desc Get courses of a specific language (Move to explore route?)
-//@route GET /api/courses/
-//@acess Public
-const getLanguageCourses = async (req, res) => {
-  try {
-    const courses = await Course.find({ language: req.query.language });
-    return res.status(200).json(courses);
-  } catch (error) {
-    return res.status(500).json("Could not find courses");
-  }
-};
-*/
-
 //@desc POST create a course
 //@route POST /api/courses/
 //@acess private
@@ -34,7 +20,6 @@ const createCourse = async (req, res) => {
       creatorId: user._id,
       language: language.toLowerCase(),
       level: level.toLowerCase(),
-      accessCode: uuidv4(),
     });
 
     const course = await newCourse.save();
@@ -111,13 +96,13 @@ const joinCourse = async (req, res) => {
   try {
     switch (action) {
       case "join":
-        await user.updateOne({ $push: { courses: user._id } });
-        await course.updateOne({ $push: { participants: user._id } });
+        await user.updateOne({ $addToSet: { courses: course._id } });
+        await course.updateOne({ $addToSet: { participants: user._id } });
 
         return res.status(200).json("joined course");
 
       case "leave":
-        await user.updateOne({ $pull: { courses: user._id } });
+        await user.updateOne({ $pull: { courses: course._id } });
         await course.updateOne({ $pull: { participants: user._id } });
 
         return res.status(200).json("leave course");

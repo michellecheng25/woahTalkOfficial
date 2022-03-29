@@ -212,8 +212,8 @@ const followUser = async (req, res) => {
   try {
     switch (action) {
       case "follow":
-        await user.updateOne({ $push: { followers: currentUser._id } });
-        await currentUser.updateOne({ $push: { following: user._id } });
+        await user.updateOne({ $addToSet: { followers: currentUser._id } });
+        await currentUser.updateOne({ $addToSet: { following: user._id } });
 
         return res.status(200).json("following user");
 

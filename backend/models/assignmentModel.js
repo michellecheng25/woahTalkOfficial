@@ -2,15 +2,23 @@ const mongoose = require("mongoose");
 
 const assignmentSchema = mongoose.Schema(
   {
-    assignmentId: {
+    courseId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "Course",
     },
-    userId: {
+    creatorId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
+    },
+    folder: {
+      type: String,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
     },
     description: {
       type: String,
@@ -20,6 +28,9 @@ const assignmentSchema = mongoose.Schema(
     },
     totalPoints: {
       type: Number,
+    },
+    dueDate: {
+      type: Date,
     },
     submissions: {
       type: Array,

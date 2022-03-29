@@ -11,11 +11,6 @@ const courseSchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
-    accessCode: {
-      type: String,
-      requiired: true,
-      unique: true,
-    },
     language: {
       type: String,
       required: true,
@@ -23,6 +18,10 @@ const courseSchema = mongoose.Schema(
     level: {
       type: String,
       enum: ["novice", "intermediate", "advanced"],
+    },
+    folders: {
+      type: Array,
+      default: ["Announcement", "Course Materials", "Assignemnts"],
     },
     participants: {
       type: Array,
