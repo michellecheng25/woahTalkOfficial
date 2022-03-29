@@ -32,20 +32,6 @@ const assignmentSchema = mongoose.Schema(
     dueDate: {
       type: Date,
     },
-    submissions: {
-      type: Array,
-      _id: { type: String, required: true },
-      userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "User",
-      },
-      content: { type: String },
-      upload: { type: String },
-      grade: { type: Number },
-      feedback: { type: String },
-      date: { type: Date, default: Date.now },
-    },
   },
   {
     timestamps: true,

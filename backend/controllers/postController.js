@@ -158,9 +158,8 @@ const createComment = async (req, res) => {
       };
       await post.comments.unshift(newComment);
       await post.save();
+      return res.status(200).json("saved comment");
     } else return res.status(400).json("create a comment");
-
-    return res.status(200).json("saved comment");
   } catch (error) {
     return res.status(500).json("Could not comment post");
   }

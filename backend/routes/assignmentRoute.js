@@ -19,5 +19,4 @@ router
   .get(authenticateToken, getAssignment)
   .put(authenticateToken, editAssignment)
   .delete(authenticateToken, deleteAssignment);
-
 module.exports = router;

@@ -47,11 +47,9 @@ const createAssignment = async (req, res) => {
       const newAssignment = new Assignment({
         ...req.body,
         courseId: course._id,
+        creatorId: req.user.id,
         folder: req.body.folder,
       });
-
-      newAssignment.creatorId = req.user.id;
-      console.log(newAssignment);
       const createdAssigment = await newAssignment.save();
 
       await course.updateOne({ $addToSet: { folders: req.body.folder } });
@@ -94,7 +92,10 @@ const getAssignment = async (req, res) => {
 const editAssignment = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
+    if (!user) return res.status(401).json("user not found");
+
     const assignment = await Assignment.findById(req.params.assignmentId);
+    if (!assignment) return res.status(401).json("assigment not found");
 
     if (user._id.equals(assignment.creatorId)) {
       const updatedAssignment = await Assignment.findByIdAndUpdate(
@@ -116,7 +117,10 @@ const editAssignment = async (req, res) => {
 const deleteAssignment = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
+    if (!user) return res.status(401).json("user not found");
+
     const assignment = await Assignment.findById(req.params.assignmentId);
+    if (!assignment) return res.status(401).json("assigment not found");
 
     if (user._id.equals(assignment.creatorId)) {
       await assignment.deleteOne();
@@ -127,26 +131,6 @@ const deleteAssignment = async (req, res) => {
     return res.status(500).json("Could not delete assigment");
   }
 };
-
-//@desc Create an assignment submission
-//@route POST /api/courses/:courseId/assignment/:assignmentId/:username
-//@acess private
-const createSubmission = async (req, res) => {};
-
-//@desc Edit an assignment submission
-//@route PUT /api/courses/:courseId/assignment/:assignmentId/:username
-//@acess private
-const editSubmission = async (req, res) => {};
-
-//@desc Delete an assignment submission
-//@route DELETE /api/courses/:courseId/assignment/:assignmentId:username
-//@acess private
-const deleteSubmission = async (req, res) => {};
-
-//@desc PUT an assignment submission
-//@route PUT /api/courses/:courseId/assignment/:assignmentId:username
-//@acess private
-const gradeSubmission = async (req, res) => {};
 
 module.exports = {
   getAssignments,
