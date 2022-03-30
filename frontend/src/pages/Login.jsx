@@ -1,9 +1,9 @@
 import { FaSignInAlt } from "react-icons/fa";
 import { useState, useContext } from "react";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
-import { loginCall } from "../apiCalls";
+import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../context/users/UserContext";
+import { login } from "../context/users/UserActions";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -14,6 +14,8 @@ function Login() {
   const { username, password } = formData;
   const { user, error, isFetching, dispatch } = useContext(UserContext);
 
+  const navigate = useNavigate();
+
   const onChange = (e) => {
     setFormData((prevState) => {
       return {
@@ -23,10 +25,21 @@ function Login() {
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const userCredentials = await login(
+        { username, password },
+        dispatch,
+        toast
+      );
 
-    loginCall({ username, password }, dispatch);
+      if (userCredentials) {
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (

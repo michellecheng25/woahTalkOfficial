@@ -12,7 +12,7 @@ function Header() {
   return (
     <header className="header" style={{ background: "#152E34" }}>
       <div className="logo">
-        <Link to="/login">
+        <Link to="/">
           <ImBubbles />
           WoahTalk
         </Link>

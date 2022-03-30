@@ -4,7 +4,7 @@ import UserReducer from "./UserReducer";
 const INTIAL_STATE = {
   user: null,
   isFetching: false,
-  error: false,
+  error: null,
 };
 
 export const UserContext = createContext(INTIAL_STATE);

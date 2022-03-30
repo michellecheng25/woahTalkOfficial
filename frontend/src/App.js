@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRoute";
 import Header from "./components/Header";
+import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import { ToastContainer } from "react-toastify";
@@ -14,7 +16,9 @@ function App() {
           <div className="container">
             <Header />
             <Routes>
-              <Route path="/" element={<Login />} />
+              <Route path="/" element={<PrivateRoute />}>
+                <Route path="/" element={<Home />} />
+              </Route>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
             </Routes>
