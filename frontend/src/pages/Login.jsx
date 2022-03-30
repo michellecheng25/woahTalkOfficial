@@ -48,7 +48,7 @@ function Login() {
           <div>
             <input
               style={styles.input}
-              type="textt"
+              type="text"
               className="form-control"
               id="username"
               name="username"
@@ -99,14 +99,12 @@ let styles = {
     height: "37px",
     width: "275px",
     fontWeight: "Bolder",
-    letterSpacing: "1.4px",
     cursor: "pointer",
   },
   form: {
     height: "100vh",
     fontSize: "30px",
     textAlign: "center",
-    fontFamily: "Open Sans",
     backgroundColor: "#152E34",
   },
   input: {
@@ -135,7 +133,7 @@ let styles = {
     textAlign: "center",
     fontSize: "30px",
     fontWeight: "bolder",
-    padding: "180px 0px 15px 0px",
+    padding: "100px 0px 15px 0px",
   },
 };
 export default Login;
