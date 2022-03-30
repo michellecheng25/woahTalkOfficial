@@ -1,8 +1,9 @@
 import { FaSignInAlt } from "react-icons/fa";
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import Axios from "axios";
+import { loginCall } from "../apiCalls";
+import UserContext from "../context/users/UserContext";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ function Login() {
   });
 
   const { username, password } = formData;
+  const { user, error, isFetching, dispatch } = useContext(UserContext);
 
   const onChange = (e) => {
     setFormData((prevState) => {
@@ -24,14 +26,7 @@ function Login() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    Axios.post("http://localhost:5000/api/users/login", {
-      username,
-      password,
-    })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => toast.error("Invalid username or password"));
+    loginCall({ username, password }, dispatch);
   };
 
   return (

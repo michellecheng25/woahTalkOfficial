@@ -2,7 +2,7 @@ import { FaUser } from "react-icons/fa";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import Axios from "axios";
+import axios from "axios";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -30,14 +30,17 @@ function Register() {
     if (password !== password2) {
       toast.error("Passwords do not match!");
     } else {
-      Axios.post("http://localhost:5000/api/users", {
-        username,
-        name,
-        email,
-        password,
-      }).then((response) => {
-        console.log(response);
-      });
+      axios
+        .post("http://localhost:5000/api/users", {
+          username,
+          name,
+          email,
+          password,
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => toast.error(error.response.data));
     }
   };
 
