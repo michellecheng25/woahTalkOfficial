@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
-import Header from "./components/Header";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -14,7 +13,6 @@ function App() {
       <UserProvider>
         <Router>
           <div className="container">
-            <Header />
             <Routes>
               <Route path="/" element={<PrivateRoute />}>
                 <Route path="/" element={<Home />} />

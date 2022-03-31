@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../context/users/UserContext";
 import { login } from "../context/users/UserActions";
+import Header from "../components/Header";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -28,11 +29,7 @@ function Login() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const userCredentials = await login(
-        { username, password },
-        dispatch,
-        toast
-      );
+      const userCredentials = await login({ username, password }, dispatch);
 
       if (userCredentials) {
         navigate("/");
@@ -43,57 +40,60 @@ function Login() {
   };
 
   return (
-    <div style={styles.form}>
-      <section className="heading" style={styles.heading}>
-        <h1>
-          <FaSignInAlt /> Sign In
-        </h1>
-        <p>Welcome back!</p>
-      </section>
+    <>
+      <Header />
+      <div style={styles.form}>
+        <section className="heading" style={styles.heading}>
+          <h1>
+            <FaSignInAlt /> Sign In
+          </h1>
+          <p>Welcome back!</p>
+        </section>
 
-      <section className="form">
-        <form onSubmit={onSubmit}>
-          <div>
-            <input
-              style={styles.input}
-              type="text"
-              className="form-control"
-              id="username"
-              name="username"
-              value={username}
-              onChange={onChange}
-              placeholder="Enter your username"
-              required
-            />
-          </div>
-          <div>
-            <input
-              style={styles.input}
-              type="password"
-              className="form-control"
-              id="password"
-              name="password"
-              value={password}
-              onChange={onChange}
-              placeholder="Enter your password"
-              required
-            />
-          </div>
+        <section className="form">
+          <form onSubmit={onSubmit}>
+            <div>
+              <input
+                style={styles.input}
+                type="text"
+                className="form-control"
+                id="username"
+                name="username"
+                value={username}
+                onChange={onChange}
+                placeholder="Enter your username"
+                required
+              />
+            </div>
+            <div>
+              <input
+                style={styles.input}
+                type="password"
+                className="form-control"
+                id="password"
+                name="password"
+                value={password}
+                onChange={onChange}
+                placeholder="Enter your password"
+                required
+              />
+            </div>
 
-          <div>
-            <button style={styles.btn}>Submit</button>
-          </div>
-        </form>
-        <p style={styles.paragraph}>
-          Don’t have an account? &nbsp;
-          <span>
-            <Link style={styles.themeColor} to="/register">
-              Sign Up
-            </Link>
-          </span>
-        </p>
-      </section>
-    </div>
+            <div>
+              <button style={styles.btn}>Submit</button>
+            </div>
+          </form>
+          <p style={styles.paragraph}>
+            Don’t have an account? &nbsp;
+            <span>
+              <Link style={styles.themeColor} to="/register">
+                Sign Up
+              </Link>
+            </span>
+          </p>
+        </section>
+      </div>
+    </>
   );
 }
 
@@ -141,7 +141,7 @@ let styles = {
     textAlign: "center",
     fontSize: "30px",
     fontWeight: "bolder",
-    padding: "100px 0px 15px 0px",
+    padding: "50px 0px 15px 0px",
   },
 };
 export default Login;
