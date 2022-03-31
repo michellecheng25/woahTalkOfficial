@@ -52,7 +52,7 @@ function Register() {
         const userCredentials = await login({ username, password }, dispatch);
 
         if (userCredentials) {
-          navigate("/");
+          navigate("/get-started");
         }
       } catch (error) {
         toast.error(error.message);

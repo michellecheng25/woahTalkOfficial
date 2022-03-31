@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "./context/users/UserContext";
+import GetStarted from "./pages/GetStarted";
 
 function App() {
   return (
@@ -14,10 +15,26 @@ function App() {
         <Router>
           <div className="container">
             <Routes>
-              <Route path="/" element={<PrivateRoute />}>
-                <Route path="/" element={<Home />} />
-              </Route>
+              <Route
+                path="/"
+                element={
+                  <PrivateRoute redirectPath="/login">
+                    <Home />
+                  </PrivateRoute>
+                }
+              />
+
               <Route path="/login" element={<Login />} />
+
+              <Route
+                path="/get-started"
+                element={
+                  <PrivateRoute redirectPath="/register">
+                    <GetStarted />
+                  </PrivateRoute>
+                }
+              />
+
               <Route path="/register" element={<Register />} />
             </Routes>
           </div>
