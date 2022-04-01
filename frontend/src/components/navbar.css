@@ -1,1 +1,67 @@
+.navbar {
+  height: 50px;
+  background-color: #e9e5df;
+  display: flex;
+  align-items: center;
+  color: black;
+  padding: 20px 100px;
+}
 
+.navbar .logo {
+  font-size: 1.5rem;
+  color: black;
+  cursor: pointer;
+}
+
+.navbar a {
+  text-decoration: none;
+}
+
+.navbarLeft {
+  flex: 3;
+}
+
+.navbarCenter {
+  flex: 8;
+}
+
+.navbar .searchbar {
+  width: 70%;
+  height: 30px;
+  background-color: white;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  border: 0.5px solid #eee;
+}
+
+.navbar .searchInput {
+  width: 90%;
+  border: none;
+  padding: 0px 10px;
+}
+
+.navbar .searchInput:focus {
+  outline: none;
+}
+
+.navbar svg {
+  font-size: 1.55rem;
+  margin-left: 10px;
+}
+
+.navbarRight {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar .navbarIcon {
+  font-size: 30px !important;
+  cursor: pointer;
+}
+
+.navbar .navbarIcon {
+  filter: brightness(1.2);
+}
