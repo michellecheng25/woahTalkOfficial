@@ -70,7 +70,9 @@ const loginUser = async (req, res) => {
         username: user.username,
         name: user.name,
         email: user.email,
+        /*
         token: generateToken(user._id),
+        */
       });
     } else {
       res.status(401).json("Invalid credentials");

@@ -2,7 +2,7 @@ import { createContext, useReducer } from "react";
 import UserReducer from "./UserReducer";
 
 const INTIAL_STATE = {
-  user: null,
+  user: JSON.parse(localStorage.getItem("user")) || null,
   isFetching: false,
   error: null,
 };

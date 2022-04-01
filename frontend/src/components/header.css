@@ -1,6 +1,5 @@
 /* login and register heading */
 
-/* TODO: move to Header.jsx component */
 ul {
   list-style: none;
 }
@@ -19,36 +18,48 @@ ul {
   justify-content: space-between;
 }
 
-.logo,
+.header .logo,
 .header ul li {
   margin: 20px;
   font-size: 1.2rem;
   line-height: 2;
+  display: flex;
 }
 
-.logo {
+.header .logo {
   font-size: 1.5rem !important;
 }
 
-a {
+.header a {
   text-decoration: none;
   color: white;
 }
 
-.header ul li a svg {
-  margin-right: 10px;
-}
-
-.heading {
-  margin-bottom: 25px;
-}
-
-.register-btn {
+.header .register-btn {
   background: #eca645;
   padding: 9px 12px 9px 12px;
   border-radius: 6px;
 }
 
-.register-btn:hover {
+.header .register-btn:hover {
   background: #e6a447;
+}
+
+@media screen and (max-width: 700px) {
+  .header {
+    padding: 0px 0px !important;
+    font-size: 1rem;
+    padding: 20px 5px !important;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .header ul li {
+    display: none;
+  }
+
+  .header .logo {
+    margin: 0 auto;
+    display: block;
+  }
 }

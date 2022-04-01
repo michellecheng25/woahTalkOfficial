@@ -5,6 +5,7 @@ import {
   FaBorderNone,
 } from "react-icons/fa";
 
+import "./header.css";
 import { ImBubbles } from "react-icons/im";
 import { Link } from "react-router-dom";
 

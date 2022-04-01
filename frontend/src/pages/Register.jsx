@@ -38,7 +38,7 @@ function Register() {
       toast.error("Passwords do not match!");
     } else {
       try {
-        await axios.post("http://localhost:5000/api/users", {
+        await axios.post("api/users", {
           username,
           name,
           email,
@@ -46,13 +46,14 @@ function Register() {
         });
       } catch (error) {
         toast.error(error.response.data);
+        return;
       }
 
       try {
         const userCredentials = await login({ username, password }, dispatch);
 
         if (userCredentials) {
-          navigate("/get-started");
+          navigate("/profile");
         }
       } catch (error) {
         toast.error(error.message);
