@@ -1,16 +1,25 @@
 .navbar {
-  height: 50px;
   background-color: #e9e5df;
+}
+
+.navbar-container {
+  margin: 0 auto;
+  width: 90vw;
+  height: 60px;
   display: flex;
   align-items: center;
-  color: black;
-  padding: 20px 100px;
+  padding: 20px 0px;
+  position: sticky;
+  top: 0px;
 }
 
 .navbar .logo {
   font-size: 1.5rem;
-  color: black;
   cursor: pointer;
+  display: flex;
+  color: black;
+  align-items: center;
+  justify-content: center;
 }
 
 .navbar a {
@@ -47,21 +56,64 @@
 
 .navbar svg {
   font-size: 1.55rem;
-  margin-left: 10px;
+  margin: 10px;
 }
 
 .navbarRight {
   flex: 2;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  padding-right: 50px;
 }
 
-.navbar .navbarIcon {
+.navbar .navbarIcon,
+.navbar .dropdownItem {
   font-size: 30px !important;
   cursor: pointer;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fffefc;
+  border-radius: 50%;
+  margin: 7px;
 }
 
-.navbar .navbarIcon {
-  filter: brightness(1.2);
+.dropdownItem:hover {
+  filter: brightness(0.8);
+}
+
+.navbar li {
+  list-style: none;
+}
+
+/* Dropdown Menu */
+.dropdown {
+  position: absolute;
+  width: 300px;
+  top: 55px;
+  transform: translateX(-45%);
+  background-color: #e9e5df !important;
+  border-radius: 10px;
+  padding: 1rem;
+  overflow: hidden;
+  border: 0.7px solid #ccc;
+  font-size: 1.3rem;
+}
+
+.menu-item {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  padding: 0.5px;
+}
+
+.menu-item:hover {
+  background-color: #fff;
+}
+
+.navbar a {
+  color: black;
 }
