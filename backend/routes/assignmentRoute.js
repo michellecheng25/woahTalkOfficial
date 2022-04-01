@@ -9,6 +9,10 @@ const {
 } = require("../controllers/assignmentController");
 const { authenticateToken } = require("../middleware/authMiddleware");
 
+//Re-route into submission router
+const submissionRouter = require("./submissionRoute");
+router.use("/:assignmentId/submissions", submissionRouter);
+
 router
   .route("/")
   .get(authenticateToken, getAssignments)

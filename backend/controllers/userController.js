@@ -101,16 +101,10 @@ const getCurrentUserInfo = async (req, res) => {
 //@access Public
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({});
-    res.status(200).json(
-      users.map((user) => {
-        return {
-          _id: user._id,
-          username: user.username,
-          name: user.name,
-        };
-      })
+    const users = await User.find({}).select(
+      "-password -_id -isAdmin -createdAt -updatedAt -email"
     );
+    res.status(200).json(users);
   } catch (error) {
     return res.status(500).json("Could not get Users");
   }

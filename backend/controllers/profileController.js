@@ -9,7 +9,7 @@ const getUserInfo = async (req, res) => {
 
   try {
     const user = await User.findOne({ username }).select(
-      "-_id -isAdmin -createdAt -updatedAt -email"
+      "-password -_id -isAdmin -createdAt -updatedAt -email"
     );
 
     res.status(200).json(user);

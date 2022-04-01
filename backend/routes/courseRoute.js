@@ -10,7 +10,7 @@ const {
 
 const { authenticateToken } = require("../middleware/authMiddleware");
 
-//Re-route into note router
+//Re-route into assignmennt router
 const assignmentRouter = require("./assignmentRoute");
 router.use("/:courseId/assignments", assignmentRouter);
 

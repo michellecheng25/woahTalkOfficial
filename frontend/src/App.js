@@ -6,7 +6,7 @@ import Login from "./pages/Login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "./context/users/UserContext";
-import Profile from "./pages/Profile";
+import UserSettings from "./pages/UserSettings";
 
 function App() {
   return (
@@ -27,10 +27,10 @@ function App() {
               <Route path="/login" element={<Login />} />
 
               <Route
-                path="/profile"
+                path="/user-settings"
                 element={
                   <PrivateRoute redirectPath="/login">
-                    <Profile />
+                    <UserSettings />
                   </PrivateRoute>
                 }
               />

@@ -59,7 +59,7 @@ const createAssignment = async (req, res) => {
         .status(404)
         .json("you cannot create an assignment for this course");
   } catch (error) {
-    return res.status(500).json(error);
+    return res.status(500).json("could not create assignment");
   }
 };
 

@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import { ImBubbles } from "react-icons/im";
-import { MdTravelExplore, MdAccountCircle, MdLogout } from "react-icons/md";
+import {
+  MdTravelExplore,
+  MdAccountCircle,
+  MdLogout,
+  MdOutlineArrowDropDownCircle,
+} from "react-icons/md";
 import { SiGoogleclassroom } from "react-icons/si";
 import { BsFillChatDotsFill, BsSearch } from "react-icons/bs";
 import { GrUserSettings } from "react-icons/gr";
@@ -37,7 +42,10 @@ function Navbar() {
             <DropDownItem icon={<BsFillChatDotsFill />} />
           </div>
           <div className="navbarIcon">
-            <DropDownItem icon={<MdAccountCircle />}>
+            <DropDownItem icon={<MdAccountCircle />} />
+          </div>
+          <div className="navbarIcon">
+            <DropDownItem icon={<MdOutlineArrowDropDownCircle />}>
               <DropDownMenu />
             </DropDownItem>
           </div>
@@ -75,8 +83,8 @@ function DropDownMenu() {
   return (
     <div className="dropdown">
       <div className="dropdown-item">
-        <Link to="/profile">
-          <DropDownItem icon={<GrUserSettings />}> Profile</DropDownItem>
+        <Link to="/user-settings">
+          <DropDownItem icon={<GrUserSettings />}> Settings</DropDownItem>
         </Link>
       </div>
 
