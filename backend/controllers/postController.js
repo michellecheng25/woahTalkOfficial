@@ -13,7 +13,7 @@ const getPosts = async (req, res) => {
 
     posts = await Post.find({
       userId: {
-        $in: [req.user.id, ...user.following],
+        $in: [user._id, ...user.following],
       },
     })
       .limit(10)

@@ -44,7 +44,7 @@ const registerUser = async (req, res) => {
       name: user.name,
       email: user.email,
       profilePicture: user.profilePicture,
-      token: generateToken(user._id),
+      //token: generateToken(user._id),
     });
   } catch (error) {
     return res.status(500).json("Could not register user");
@@ -70,9 +70,8 @@ const loginUser = async (req, res) => {
         username: user.username,
         name: user.name,
         email: user.email,
-        /*
+
         token: generateToken(user._id),
-        */
       });
     } else {
       res.status(401).json("Invalid credentials");
@@ -111,7 +110,7 @@ const getAllUsers = async (req, res) => {
 };
 
 //@desc get a user
-//@route GET /api/users/:id
+//@route GET /api/users/:username
 //@access Public
 const getUser = async (req, res) => {
   const username = req.params.username;
@@ -128,7 +127,7 @@ const getUser = async (req, res) => {
 };
 
 //@desc update current user
-//@route PUT /api/users/:id
+//@route PUT /api/users/:username
 //@access PRIVATE
 const updateUser = async (req, res) => {
   //if update password
@@ -165,7 +164,7 @@ const updateUser = async (req, res) => {
 };
 
 //@desc delete current user
-//@route DELETE /api/users/:id
+//@route DELETE /api/users/:username
 //@access PRIVATE
 const deleteUser = async (req, res) => {
   try {
