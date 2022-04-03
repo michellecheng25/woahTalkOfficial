@@ -1,14 +1,16 @@
 import axios from "axios";
 
+/*
 const woahTalk = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "http://localhost:5000/",
 });
+*/
 
 export const login = async (userCredentials, dispatch) => {
   dispatch({ type: "LOGIN_START" });
   let response;
   try {
-    response = await woahTalk.post("/users/login", userCredentials);
+    response = await axios.post("api/users/login", userCredentials);
     dispatch({ type: "LOGIN_SUCCESS", payload: response.data });
     console.log(response);
     localStorage.setItem("user", JSON.stringify(response.data));
@@ -18,4 +20,8 @@ export const login = async (userCredentials, dispatch) => {
     const message = error.response.data;
     throw new Error(message);
   }
+};
+
+export const logout = async (dispatch) => {
+  dispatch({ type: "LOGOUT" });
 };

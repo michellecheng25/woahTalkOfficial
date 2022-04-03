@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ImBubbles } from "react-icons/im";
 import {
   MdTravelExplore,
@@ -9,7 +9,9 @@ import {
 import { SiGoogleclassroom } from "react-icons/si";
 import { BsFillChatDotsFill, BsSearch } from "react-icons/bs";
 import { GrUserSettings } from "react-icons/gr";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import UserContext from "../context/users/UserContext";
+import { logout } from "../context/users/UserActions";
 
 import "./navbar.css";
 
@@ -67,6 +69,8 @@ function DropDownItem(props) {
 }
 
 function DropDownMenu() {
+  const { user, error, isFetching, dispatch } = useContext(UserContext);
+
   function DropDownItem(props) {
     return (
       <div className="menu-item">
@@ -76,9 +80,11 @@ function DropDownMenu() {
     );
   }
 
+  const navigate = useNavigate();
   const onLogout = () => {
-    localStorage.removeItem("user");
-    window.location.href = "/";
+    localStorage.clear();
+    logout(dispatch);
+    navigate("/login");
   };
   return (
     <div className="dropdown">
