@@ -84,7 +84,7 @@ function DropDownMenu() {
   const onLogout = () => {
     localStorage.clear();
     logout(dispatch);
-    navigate("/login");
+    navigate("/");
   };
   return (
     <div className="dropdown">
