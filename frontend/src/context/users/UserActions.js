@@ -12,7 +12,6 @@ export const login = async (userCredentials, dispatch) => {
   try {
     response = await axios.post("api/users/login", userCredentials);
     dispatch({ type: "LOGIN_SUCCESS", payload: response.data });
-    console.log(response);
     localStorage.setItem("user", JSON.stringify(response.data));
     return response.data;
   } catch (error) {

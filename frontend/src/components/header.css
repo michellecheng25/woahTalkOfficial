@@ -24,6 +24,9 @@ ul {
   font-size: 1.2rem;
   line-height: 2;
   display: flex;
+  align-items: center;
+  color: white;
+  cursor: default;
 }
 
 .header .logo {

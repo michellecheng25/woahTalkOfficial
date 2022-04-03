@@ -101,7 +101,7 @@ const getCurrentUserInfo = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({}).select(
-      "-password -_id -isAdmin -createdAt -updatedAt -email"
+      "-password -isAdmin -createdAt -updatedAt -email"
     );
     res.status(200).json(users);
   } catch (error) {

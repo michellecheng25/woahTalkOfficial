@@ -3,6 +3,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import Search from "./pages/Search";
+import NotFound from "./pages/NotFound";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "./context/users/UserContext";
@@ -36,6 +38,11 @@ function App() {
               />
 
               <Route path="/register" element={<Register />} />
+
+              <Route path="/search/:searchText" element={<Search />} />
+              <Route path="/search" element={<Search />} />
+
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
         </Router>

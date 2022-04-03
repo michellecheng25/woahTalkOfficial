@@ -9,14 +9,12 @@ import "./header.css";
 import { ImBubbles } from "react-icons/im";
 import { Link } from "react-router-dom";
 
-function Header() {
+function Header({ onSearch }) {
   return (
     <header className="header" style={{ background: "#152E34" }}>
       <div className="logo">
-        <Link to="/">
-          <ImBubbles />
-          WoahTalk
-        </Link>
+        <ImBubbles />
+        WoahTalk
       </div>
       <ul>
         <li>

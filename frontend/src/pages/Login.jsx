@@ -1,5 +1,5 @@
 import { FaSignInAlt } from "react-icons/fa";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../context/users/UserContext";
@@ -16,6 +16,10 @@ function Login() {
   const { user, error, isFetching, dispatch } = useContext(UserContext);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) navigate("/");
+  }, [user]);
 
   const onChange = (e) => {
     setFormData((prevState) => {

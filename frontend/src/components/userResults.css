@@ -1,0 +1,17 @@
+.userResultsList {
+  margin-top: 20px;
+}
+
+.noUsersFound {
+  text-align: center;
+  margin: 50px;
+}
+
+.noUsersFound svg {
+  margin: auto;
+  display: block;
+}
+
+.noUsersFound p {
+  margin-top: 10px;
+}
