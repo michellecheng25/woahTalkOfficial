@@ -56,35 +56,39 @@ function Navbar({ searchText }) {
             <button type="submit">Search</button>
           </form>
         </div>
-        {user ? (
-          <div className="navbarRight" styles={{ paddingRight: "50px" }}>
+        <div className="navbarRight" styles={{ paddingRight: "50px" }}>
+          {user && (
             <div className="navbarIcon">
-              <DropDownItem icon={<SiGoogleclassroom />} />
+              <Link to="/courses">
+                <DropDownItem icon={<SiGoogleclassroom />} />
+              </Link>
             </div>
-            <div className="navbarIcon">
+          )}
+          <div className="navbarIcon">
+            <Link to="/explore-users">
               <DropDownItem icon={<MdTravelExplore />} />
-            </div>
+            </Link>
+          </div>
+          {user && (
             <div className="navbarIcon">
-              <DropDownItem icon={<BsFillChatDotsFill />} />
+              <Link to="/chat">
+                <DropDownItem icon={<BsFillChatDotsFill />} />
+              </Link>
             </div>
-            <div className="navbarIcon">
+          )}
+          <div className="navbarIcon">
+            <Link to={user ? "/profile" : "/login"}>
               <DropDownItem icon={<MdAccountCircle />} />
-            </div>
+            </Link>
+          </div>
+          {user && (
             <div className="navbarIcon">
               <DropDownItem icon={<MdOutlineArrowDropDownCircle />}>
                 <DropDownMenu />
               </DropDownItem>
             </div>
-          </div>
-        ) : (
-          <div className="navbarRight PorfileLogInIcon">
-            <div className="navbarIcon">
-              <Link to="/login">
-                <DropDownItem icon={<MdAccountCircle />} />
-              </Link>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </section>
   );

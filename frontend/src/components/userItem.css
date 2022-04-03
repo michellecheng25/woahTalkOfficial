@@ -1,0 +1,76 @@
+.profile-result-list-item {
+  padding: 30px;
+  display: flex;
+  background-color: white;
+  border-radius: 0.8rem;
+  border: 0.1px solid #ccc;
+  margin: 20px;
+  color: black;
+}
+
+.profile-result-list-item a {
+  color: black;
+}
+
+.profile-result-list-item img {
+  width: 60px;
+  height: 60px;
+  border-radius: 49.9%;
+  margin-right: 10px;
+  flex: 2;
+}
+.profile-result-list-item .profile_info {
+  flex: 7;
+}
+.profile-result-list-item .profile_info * {
+  padding: 2px;
+}
+
+.profile_language_info div {
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.profile_title {
+  display: flex;
+  align-items: center;
+}
+
+.connect_btn {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+.connect_btn div {
+  border: 2px solid black;
+  padding: 5px;
+  height: 30px;
+  border-radius: 5px;
+  box-shadow: 2px 2px #b9b9b9;
+}
+.profile_title h1,
+.profile_title h4,
+.connect_btn div {
+  margin-right: 10px;
+}
+
+.profile-result-list-item .connect_btn {
+  flex: 3;
+}
+
+.profile-result-list-item .level {
+  border-radius: 20px;
+  height: 20px;
+  margin-left: 5px;
+  width: 100px;
+  border: 1px solid #ccc;
+  vertical-align: bottom;
+}
+
+.profile-result-list-item .level-fill {
+  background-color: #26af44;
+  border-radius: 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}

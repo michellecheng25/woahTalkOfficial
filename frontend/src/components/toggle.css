@@ -1,0 +1,26 @@
+.explore-toggle-btns {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+.explore-toggle-btns a {
+  color: black;
+}
+.users-toggle,
+.courses-toggle {
+  display: inline-block;
+  padding: 10px;
+  font-size: 1.3rem;
+  background-color: white;
+  width: 100px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.users-toggle {
+  border-radius: 10px 0px 0px 10px;
+}
+
+.courses-toggle {
+  border-radius: 0px 10px 10px 0px;
+}

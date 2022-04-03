@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {
+  getCourses,
   createCourse,
   getCourse,
   editCourse,
@@ -14,7 +15,7 @@ const { authenticateToken } = require("../middleware/authMiddleware");
 const assignmentRouter = require("./assignmentRoute");
 router.use("/:courseId/assignments", assignmentRouter);
 
-router.route("/").post(authenticateToken, createCourse);
+router.route("/").get(getCourses).post(authenticateToken, createCourse);
 
 router
   .route("/:courseId")

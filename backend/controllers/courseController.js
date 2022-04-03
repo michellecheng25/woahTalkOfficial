@@ -30,6 +30,18 @@ const createCourse = async (req, res) => {
 };
 
 //@desc Get a courses
+//@route GET /api/courses/
+//@acess Public
+const getCourses = async (req, res) => {
+  try {
+    const courses = await Course.find({});
+    return res.status(200).json(courses);
+  } catch (error) {
+    return res.status(500).json("could not find courses");
+  }
+};
+
+//@desc Get a courses
 //@route GET /api/courses/:courseId
 //@acess Public
 const getCourse = async (req, res) => {
@@ -115,6 +127,7 @@ const joinCourse = async (req, res) => {
 };
 
 module.exports = {
+  getCourses,
   createCourse,
   getCourse,
   editCourse,

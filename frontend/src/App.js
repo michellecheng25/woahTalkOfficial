@@ -4,6 +4,8 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Search from "./pages/Search";
+import ExploreUsers from "./pages/ExploreUsers";
+import ExploreCourses from "./pages/ExploreCourses";
 import NotFound from "./pages/NotFound";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -41,6 +43,9 @@ function App() {
 
               <Route path="/search/:searchText" element={<Search />} />
               <Route path="/search" element={<Search />} />
+
+              <Route path="/explore-users" element={<ExploreUsers />} />
+              <Route path="/explore-courses" element={<ExploreCourses />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>

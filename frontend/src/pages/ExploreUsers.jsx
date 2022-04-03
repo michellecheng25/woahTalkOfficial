@@ -1,28 +1,27 @@
 import Navbar from "../components/Navbar";
 import UserResults from "../components/UserResults";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
+import Toggle from "../components/Toggle";
 
-function Search() {
-  let { searchText } = useParams();
-
+function ExploreUsers() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     fetchUsers();
-  }, [searchText]);
+  }, []);
 
   const fetchUsers = async () => {
-    const response = await axios.get("/api/search/" + searchText);
+    const response = await axios.get("/api/users/");
     setUsers(response.data);
   };
   return (
     <div>
-      <Navbar searchText={searchText} />
-      <UserResults searchText={searchText} users={users} />
+      <Navbar />
+      <Toggle active={"users"} />
+      <UserResults users={users} />
     </div>
   );
 }
 
-export default Search;
+export default ExploreUsers;

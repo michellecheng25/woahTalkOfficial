@@ -4,3 +4,11 @@
   box-sizing: border-box;
   font-family: "Times";
 }
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background-color: #e9e5df;
+}
