@@ -3,6 +3,7 @@ import UserResults from "../components/UserResults";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Toggle from "../components/Toggle";
+import CourseResults from "../components/CourseResults";
 
 function ExploreCourses() {
   const [courses, setCourses] = useState([]);
@@ -20,6 +21,7 @@ function ExploreCourses() {
     <>
       <Navbar />
       <Toggle active={"courses"} />
+      <CourseResults courses={courses} />
     </>
   );
 }

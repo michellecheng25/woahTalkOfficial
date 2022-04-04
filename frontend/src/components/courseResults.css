@@ -1,0 +1,22 @@
+.CourseResultsList {
+  margin-top: 20px;
+  max-width: 1000px;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.noCoursesFound {
+  text-align: center;
+  margin: 50px;
+}
+
+.noUsenoCoursesFoundrsFound svg {
+  margin: auto;
+  display: block;
+}
+
+.noCoursesFound p {
+  margin-top: 10px;
+}
