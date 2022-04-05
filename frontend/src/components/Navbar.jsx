@@ -21,7 +21,6 @@ function Navbar({ searchText }) {
   const [searchInput, setSearchInput] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.pathname);
 
   useEffect(() => {
     if (searchText !== undefined) setSearchInput(searchText);

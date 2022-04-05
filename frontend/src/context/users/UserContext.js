@@ -11,7 +11,6 @@ export const UserContext = createContext(INTIAL_STATE);
 
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(UserReducer, INTIAL_STATE);
-  console.log(state);
 
   return (
     <UserContext.Provider

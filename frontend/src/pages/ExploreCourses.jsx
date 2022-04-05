@@ -13,7 +13,7 @@ function ExploreCourses() {
   }, []);
 
   const fetchCourses = async () => {
-    const response = await axios.get("/api/courses/");
+    const response = await axios.get("http://localhost:5000/api/courses/");
     setCourses(response.data);
   };
 

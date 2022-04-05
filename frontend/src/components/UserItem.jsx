@@ -1,11 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./userItem.css";
-import { BsFillChatFill } from "react-icons/bs";
-import UserContext from "../context/users/UserContext";
-import { useContext } from "react";
+//import UserContext from "../context/users/UserContext";
+//import { useContext } from "react";
+import ConnectBtns from "./ConnectBtns";
 
 function UserItem({ foundUser }) {
-  const { user } = useContext(UserContext);
+  //const { user } = useContext(UserContext);
 
   const userLink = "/profile/" + foundUser.username;
   const nativeLevel = "100%";
@@ -49,14 +49,7 @@ function UserItem({ foundUser }) {
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </div>
         </Link>
-        {user && (
-          <div className="connect_btn">
-            <div>
-              <BsFillChatFill size={15} />
-            </div>
-            <div> Follow </div>
-          </div>
-        )}
+        <ConnectBtns foundUser={foundUser.username} />
       </div>
     </>
   );

@@ -36,22 +36,8 @@
   align-items: center;
 }
 
-.connect_btn {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
-}
-.connect_btn div {
-  border: 2px solid black;
-  padding: 5px;
-  height: 30px;
-  border-radius: 5px;
-  box-shadow: 2px 2px 2px #dbdbd2;
-  cursor: pointer;
-}
 .profile_title h1,
-.profile_title h4,
-.connect_btn div {
+.profile_title h4 {
   margin-right: 10px;
 }
 

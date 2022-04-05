@@ -42,7 +42,7 @@ function Register() {
       toast.error("Passwords do not match!");
     } else {
       try {
-        await axios.post("/api/users", {
+        await axios.post("http://localhost:5000/api/users", {
           username,
           name,
           email,

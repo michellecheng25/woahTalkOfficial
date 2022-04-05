@@ -112,13 +112,14 @@
 .dropdown {
   position: absolute;
   width: 300px;
-  top: 65px;
-  transform: translateX(-45%);
+  top: 63px;
+  transform: translateX(-60%);
   border-radius: 10px;
   padding: 1rem;
   overflow: hidden;
   border: 0.7px solid #ccc;
   font-size: 1.3rem;
+  background-color: white;
 }
 
 .menu-item {

@@ -1,7 +1,6 @@
 import "./toggle.css";
 import { Link } from "react-router-dom";
 function Toggle({ active, firstLink, secondLink }) {
-  console.log(firstLink, secondLink);
   return (
     <div className="explore-toggle-btns">
       <Link

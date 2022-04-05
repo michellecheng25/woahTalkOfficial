@@ -1,5 +1,4 @@
 .profile-top {
-  position: relative;
   height: 300px;
   margin-bottom: 20px;
 }
@@ -17,7 +16,7 @@
   position: absolute;
   left: 175px;
   margin: auto;
-  top: 50px;
+  top: 100px;
   border: 10px solid white;
 }
 
@@ -37,6 +36,7 @@
 
 .profile-left-top {
   display: flex;
+  max-width: 300px;
 }
 
 .profile-left-top .user-name {
@@ -52,8 +52,13 @@
 .user-bio,
 .profile .language {
   margin-bottom: 10px;
+  word-wrap: break-word;
 }
 
 .profile_language_info .level {
   padding: 1px;
+}
+
+.user-name,
+.language {
 }

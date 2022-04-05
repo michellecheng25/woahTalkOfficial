@@ -3,7 +3,6 @@ import "./courseResults.css";
 import CourseItem from "./CourseItem";
 
 function CourseResults({ courses }) {
-  console.log(courses);
   return (
     <div className="CourseResultsList">
       {courses.length === 0 ? (
