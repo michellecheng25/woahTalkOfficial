@@ -3,8 +3,9 @@ import UserResults from "../components/UserResults";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Toggle from "../components/Toggle";
 
-function Search() {
+function SearchUsers() {
   let { searchText } = useParams();
 
   const [users, setUsers] = useState([]);
@@ -14,15 +15,21 @@ function Search() {
   }, [searchText]);
 
   const fetchUsers = async () => {
-    const response = await axios.get("/api/search/" + searchText);
+    const response = await axios.get("/api/search/users/" + searchText);
     setUsers(response.data);
   };
+
   return (
     <div>
       <Navbar searchText={searchText} />
+      <Toggle
+        active={"users"}
+        firstLink={"/search/users/" + searchText}
+        secondLink={"/search/courses/" + searchText}
+      />
       <UserResults searchText={searchText} users={users} />
     </div>
   );
 }
 
-export default Search;
+export default SearchUsers;

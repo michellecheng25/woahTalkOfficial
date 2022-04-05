@@ -15,10 +15,15 @@ function ExploreUsers() {
     const response = await axios.get("/api/users/");
     setUsers(response.data);
   };
+
   return (
     <div>
       <Navbar />
-      <Toggle active={"users"} />
+      <Toggle
+        active={"users"}
+        firstLink={"/explore-users"}
+        secondLink={"/explore-courses"}
+      />
       <UserResults users={users} />
     </div>
   );

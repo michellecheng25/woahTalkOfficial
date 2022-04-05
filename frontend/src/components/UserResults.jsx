@@ -1,6 +1,4 @@
-//import { useEffect, useState } from "react";
 import UserItem from "./UserItem";
-//import axios from "axios";
 import "./userResults.css";
 import { ReactComponent as NoUsers } from "../assets/svg/undraw_people_search_re_5rre.svg";
 
@@ -13,7 +11,7 @@ function UserResults({ users }) {
           <p>No Users found</p>
         </div>
       ) : (
-        users.map((user) => {
+        users.map((user, index) => {
           return <UserItem key={user._id} foundUser={user} />;
         })
       )}

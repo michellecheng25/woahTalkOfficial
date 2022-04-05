@@ -20,7 +20,11 @@ function ExploreCourses() {
   return (
     <>
       <Navbar />
-      <Toggle active={"courses"} />
+      <Toggle
+        active={"courses"}
+        firstLink={"/explore-users"}
+        secondLink={"/explore-courses"}
+      />
       <CourseResults courses={courses} />
     </>
   );

@@ -46,7 +46,8 @@
   padding: 5px;
   height: 30px;
   border-radius: 5px;
-  box-shadow: 2px 2px #b9b9b9;
+  box-shadow: 2px 2px 2px #dbdbd2;
+  cursor: pointer;
 }
 .profile_title h1,
 .profile_title h4,
@@ -58,7 +59,7 @@
   flex: 3;
 }
 
-.profile-result-list-item .level {
+.level {
   border-radius: 20px;
   height: 20px;
   margin-left: 5px;
@@ -67,7 +68,7 @@
   vertical-align: bottom;
 }
 
-.profile-result-list-item .level-fill {
+.level-fill {
   background-color: #26af44;
   border-radius: 20px;
   height: 100%;

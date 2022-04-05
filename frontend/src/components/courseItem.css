@@ -11,12 +11,13 @@
   height: 200px;
 }
 
-.courseBox .courseName {
+.courseBox .courseName,
+.courseBox .courseDescription {
   padding: 10px 5px 10px 5px;
 }
 
-.courseBox .courseDescription {
-  padding: 10px 5px 10px 5px;
+.courseBox a {
+  color: black;
 }
 
 .courseBox .join-btn {

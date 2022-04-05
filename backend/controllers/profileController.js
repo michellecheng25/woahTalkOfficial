@@ -2,7 +2,7 @@ const Post = require("../models/postModel");
 const User = require("../models/userModel");
 
 //@desc Get profile of a  user
-//@route POST /api/profile/:username
+//@route POST /api/profiles/:username
 //@access Public
 const getUserInfo = async (req, res) => {
   const username = req.params.username;
@@ -19,7 +19,7 @@ const getUserInfo = async (req, res) => {
 };
 
 //@desc Get all posts of a user
-//@route POST /api/profile/:username/posts
+//@route POST /api/profiles/:username/posts
 //@access Public
 const getUserPosts = async (req, res) => {
   const username = req.params.username;

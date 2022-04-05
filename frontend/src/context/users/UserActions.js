@@ -1,11 +1,5 @@
 import axios from "axios";
 
-/*
-const woahTalk = axios.create({
-  baseURL: "http://localhost:5000/",
-});
-*/
-
 export const login = async (userCredentials, dispatch) => {
   dispatch({ type: "LOGIN_START" });
   let response;

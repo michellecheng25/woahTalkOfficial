@@ -1,10 +1,11 @@
 import "./toggle.css";
 import { Link } from "react-router-dom";
-function Toggle({ active }) {
+function Toggle({ active, firstLink, secondLink }) {
+  console.log(firstLink, secondLink);
   return (
     <div className="explore-toggle-btns">
       <Link
-        to="/explore-users"
+        to={firstLink}
         className="users-toggle"
         style={{
           backgroundColor: active === "users" && "#283436",
@@ -15,7 +16,7 @@ function Toggle({ active }) {
       </Link>
 
       <Link
-        to="/explore-courses"
+        to={secondLink}
         className="courses-toggle"
         style={{
           backgroundColor: active === "courses" && "#283436",

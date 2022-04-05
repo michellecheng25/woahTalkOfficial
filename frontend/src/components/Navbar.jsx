@@ -1,10 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ImBubbles } from "react-icons/im";
 import {
   MdTravelExplore,
   MdAccountCircle,
   MdLogout,
   MdOutlineArrowDropDownCircle,
+  MdHome,
 } from "react-icons/md";
 import { SiGoogleclassroom } from "react-icons/si";
 import { BsFillChatDotsFill, BsSearch } from "react-icons/bs";
@@ -19,6 +20,8 @@ function Navbar({ searchText }) {
   const { user, error, isFetching, dispatch } = useContext(UserContext);
   const [searchInput, setSearchInput] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location.pathname);
 
   useEffect(() => {
     if (searchText !== undefined) setSearchInput(searchText);
@@ -30,7 +33,12 @@ function Navbar({ searchText }) {
 
   const onSearch = (e) => {
     e.preventDefault();
-    navigate("/search/" + searchInput);
+
+    if (location.pathname.includes("/search/courses/"))
+      navigate("/search/courses/" + searchInput);
+    else {
+      navigate("/search/users/" + searchInput);
+    }
   };
 
   return (
@@ -59,6 +67,13 @@ function Navbar({ searchText }) {
         <div className="navbarRight" styles={{ paddingRight: "50px" }}>
           {user && (
             <div className="navbarIcon">
+              <Link to="/">
+                <DropDownItem icon={<MdHome />} />
+              </Link>
+            </div>
+          )}
+          {user && (
+            <div className="navbarIcon">
               <Link to="/courses">
                 <DropDownItem icon={<SiGoogleclassroom />} />
               </Link>
@@ -77,7 +92,7 @@ function Navbar({ searchText }) {
             </div>
           )}
           <div className="navbarIcon">
-            <Link to={user ? "/profile" : "/login"}>
+            <Link to={user ? "/profile/" + user.username : "/login"}>
               <DropDownItem icon={<MdAccountCircle />} />
             </Link>
           </div>
