@@ -63,48 +63,50 @@ function Navbar({ searchText }) {
             <button type="submit">Search</button>
           </form>
         </div>
-        {!isFetching && (
-          <div className="navbarRight" styles={{ paddingRight: "50px" }}>
-            {user && (
+        <div className="navbarRight" styles={{ paddingRight: "50px" }}>
+          {!isFetching && (
+            <>
+              {user && (
+                <div className="navbarIcon">
+                  <Link to="/">
+                    <DropDownItem icon={<MdHome />} />
+                  </Link>
+                </div>
+              )}
+              {user && (
+                <div className="navbarIcon">
+                  <Link to="/courses">
+                    <DropDownItem icon={<SiGoogleclassroom />} />
+                  </Link>
+                </div>
+              )}
               <div className="navbarIcon">
-                <Link to="/">
-                  <DropDownItem icon={<MdHome />} />
+                <Link to="/explore-users">
+                  <DropDownItem icon={<MdTravelExplore />} />
                 </Link>
               </div>
-            )}
-            {user && (
+              {user && (
+                <div className="navbarIcon">
+                  <Link to="/chat">
+                    <DropDownItem icon={<BsFillChatDotsFill />} />
+                  </Link>
+                </div>
+              )}
               <div className="navbarIcon">
-                <Link to="/courses">
-                  <DropDownItem icon={<SiGoogleclassroom />} />
+                <Link to={user ? "/profile/" + user.username : "/login"}>
+                  <DropDownItem icon={<MdAccountCircle />} />
                 </Link>
               </div>
-            )}
-            <div className="navbarIcon">
-              <Link to="/explore-users">
-                <DropDownItem icon={<MdTravelExplore />} />
-              </Link>
-            </div>
-            {user && (
-              <div className="navbarIcon">
-                <Link to="/chat">
-                  <DropDownItem icon={<BsFillChatDotsFill />} />
-                </Link>
-              </div>
-            )}
-            <div className="navbarIcon">
-              <Link to={user ? "/profile/" + user.username : "/login"}>
-                <DropDownItem icon={<MdAccountCircle />} />
-              </Link>
-            </div>
-            {user && (
-              <div className="navbarIcon">
-                <DropDownItem icon={<MdOutlineArrowDropDownCircle />}>
-                  <DropDownMenu />
-                </DropDownItem>
-              </div>
-            )}
-          </div>
-        )}
+              {user && (
+                <div className="navbarIcon">
+                  <DropDownItem icon={<MdOutlineArrowDropDownCircle />}>
+                    <DropDownMenu />
+                  </DropDownItem>
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </section>
   );

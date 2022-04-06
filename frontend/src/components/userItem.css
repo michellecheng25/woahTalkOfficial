@@ -26,11 +26,6 @@
   padding: 2px;
 }
 
-.profile_language_info div {
-  margin-right: 10px;
-  display: inline-block;
-}
-
 .profile_title {
   display: flex;
   align-items: center;
@@ -43,21 +38,4 @@
 
 .profile-result-list-item .connect_btn {
   flex: 3;
-}
-
-.level {
-  border-radius: 20px;
-  height: 20px;
-  margin-left: 5px;
-  width: 100px;
-  border: 1px solid #ccc;
-  vertical-align: bottom;
-}
-
-.level-fill {
-  background-color: #26af44;
-  border-radius: 20px;
-  height: 100%;
-  display: flex;
-  align-items: center;
 }

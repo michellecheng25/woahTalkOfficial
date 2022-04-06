@@ -37,7 +37,7 @@
 }
 
 .navbarCenter {
-  flex: 8;
+  flex: 5;
 }
 
 .navbar .searchbar {
@@ -77,7 +77,7 @@
 }
 
 .navbarRight {
-  flex: 2;
+  flex: 4;
   display: flex;
   align-items: center;
 }

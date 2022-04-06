@@ -1,0 +1,25 @@
+.profile_language_info div {
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.level {
+  border-radius: 20px;
+  height: 20px;
+  margin-left: 5px;
+  width: 100px;
+  border: 1px solid #ccc;
+  vertical-align: bottom;
+}
+
+.level-fill {
+  background-color: #26af44;
+  border-radius: 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.profile_language_info .level {
+  padding: 1px;
+}

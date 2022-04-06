@@ -16,7 +16,10 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) getCurrentUser(JSON.parse(token));
+    else dispatch({ type: "LOGOUT" });
   }, []);
+
+  console.log(state);
 
   const getCurrentUser = async (token) => {
     //dispatch({ type: "LOGIN_START" });

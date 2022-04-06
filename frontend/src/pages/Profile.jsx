@@ -5,12 +5,13 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import CourseBtns from "../components/ConnectBtns";
 import UserContext from "../context/users/UserContext";
+import LanguageProgress from "../components/LanguageProgress";
 
 function Profile() {
   let { username } = useParams();
 
   const [foundUser, setUser] = useState([]);
-  const { user, isFetching } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     fetchUsers();
@@ -36,7 +37,10 @@ function Profile() {
             <div className="profile-left-top">
               <h1 className="user-name"> {foundUser.name}</h1>
               {user && user.username !== foundUser.username && (
-                <CourseBtns foundUser={foundUser.username} />
+                <CourseBtns
+                  foundUser={foundUser}
+                  followingList={user.following}
+                />
               )}
             </div>
             <div className="user-foreignName">foreignName</div>
@@ -46,20 +50,7 @@ function Profile() {
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat.
             </div>
-            <div className="profile_language_info">
-              <div className="language">
-                Native
-                <div className="level">
-                  <div className="level-fill" style={{ width: "100%" }}></div>
-                </div>
-              </div>
-              <div className="language">
-                Foreign
-                <div className="level">
-                  <div className="level-fill" style={{ width: "100%" }}></div>
-                </div>
-              </div>
-            </div>
+            <LanguageProgress />
           </div>
           <div className="profile-right">feed</div>
         </div>
