@@ -2,11 +2,10 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useContext } from "react";
 import UserContext from "../context/users/UserContext";
 
-const PrivateRoute = ({ redirectPath = "/login", children }) => {
-  const { user } = useContext(UserContext);
+const PrivateRoute = ({ children }) => {
+  const { user, isFetching } = useContext(UserContext);
+  if (isFetching && localStorage.getItem("token")) return <div></div>;
 
-  if (!user) return <Navigate to={redirectPath} replace />;
-
-  return children ? children : <Outlet />;
+  return user ? <Outlet /> : <Navigate to="/login" />;
 };
 export default PrivateRoute;

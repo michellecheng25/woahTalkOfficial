@@ -21,25 +21,15 @@ function App() {
         <Router>
           <div className="container">
             <Routes>
-              <Route
-                path="/"
-                element={
-                  <PrivateRoute redirectPath="/login">
-                    <Home />
-                  </PrivateRoute>
-                }
-              />
+              <Route path="/" element={<PrivateRoute />}>
+                <Route path="/" element={<Home />} />
+              </Route>
 
               <Route path="/login" element={<Login />} />
 
-              <Route
-                path="/user-settings"
-                element={
-                  <PrivateRoute redirectPath="/login">
-                    <UserSettings />
-                  </PrivateRoute>
-                }
-              />
+              <Route path="/user-settings" element={<PrivateRoute />}>
+                <Route path="/user-settings" element={<UserSettings />} />
+              </Route>
 
               <Route path="/register" element={<Register />} />
 

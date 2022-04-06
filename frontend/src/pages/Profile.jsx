@@ -10,7 +10,7 @@ function Profile() {
   let { username } = useParams();
 
   const [foundUser, setUser] = useState([]);
-  const { user } = useContext(UserContext);
+  const { user, isFetching } = useContext(UserContext);
 
   useEffect(() => {
     fetchUsers();
@@ -35,7 +35,7 @@ function Profile() {
           <div className="profile-left">
             <div className="profile-left-top">
               <h1 className="user-name"> {foundUser.name}</h1>
-              {user.username !== foundUser.username && (
+              {user && user.username !== foundUser.username && (
                 <CourseBtns foundUser={foundUser.username} />
               )}
             </div>

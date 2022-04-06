@@ -53,15 +53,13 @@ function Register() {
         return;
       }
 
-      try {
-        const userCredentials = await login({ username, password }, dispatch);
-
-        if (userCredentials) {
-          navigate("/user-settings");
-        }
-      } catch (error) {
-        toast.error(error.message);
-      }
+      await login({ username, password }, dispatch)
+        .then(() => {
+          navigate("/");
+        })
+        .catch((error) => {
+          toast.error(error.message);
+        });
     }
   };
 

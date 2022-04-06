@@ -1,5 +1,12 @@
+import Navbar from "../components/Navbar";
 function UserSettings() {
-  return <div>UserSettings</div>;
+  <Navbar />;
+  return (
+    <>
+      <Navbar />
+      UserSettings
+    </>
+  );
 }
 
 export default UserSettings;

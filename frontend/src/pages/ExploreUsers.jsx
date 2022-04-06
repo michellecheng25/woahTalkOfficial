@@ -24,7 +24,7 @@ function ExploreUsers() {
         firstLink={"/explore-users"}
         secondLink={"/explore-courses"}
       />
-      <UserResults users={users} />
+      <UserResults foundUsers={users} />
     </div>
   );
 }

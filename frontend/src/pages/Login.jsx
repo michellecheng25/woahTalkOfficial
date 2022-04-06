@@ -33,11 +33,9 @@ function Login() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const userCredentials = await login({ username, password }, dispatch);
+      await login({ username, password }, dispatch);
 
-      if (userCredentials) {
-        navigate("/");
-      }
+      navigate("/");
     } catch (error) {
       toast.error(error.message);
     }

@@ -5,16 +5,9 @@ import CourseItem from "./CourseItem";
 function CourseResults({ courses }) {
   return (
     <div className="CourseResultsList">
-      {courses.length === 0 ? (
-        <div className="noCoursesFound">
-          <NoCourses />
-          <p>No courses found</p>
-        </div>
-      ) : (
-        courses.map((course) => {
-          return <CourseItem key={course._id} course={course} />;
-        })
-      )}
+      {courses.map((course) => {
+        return <CourseItem key={course._id} course={course} />;
+      })}
     </div>
   );
 }

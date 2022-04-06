@@ -29,7 +29,7 @@ function SearchUsers() {
         firstLink={"/search/users/" + searchText}
         secondLink={"/search/courses/" + searchText}
       />
-      <UserResults searchText={searchText} users={users} />
+      <UserResults searchText={searchText} foundUsers={users} />
     </div>
   );
 }

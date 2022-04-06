@@ -1,26 +1,18 @@
 import UserItem from "./UserItem";
 import "./userResults.css";
-import { ReactComponent as NoUsers } from "../assets/svg/undraw_people_search_re_5rre.svg";
 
-function UserResults({ users }) {
+function UserResults({ foundUsers }) {
   return (
     <div className="userResultsList">
-      {users.length === 0 ? (
-        <div className="noUsersFound">
-          <NoUsers />
-          <p>No Users found</p>
-        </div>
-      ) : (
-        users.map((user, index) => {
-          return <UserItem key={user._id} foundUser={user} />;
-        })
-      )}
+      {foundUsers.map((foundUser, index) => {
+        return <UserItem key={foundUser._id} foundUser={foundUser} />;
+      })}
     </div>
   );
 }
 
 UserResults.defaultProps = {
-  users: [],
+  foundUsers: [],
 };
 
 export default UserResults;
