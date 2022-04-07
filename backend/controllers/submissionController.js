@@ -1,6 +1,7 @@
 const Course = require("../models/courseModel");
 const User = require("../models/userModel");
 const Assignment = require("../models/assignmentModel");
+//fixed case sensitivity issue
 const Submission = require("../models/submissionModel");
 const { v4: uuidv4 } = require("uuid");
 
