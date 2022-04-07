@@ -19,15 +19,20 @@ export const UserProvider = ({ children }) => {
     else dispatch({ type: "LOGOUT" });
   }, []);
 
-  console.log(state);
-
   const getCurrentUser = async (token) => {
     //dispatch({ type: "LOGIN_START" });
-    const userInfo = await axios.get("http://localhost:5000/api/users/me", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    dispatch({ type: "LOGIN_SUCCESS", payload: userInfo.data });
+    try {
+      const userInfo = await axios.get("http://localhost:5000/api/users/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      dispatch({ type: "LOGIN_SUCCESS", payload: userInfo.data });
+    } catch (error) {
+      dispatch({ type: "LOGIN_FAILURE", payload: error.response.data });
+      const message = error.response.data;
+      throw new Error(message);
+    }
   };
+  console.log(state);
 
   return (
     <UserContext.Provider

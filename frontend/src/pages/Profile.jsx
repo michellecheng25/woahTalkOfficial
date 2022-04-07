@@ -11,7 +11,7 @@ function Profile() {
   let { username } = useParams();
 
   const [foundUser, setUser] = useState([]);
-  const { user } = useContext(UserContext);
+  const { user, isFetching } = useContext(UserContext);
 
   useEffect(() => {
     fetchUsers();
