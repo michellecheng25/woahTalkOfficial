@@ -18,9 +18,7 @@ function Profile() {
   }, [username]);
 
   const fetchUsers = async () => {
-    const response = await axios.get(
-      "http://localhost:5000/api/profiles/" + username
-    );
+    const response = await axios.get("/api/profiles/" + username);
     setUser(response.data);
   };
 

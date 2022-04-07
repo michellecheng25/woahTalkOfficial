@@ -22,7 +22,7 @@ export const UserProvider = ({ children }) => {
   const getCurrentUser = async (token) => {
     //dispatch({ type: "LOGIN_START" });
     try {
-      const userInfo = await axios.get("http://localhost:5000/api/users/me", {
+      const userInfo = await axios.get("/api/users/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
       dispatch({ type: "LOGIN_SUCCESS", payload: userInfo.data });

@@ -15,9 +15,7 @@ function SearchUsers() {
   }, [searchText]);
 
   const fetchUsers = async () => {
-    const response = await axios.get(
-      "http://localhost:5000/api/search/users/" + searchText
-    );
+    const response = await axios.get("/api/search/users/" + searchText);
     setUsers(response.data);
   };
 

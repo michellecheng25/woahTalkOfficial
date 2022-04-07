@@ -15,9 +15,7 @@ function SearchCourses() {
   }, [searchText]);
 
   const fetchCourses = async () => {
-    const response = await axios.get(
-      "http://localhost:5000/api/search/courses/" + searchText
-    );
+    const response = await axios.get("/api/search/courses/" + searchText);
     setCourses(response.data);
   };
 
