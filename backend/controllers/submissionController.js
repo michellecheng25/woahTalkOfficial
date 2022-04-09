@@ -11,24 +11,24 @@ const { v4: uuidv4 } = require("uuid");
 const getSubmissions = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    if (!user) return res.status(401).json("user not found");
+    if (!user) return res.status(404).json("user not found");
 
     const course = await Course.findById(req.params.courseId);
-    if (!course) return res.status(401).json("course not found");
+    if (!course) return res.status(404).json("course not found");
 
     const assignment = await Assignment.findById(req.params.assignmentId);
-    if (!assignment) return res.status(401).json("assignment not found");
+    if (!assignment) return res.status(404).json("assignment not found");
 
     //only course creator can view submissions
     if (course.creatorId.equals(user._id)) {
       const submission = await Submission.find({
         assignmentId: assignment._id,
       }).populate("creatorId", { username: 1, name: 1, profilePicture: 1 });
-      if (!submission) return res.status(401).json("submission not found");
+      if (!submission) return res.status(404).json("submission not found");
       return res.status(200).json(submission);
     } else
       return res
-        .status(404)
+        .status(403)
         .json("you cannot view submissions for this assignment");
   } catch (error) {
     return res.status(500).json("cannot view submissions");
@@ -41,13 +41,13 @@ const getSubmissions = async (req, res) => {
 const createSubmission = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    if (!user) return res.status(401).json("user not found");
+    if (!user) return res.status(404).json("user not found");
 
     const course = await Course.findById(req.params.courseId);
-    if (!course) return res.status(401).json("course not found");
+    if (!course) return res.status(404).json("course not found");
 
     const assignment = await Assignment.findById(req.params.assignmentId);
-    if (!assignment) return res.status(401).json("assignment not found");
+    if (!assignment) return res.status(404).json("assignment not found");
 
     //only course creator or participant can create submission
     if (
@@ -64,7 +64,7 @@ const createSubmission = async (req, res) => {
       res.status(201).json(newSubmission);
     } else
       return res
-        .status(404)
+        .status(403)
         .json("you cannot create an submission for this assignment");
   } catch (error) {
     return res.status(500).json("cannot create a submission");
@@ -77,13 +77,13 @@ const createSubmission = async (req, res) => {
 const getSubmission = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    if (!user) return res.status(401).json("user not found");
+    if (!user) return res.status(404).json("user not found");
 
     const course = await Course.findById(req.params.courseId);
-    if (!course) return res.status(401).json("course not found");
+    if (!course) return res.status(404).json("course not found");
 
     const assignment = await Assignment.findById(req.params.assignmentId);
-    if (!assignment) return res.status(401).json("assignment not found");
+    if (!assignment) return res.status(404).json("assignment not found");
 
     //only course creator and original creator can view submissions
     if (
@@ -93,11 +93,11 @@ const getSubmission = async (req, res) => {
       const submission = await Submission.findById(
         req.params.submissionId
       ).populate("creatorId", { username: 1, name: 1, profilePicture: 1 });
-      if (!submission) return res.status(401).json("submission not found");
+      if (!submission) return res.status(404).json("submission not found");
       return res.status(200).json(submission);
     } else
       return res
-        .status(404)
+        .status(403)
         .json("you cannot view submissions for this assignment");
   } catch (error) {
     return res.status(500).json("cannot view submissions");
@@ -110,16 +110,16 @@ const getSubmission = async (req, res) => {
 const editSubmission = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    if (!user) return res.status(401).json("user not found");
+    if (!user) return res.status(404).json("user not found");
 
     const course = await Course.findById(req.params.courseId);
-    if (!course) return res.status(401).json("course not found");
+    if (!course) return res.status(404).json("course not found");
 
     const assignment = await Assignment.findById(req.params.assignmentId);
-    if (!assignment) return res.status(401).json("assignment not found");
+    if (!assignment) return res.status(404).json("assignment not found");
 
     const submission = await Submission.findById(req.params.submissionId);
-    if (!submission) return res.status(401).json("submission not found");
+    if (!submission) return res.status(404).json("submission not found");
 
     //only course creator and original creator can view submissions
     if (submission.creatorId.equals(user._id)) {
@@ -129,7 +129,7 @@ const editSubmission = async (req, res) => {
         { new: true }
       );
       return res.status(201).json(updatedSubmission);
-    } else return res.status(404).json("you cannot edit this submission");
+    } else return res.status(403).json("you cannot edit this submission");
   } catch (error) {
     return res.status(500).json("cannot view submissions");
   }
@@ -141,22 +141,22 @@ const editSubmission = async (req, res) => {
 const deleteSubmission = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    if (!user) return res.status(401).json("user not found");
+    if (!user) return res.status(404).json("user not found");
 
     const course = await Course.findById(req.params.courseId);
-    if (!course) return res.status(401).json("course not found");
+    if (!course) return res.status(404).json("course not found");
 
     const assignment = await Assignment.findById(req.params.assignmentId);
-    if (!assignment) return res.status(401).json("assignment not found");
+    if (!assignment) return res.status(404).json("assignment not found");
 
     const submission = await Submission.findById(req.params.submissionId);
-    if (!submission) return res.status(401).json("submission not found");
+    if (!submission) return res.status(404).json("submission not found");
 
     //only course creator and original creator can view submissions
     if (submission.creatorId.equals(user._id)) {
       await submission.deleteOne();
       return res.status(201).json("deleted submission");
-    } else return res.status(404).json("you cannot edit this submission");
+    } else return res.status(403).json("you cannot edit this submission");
   } catch (error) {
     return res.status(500).json("cannot view submissions");
   }
@@ -168,16 +168,16 @@ const deleteSubmission = async (req, res) => {
 const gradeSubmission = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    if (!user) return res.status(401).json("user not found");
+    if (!user) return res.status(404).json("user not found");
 
     const course = await Course.findById(req.params.courseId);
-    if (!course) return res.status(401).json("course not found");
+    if (!course) return res.status(404).json("course not found");
 
     const assignment = await Assignment.findById(req.params.assignmentId);
-    if (!assignment) return res.status(401).json("assignment not found");
+    if (!assignment) return res.status(404).json("assignment not found");
 
     const submission = await Submission.findById(req.params.submissionId);
-    if (!submission) return res.status(401).json("submission not found");
+    if (!submission) return res.status(404).json("submission not found");
 
     //only course creator and original creator can view submissions
     if (course.creatorId.equals(user._id)) {
@@ -187,7 +187,7 @@ const gradeSubmission = async (req, res) => {
         { new: true }
       );
       return res.status(201).json(updatedSubmission);
-    } else return res.status(404).json("you cannot edit this submission");
+    } else return res.status(403).json("you cannot edit this submission");
   } catch (error) {
     return res.status(500).json("cannot view submissions");
   }

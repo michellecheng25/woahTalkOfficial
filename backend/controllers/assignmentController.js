@@ -9,10 +9,10 @@ const { v4: uuidv4 } = require("uuid");
 const getAssignments = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    if (!user) return res.status(401).json("user not found");
+    if (!user) return res.status(404).json("user not found");
 
     const course = await Course.findById(req.params.courseId);
-    if (!course) return res.status(401).json("course not found");
+    if (!course) return res.status(404).json("course not found");
 
     //only allow creators and participants to view assignments
     if (
@@ -21,12 +21,12 @@ const getAssignments = async (req, res) => {
     ) {
       //get assignments
       const assignment = await Assignment.find({ courseId: course._id });
-      if (!assignment) return res.status(401).json("assignment not found");
+      if (!assignment) return res.status(404).json("assignment not found");
       return res.status(200).json(assignment);
     } else
-      return res.status(404).json("you cannot view this course's assignments");
+      return res.status(403).json("you cannot view this course's assignments");
   } catch (error) {
-    return res.status(500).json("could not view course assigments");
+    return res.status(500).json("could not view course assignments");
   }
 };
 
@@ -38,10 +38,10 @@ const createAssignment = async (req, res) => {
 
   try {
     const user = await User.findById(req.user.id);
-    if (!user) return res.status(401).json("user not found");
+    if (!user) return res.status(404).json("user not found");
 
     const course = await Course.findById(req.params.courseId);
-    if (!course) return res.status(401).json("course not found");
+    if (!course) return res.status(404).json("course not found");
 
     if (course.creatorId.equals(user._id)) {
       const newAssignment = new Assignment({
@@ -56,7 +56,7 @@ const createAssignment = async (req, res) => {
       res.status(201).json(createdAssigment);
     } else
       return res
-        .status(404)
+        .status(403)
         .json("you cannot create an assignment for this course");
   } catch (error) {
     return res.status(500).json("could not create assignment");
@@ -69,20 +69,22 @@ const createAssignment = async (req, res) => {
 const getAssignment = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    if (!user) return res.status(401).json("user not found");
+    if (!user) return res.status(404).json("user not found");
 
     const course = await Course.findById(req.params.courseId);
-    if (!course) return res.status(401).json("course not found");
+    if (!course) return res.status(404).json("course not found");
 
     if (
       course.creatorId.equals(user._id) ||
       course.participants.includes(user._id)
     ) {
-      const assigment = await Assignment.findById(req.params.assignmentId);
-      return res.status(200).json(assigment);
-    } else res.status(404).json("you cannot view this assignment");
+      const assignment = await Assignment.findById(req.params.assignmentId);
+      if (!assignment) return res.status(404).json("assignment not found");
+
+      return res.status(200).json(assignment);
+    } else res.status(403).json("you cannot view this assignment");
   } catch (error) {
-    return res.status(500).json("could not find assigment");
+    return res.status(500).json("could not find assignment");
   }
 };
 
@@ -92,10 +94,10 @@ const getAssignment = async (req, res) => {
 const editAssignment = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    if (!user) return res.status(401).json("user not found");
+    if (!user) return res.status(404).json("user not found");
 
     const assignment = await Assignment.findById(req.params.assignmentId);
-    if (!assignment) return res.status(401).json("assigment not found");
+    if (!assignment) return res.status(404).json("assignment not found");
 
     if (user._id.equals(assignment.creatorId)) {
       const updatedAssignment = await Assignment.findByIdAndUpdate(
@@ -105,9 +107,9 @@ const editAssignment = async (req, res) => {
       );
       return res.status(201).json(updatedAssignment);
     } else
-      return res.status(403).json("you cannot edit someone else's assigment");
+      return res.status(403).json("you cannot edit someone else's assignment");
   } catch (error) {
-    return res.status(500).json("Could not edit assigment");
+    return res.status(500).json("Could not edit assignment");
   }
 };
 
@@ -117,18 +119,20 @@ const editAssignment = async (req, res) => {
 const deleteAssignment = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    if (!user) return res.status(401).json("user not found");
+    if (!user) return res.status(404).json("user not found");
 
     const assignment = await Assignment.findById(req.params.assignmentId);
-    if (!assignment) return res.status(401).json("assigment not found");
+    if (!assignment) return res.status(404).json("assignment not found");
 
     if (user._id.equals(assignment.creatorId)) {
       await assignment.deleteOne();
-      return res.status(201).json("deleted assigment");
+      return res.status(201).json("deleted assignment");
     } else
-      return res.status(403).json("you cannot delete someone else's assigment");
+      return res
+        .status(403)
+        .json("you cannot delete someone else's assignment");
   } catch (error) {
-    return res.status(500).json("Could not delete assigment");
+    return res.status(500).json("Could not delete assignment");
   }
 };
 

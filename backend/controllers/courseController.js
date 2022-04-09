@@ -47,6 +47,7 @@ const getCourses = async (req, res) => {
 const getCourse = async (req, res) => {
   try {
     const course = await Course.findById(req.params.courseId);
+    if (!course) return res.status(404).json("can not find course");
     return res.status(200).json(course);
   } catch (error) {
     return res.status(500).json("could not find course");
@@ -59,7 +60,9 @@ const getCourse = async (req, res) => {
 const editCourse = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json("user not found");
     const course = await Course.findById(req.params.courseId);
+    if (!course) return res.status(404).json("can not find course");
     if (user._id.equals(course.creatorId)) {
       const updatedCourse = await Course.findByIdAndUpdate(
         req.params.courseId,
@@ -79,7 +82,9 @@ const editCourse = async (req, res) => {
 const deleteCourse = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json("user not found");
     const course = await Course.findById(req.params.courseId);
+    if (!course) return res.status(404).json("can not find course");
     if (user._id.equals(course.creatorId)) {
       await course.deleteOne();
       return res.status(201).json("deleted course");
@@ -100,7 +105,9 @@ const joinCourse = async (req, res) => {
   let course;
   try {
     user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json("user not found");
     course = await Course.findById(req.params.courseId);
+    if (!course) return res.status(404).json("can not find course");
   } catch (error) {
     return res.status(404).json("Could not find user/course");
   }

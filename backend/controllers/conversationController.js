@@ -11,10 +11,10 @@ const createConversation = async (req, res) => {
   }
 
   const sender = await User.findById(req.user.id);
-  if (!sender) return res.status(401).json("user not found");
+  if (!sender) return res.status(404).json("user not found");
 
   const reciever = await User.findOne({ username });
-  if (!reciever) return res.status(401).json("user not found");
+  if (!reciever) return res.status(404).json("user not found");
 
   const newConversation = new Conversation({
     members: [sender._id, reciever._id],
@@ -65,10 +65,11 @@ const getConversation = async (req, res) => {
     if (!user) return res.status(404).json("users could not be found");
 
     const conversation = await Conversation.findById(req.params.conversationId);
+    if (!conversation) return res.status(404).json("cannot find conversation");
 
     res.status(200).json(conversation);
   } catch (error) {
-    return res.status(500).json(error);
+    return res.status(404).json("could not find conversation");
   }
 };
 

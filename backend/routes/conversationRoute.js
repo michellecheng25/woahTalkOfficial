@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   createConversation,
   getConversations,
-  //getConversation,
+  getConversation,
 } = require("../controllers/conversationController");
 const { authenticateToken } = require("../middleware/authMiddleware");
 
@@ -16,6 +16,6 @@ router
   .get(authenticateToken, getConversations)
   .post(authenticateToken, createConversation);
 
-//router.route("/:conversationId").get(authenticateToken, getConversation);
+router.route("/:conversationId").get(authenticateToken, getConversation);
 
 module.exports = router;

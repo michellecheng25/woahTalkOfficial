@@ -111,6 +111,8 @@ const getUser = async (req, res) => {
   const username = req.params.username;
   try {
     const user = await User.findOne({ username });
+    if (!user) res.status(404).json("user not found");
+
     res.status(200).json({
       _id: user._id,
       username: user.username,
@@ -193,6 +195,7 @@ const followUser = async (req, res) => {
     user = await User.findOne({ username });
     if (!user) return res.status(404).json("User not found");
     currentUser = await User.findById(req.user.id);
+    if (!currentUser) return res.status(404).json("user not found");
   } catch (error) {
     return res.status(404).json("Could not find user(s)");
   }

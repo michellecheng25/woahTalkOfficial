@@ -40,6 +40,7 @@ const createPost = async (req, res) => {
 
   try {
     const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json("user not found");
     const newPost = new Post(req.body);
     newPost.userId = req.user.id;
     const createdPost = await newPost.save();
@@ -65,6 +66,7 @@ const getPost = async (req, res) => {
         model: "User",
         select: { username: 1, name: 1, profilePicture: 1 },
       });
+    if (!post) return res.status(404).json("no post found");
     res.status(201).json(post);
   } catch (error) {
     return res.status(500).json("Could not get Post");
@@ -77,7 +79,9 @@ const getPost = async (req, res) => {
 const editPost = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json("user not found");
     const post = await Post.findById(req.params.id);
+    if (!post) res.status(404).json("no post found");
     if (user._id.equals(post.userId)) {
       const updatedPost = await Post.findByIdAndUpdate(
         req.params.id,
@@ -97,7 +101,9 @@ const editPost = async (req, res) => {
 const deletePost = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json("user not found");
     const post = await Post.findById(req.params.id);
+    if (!post) res.status(404).json("no post found");
     if (user._id.equals(post.userId)) {
       await post.deleteOne();
       return res.status(201).json("deleted post");
@@ -117,7 +123,9 @@ const likePost = async (req, res) => {
   let post;
   try {
     user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json("user not found");
     post = await Post.findById(req.params.id);
+    if (!post) res.status(404).json("no post found");
   } catch (error) {
     return res.status(500).json("Could not retrive post/data");
   }
