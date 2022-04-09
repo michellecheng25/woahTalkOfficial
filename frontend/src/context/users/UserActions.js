@@ -22,3 +22,13 @@ export const login = async (userCredentials, dispatch) => {
 export const logout = async (dispatch) => {
   dispatch({ type: "LOGOUT" });
 };
+
+export const Follow = (userId) => ({
+  type: "FOLLOW",
+  payload: userId,
+});
+
+export const Unfollow = (userId) => ({
+  type: "UNFOLLOW",
+  payload: userId,
+});

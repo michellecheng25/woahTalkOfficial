@@ -1,0 +1,63 @@
+.post {
+  border-radius: 10px;
+  padding: 20px 20px 0px 20px;
+  width: 100%;
+  margin: auto;
+  margin-bottom: 15px;
+  background-color: white;
+  border: 0.2px solid #ccc;
+}
+
+.user-info {
+  display: flex;
+}
+
+.profile-pic img {
+  width: 50px;
+  height: 50px;
+  border-radius: 49.9%;
+  margin-right: 10px;
+  flex: 2;
+}
+
+.post .content {
+  margin: 10px 0px;
+}
+
+.post .postInteractions {
+  border-top: 0.2px solid rgb(61, 61, 61);
+  display: flex;
+  padding: 10px 0px;
+  justify-content: space-around;
+}
+
+.post a {
+  color: black;
+}
+
+.post .postInteractions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.post .postInteractions div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.likeBtn {
+  margin: 0px 10px 10px 0px;
+}
+
+.post .icon-text {
+  padding-left: 10px;
+}
+
+.post .content img {
+  margin: 0 auto;
+  display: block;
+  height: 300px;
+  object-fit: cover;
+}

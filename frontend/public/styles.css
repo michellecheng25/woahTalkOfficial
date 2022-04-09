@@ -10,5 +10,9 @@ a {
 }
 
 body {
-  background-color: #e9e5df;
+  background-color: rgb(243, 239, 233);
+}
+
+textarea::-webkit-scrollbar {
+  width: 0px;
 }

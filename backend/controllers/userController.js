@@ -191,6 +191,7 @@ const followUser = async (req, res) => {
 
   try {
     user = await User.findOne({ username });
+    if (!user) return res.status(404).json("User not found");
     currentUser = await User.findById(req.user.id);
   } catch (error) {
     return res.status(404).json("Could not find user(s)");

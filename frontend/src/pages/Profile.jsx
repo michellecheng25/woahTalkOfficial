@@ -6,20 +6,29 @@ import axios from "axios";
 import CourseBtns from "../components/ConnectBtns";
 import UserContext from "../context/users/UserContext";
 import LanguageProgress from "../components/LanguageProgress";
+import Feed from "../components/Feed";
 
 function Profile() {
   let { username } = useParams();
 
   const [foundUser, setUser] = useState([]);
   const { user, isFetching } = useContext(UserContext);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     fetchUsers();
-  }, [username]);
+    fetchPosts();
+  }, []);
 
   const fetchUsers = async () => {
     const response = await axios.get("/api/profiles/" + username);
     setUser(response.data);
+  };
+  const fetchPosts = async () => {
+    const token = JSON.parse(localStorage.getItem("token"));
+
+    const userPosts = await axios.get("/api/profiles/" + username + "/posts");
+    setPosts(userPosts.data);
   };
 
   return (
@@ -50,7 +59,11 @@ function Profile() {
             </div>
             <LanguageProgress />
           </div>
-          <div className="profile-right">feed</div>
+          <div className="profile-right">
+            <div style={{ width: "680px", margin: "auto" }}>
+              <Feed posts={posts} />
+            </div>
+          </div>
         </div>
       </div>
     </div>

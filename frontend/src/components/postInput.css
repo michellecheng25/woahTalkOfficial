@@ -1,0 +1,37 @@
+.formContent {
+  display: inline-block;
+  width: 100%;
+}
+
+.formContent .postInput {
+  font-size: 18px;
+  outline: none;
+  border: none;
+  background-color: #e9e5df;
+  padding: 5px 5px 5px 5px;
+  resize: none;
+  width: 100%;
+}
+
+.formContent .leftBtn {
+  outline: none;
+  border: none;
+  float: left;
+  padding-right: 5px;
+  background-color: transparent;
+}
+
+.formContent .submitPost {
+  outline: none;
+  border: none;
+  color: #2a3725;
+  background-color: transparent;
+  float: right;
+}
+
+.formContent .attachment {
+  margin: 0 auto;
+  display: block;
+  /* width: 650px; */
+  object-fit: cover;
+}

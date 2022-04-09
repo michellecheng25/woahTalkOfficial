@@ -54,3 +54,7 @@
   margin-bottom: 10px;
   word-wrap: break-word;
 }
+
+.profile-right {
+  flex: 8;
+}

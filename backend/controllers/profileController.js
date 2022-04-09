@@ -12,6 +12,7 @@ const getUserInfo = async (req, res) => {
       "-password -isAdmin -createdAt -updatedAt -email"
     );
 
+    if (!user) return res.status(404).json("User not found");
     res.status(200).json(user);
   } catch (error) {
     return res.status(404).json("Could not find user");
@@ -31,7 +32,13 @@ const getUserPosts = async (req, res) => {
 
     const posts = await Post.find({ userId: user._id })
       .limit(10)
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .populate("userId", { username: 1, name: 1, profilePicture: 1 })
+      .populate({
+        path: "comments.userId",
+        model: "User",
+        select: { username: 1, name: 1, profilePicture: 1 },
+      });
 
     res.status(200).json(posts);
   } catch (error) {
