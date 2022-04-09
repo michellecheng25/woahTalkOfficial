@@ -7,29 +7,40 @@ import CourseBtns from "../components/ConnectBtns";
 import UserContext from "../context/users/UserContext";
 import LanguageProgress from "../components/LanguageProgress";
 import Feed from "../components/Feed";
+import NotFound from "./NotFound";
 
 function Profile() {
   let { username } = useParams();
 
-  const [foundUser, setUser] = useState([]);
   const { user, isFetching } = useContext(UserContext);
+  const [foundUser, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchUsers();
     fetchPosts();
-  }, []);
+  }, [username]);
 
   const fetchUsers = async () => {
-    const response = await axios.get("/api/profiles/" + username);
-    setUser(response.data);
+    await axios
+      .get("/api/profiles/" + username)
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch(console.log);
+    setIsLoading(false);
   };
   const fetchPosts = async () => {
-    const token = JSON.parse(localStorage.getItem("token"));
-
-    const userPosts = await axios.get("/api/profiles/" + username + "/posts");
-    setPosts(userPosts.data);
+    await axios.get("/api/profiles/" + username + "/posts").then((response) => {
+      setPosts(response.data);
+    });
   };
+
+  if (isLoading) return <div></div>;
+  if (!foundUser && !isLoading) {
+    return <NotFound />;
+  }
 
   return (
     <div>
