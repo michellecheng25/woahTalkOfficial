@@ -111,7 +111,7 @@ const getUser = async (req, res) => {
   const username = req.params.username;
   try {
     const user = await User.findOne({ username });
-    if (!user) res.status(404).json("user not found");
+    if (!user) return res.status(404).json("user not found");
 
     res.status(200).json({
       _id: user._id,

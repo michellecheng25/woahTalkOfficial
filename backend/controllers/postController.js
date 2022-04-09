@@ -81,7 +81,7 @@ const editPost = async (req, res) => {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json("user not found");
     const post = await Post.findById(req.params.id);
-    if (!post) res.status(404).json("no post found");
+    if (!post) return res.status(404).json("no post found");
     if (user._id.equals(post.userId)) {
       const updatedPost = await Post.findByIdAndUpdate(
         req.params.id,
@@ -103,7 +103,7 @@ const deletePost = async (req, res) => {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json("user not found");
     const post = await Post.findById(req.params.id);
-    if (!post) res.status(404).json("no post found");
+    if (!post) return res.status(404).json("no post found");
     if (user._id.equals(post.userId)) {
       await post.deleteOne();
       return res.status(201).json("deleted post");
@@ -125,7 +125,7 @@ const likePost = async (req, res) => {
     user = await User.findById(req.user.id);
     if (!user) return res.status(404).json("user not found");
     post = await Post.findById(req.params.id);
-    if (!post) res.status(404).json("no post found");
+    if (!post) return res.status(404).json("no post found");
   } catch (error) {
     return res.status(500).json("Could not retrive post/data");
   }
