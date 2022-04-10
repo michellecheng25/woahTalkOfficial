@@ -19,6 +19,7 @@
   float: left;
   padding-right: 5px;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .formContent .submitPost {
@@ -27,6 +28,7 @@
   color: #2a3725;
   background-color: transparent;
   float: right;
+  cursor: pointer;
 }
 
 .formContent .attachment {

@@ -34,8 +34,8 @@ const getPosts = async (req, res) => {
 //@route POST /api/posts/
 //@acess Private
 const createPost = async (req, res) => {
-  const { post, uploads } = req.body;
-  if (!post && !uploads)
+  const { post, upload } = req.body;
+  if (!post && !upload)
     return res.status(400).json("Please enter content/uploads");
 
   try {
