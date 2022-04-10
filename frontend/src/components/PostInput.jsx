@@ -36,10 +36,6 @@ function PostInput() {
       console.log("create 1");
       createPost();
     }
-
-    //content.current.value = "";
-
-    //setFile("");
   };
 
   const createPost = async (fileUrl) => {
@@ -57,6 +53,13 @@ function PostInput() {
     } catch (error) {
       console.log(error);
     }
+
+    content.current.value = "";
+
+    setFile("");
+
+    console.log(content.current.value);
+    console.log(file);
   };
 
   const uploadImage = async (base64EncodedImage) => {
@@ -77,7 +80,6 @@ function PostInput() {
 
   const handleFileInput = (e) => {
     const file = e.target.files[0];
-    console.log(file);
     previewFile(file);
   };
 

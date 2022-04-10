@@ -26,12 +26,14 @@
   margin-left: 150px;
 }
 
-.profile-left {
+.profile-info {
   background-color: white;
   border-radius: 20px;
   padding: 20px;
   width: 300px;
   box-shadow: 10px 10px 10px #dbdbd2;
+  position: sticky;
+  top: 2rem;
 }
 
 .profile-left-top {

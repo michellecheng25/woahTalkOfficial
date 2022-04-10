@@ -22,6 +22,15 @@ function Post({ post }) {
 
         <div className="content">
           <p>{post.post}</p>
+          {post.upload && (
+            <a href={post.upload} target="_blank">
+              <img
+                src={post.upload}
+                alt="post image"
+                style={{ marginTop: "15px" }}
+              />
+            </a>
+          )}
         </div>
         <div className="postInteractions">
           <div className="likeBtn">

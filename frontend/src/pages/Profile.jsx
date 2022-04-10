@@ -52,23 +52,25 @@ function Profile() {
         </div>
         <div className="profile-content">
           <div className="profile-left">
-            <div className="profile-left-top">
-              <h1 className="user-name"> {foundUser.name}</h1>
-              {user && user.username !== foundUser.username && (
-                <CourseBtns
-                  foundUser={foundUser}
-                  followingList={user.following}
-                />
-              )}
+            <div className="profile-info">
+              <div className="profile-left-top">
+                <h1 className="user-name"> {foundUser.name}</h1>
+                {user && user.username !== foundUser.username && (
+                  <CourseBtns
+                    foundUser={foundUser}
+                    followingList={user.following}
+                  />
+                )}
+              </div>
+              <div className="user-foreignName">foreignName</div>
+              <div className="user-bio">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+              </div>
+              <LanguageProgress />
             </div>
-            <div className="user-foreignName">foreignName</div>
-            <div className="user-bio">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </div>
-            <LanguageProgress />
           </div>
           <div className="profile-right">
             <div style={{ width: "680px", margin: "auto" }}>
