@@ -10,7 +10,6 @@ function PostInput() {
   const { user } = useContext(UserContext);
   const content = useRef();
   const [file, setFile] = useState("");
-  //const [fileUrl, setFileURL] = useState("");
 
   const setInputHeight = (element, defaultHeight) => {
     if (element) {
@@ -55,7 +54,6 @@ function PostInput() {
       await axios.post("/api/posts", newPost, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log("why?");
     } catch (error) {
       console.log(error);
     }
@@ -70,8 +68,6 @@ function PostInput() {
         },
       })
       .then((response) => {
-        //setFileURL(response.data);
-        //console.log(fileUrl);
         createPost(response.data);
       })
       .catch(() => {
