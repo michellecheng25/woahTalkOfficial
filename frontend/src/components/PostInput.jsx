@@ -5,45 +5,33 @@ import { useContext, useState, useRef } from "react";
 import UserContext from "../context/users/UserContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import uploadFile from "../utils/uploadFile";
+import setInputHeight from "../utils/setInputHeight";
 
 function PostInput() {
   const { user } = useContext(UserContext);
   const content = useRef();
   const [file, setFile] = useState("");
 
-  const setInputHeight = (element, defaultHeight) => {
-    if (element) {
-      const target = element.target ? element.target : element;
-      target.style.height = defaultHeight;
-      target.style.height = `${target.scrollHeight}px`;
-    }
-  };
-
   const token = JSON.parse(localStorage.getItem("token"));
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    //console.log(content.current.value, file);
 
     if (!content.current.value && !file) {
       toast.error("Submit something");
       return;
     }
 
+    let fileUrl;
     if (file) {
-      await uploadImage(file);
-    } else {
-      console.log("create 1");
-      createPost();
+      fileUrl = await uploadFile(file, token);
     }
-  };
 
-  const createPost = async (fileUrl) => {
     const newPost = {
       ...(content.current.value != "" && { post: content.current.value }),
       ...(fileUrl !== "" && { upload: fileUrl }),
     };
-
     console.log(newPost);
 
     try {
@@ -55,41 +43,19 @@ function PostInput() {
     }
 
     content.current.value = "";
-
     setFile("");
-
-    console.log(content.current.value);
-    console.log(file);
-  };
-
-  const uploadImage = async (base64EncodedImage) => {
-    await axios
-      .post("/api/uploads", JSON.stringify({ data: base64EncodedImage }), {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        createPost(response.data);
-      })
-      .catch(() => {
-        console.log();
-      });
+    content.current.style.height = "50px";
   };
 
   const handleFileInput = (e) => {
     const file = e.target.files[0];
-    previewFile(file);
-  };
-
-  const previewFile = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setFile(reader.result);
     };
   };
+
   return (
     <>
       <form className="formContent" onSubmit={submitHandler}>
