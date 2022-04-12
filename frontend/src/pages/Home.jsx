@@ -9,9 +9,6 @@ function Home() {
   const [currPost, setCurrPost] = useState({});
 
   useEffect(() => {
-    console.log("useeffect");
-    console.log(currPost);
-    console.log(posts);
     getTimelinePosts();
   }, [currPost]);
 

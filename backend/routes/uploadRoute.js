@@ -10,8 +10,6 @@ router.post("/", authenticateToken, async (req, res) => {
     const uploadResponse = await cloudinary.uploader.upload(fileStr, {
       upload_preset: "woahTalk",
     });
-
-    console.log(uploadResponse.url);
     return res.status(201).json(uploadResponse.url);
   } catch (error) {
     res.status(500).json("could not upload image");

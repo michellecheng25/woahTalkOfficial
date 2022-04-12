@@ -16,11 +16,12 @@ function Profile() {
   const [foundUser, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currPost, setCurrPost] = useState({});
 
   useEffect(() => {
     fetchUsers();
     fetchPosts();
-  }, [username]);
+  }, [username, currPost]);
 
   const fetchUsers = async () => {
     await axios
@@ -74,7 +75,7 @@ function Profile() {
           </div>
           <div className="profile-right">
             <div style={{ width: "680px", margin: "auto" }}>
-              <Feed posts={posts} />
+              <Feed posts={posts} setCurrPost={setCurrPost} />
             </div>
           </div>
         </div>
