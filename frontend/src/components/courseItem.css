@@ -31,4 +31,6 @@
   left: 0px;
   background-color: rgb(27, 128, 124);
   border-radius: 3px;
+  cursor: pointer;
+  color: white;
 }

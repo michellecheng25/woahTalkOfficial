@@ -23,12 +23,26 @@ export const logout = async (dispatch) => {
   dispatch({ type: "LOGOUT" });
 };
 
-export const Follow = (userId) => ({
-  type: "FOLLOW",
-  payload: userId,
-});
+export const follow = (userId, dispatch) =>
+  dispatch({
+    type: "FOLLOW",
+    payload: userId,
+  });
 
-export const Unfollow = (userId) => ({
-  type: "UNFOLLOW",
-  payload: userId,
-});
+export const unfollow = (userId, dispatch) =>
+  dispatch({
+    type: "UNFOLLOW",
+    payload: userId,
+  });
+
+export const joinCourse = (courseId, dispatch) =>
+  dispatch({
+    type: "JOIN",
+    payload: courseId,
+  });
+
+export const leaveCourse = (courseId, dispatch) =>
+  dispatch({
+    type: "LEAVE",
+    payload: courseId,
+  });

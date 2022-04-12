@@ -42,6 +42,24 @@ const UserReducer = (state, action) => {
           ),
         },
       };
+    case "JOIN":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          courses: [...state.user.courses, action.payload],
+        },
+      };
+    case "LEAVE":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          courses: state.user.courses.filter(
+            (course) => course != action.payload
+          ),
+        },
+      };
   }
 };
 

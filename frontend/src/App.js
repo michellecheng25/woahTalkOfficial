@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "./context/users/UserContext";
 import UserSettings from "./pages/UserSettings";
+import UserCourses from "./pages/UserCourses";
 
 function App() {
   return (
@@ -47,6 +48,10 @@ function App() {
               <Route path="/explore-courses" element={<ExploreCourses />} />
 
               <Route path="/profile/:username" element={<Profile />} />
+
+              <Route path="/courses" element={<PrivateRoute />}>
+                <Route path="/courses" element={<UserCourses />} />
+              </Route>
 
               <Route path="*" element={<NotFound />} />
             </Routes>

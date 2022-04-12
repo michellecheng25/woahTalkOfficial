@@ -7,10 +7,10 @@ import UserContext from "../context/users/UserContext";
 import { unfollow, follow } from "../context/users/UserActions";
 
 function ConnectBtns({ foundUser, followingList }) {
-  let isfollowing = followingList.includes(foundUser._id);
+  const isfollowing = followingList.includes(foundUser._id);
   const [following, setFollowing] = useState(isfollowing);
   const token = JSON.parse(localStorage.getItem("token"));
-  const { user, error, isFetching, dispatch } = useContext(UserContext);
+  const { dispatch } = useContext(UserContext);
 
   const onFollow = () => {
     setFollowing(!following);
@@ -32,13 +32,10 @@ function ConnectBtns({ foundUser, followingList }) {
       })
       .catch((error) => toast.error(error.response.data));
 
-    if (userAction === "follow")
-      dispatch({ type: "FOLLOW", payload: foundUser._id });
+    if (userAction === "follow") follow(foundUser._id, dispatch);
     else {
-      dispatch({ type: "UNFOLLOW", payload: foundUser._id });
+      unfollow(foundUser._id, dispatch);
     }
-
-    //TODO: follow and unfollow using dispatch
   };
 
   const onChat = () => {

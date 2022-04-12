@@ -1,7 +1,7 @@
 import { FaSignInAlt } from "react-icons/fa";
 import { useState, useContext, useEffect } from "react";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import UserContext from "../context/users/UserContext";
 import { login } from "../context/users/UserActions";
 import Header from "../components/Header";
@@ -16,10 +16,8 @@ function Login() {
   const { user, error, isFetching, dispatch } = useContext(UserContext);
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (user) navigate("/");
-  }, [user]);
+  const location = useLocation();
+  const from = location.state?.from.pathname || "/";
 
   const onChange = (e) => {
     setFormData((prevState) => {
@@ -35,7 +33,7 @@ function Login() {
     try {
       await login({ username, password }, dispatch);
 
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (error) {
       toast.error(error.message);
     }
@@ -64,6 +62,7 @@ function Login() {
                 value={username}
                 onChange={onChange}
                 placeholder="Enter your username"
+                autoComplete="off"
                 required
               />
             </div>
@@ -77,6 +76,7 @@ function Login() {
                 value={password}
                 onChange={onChange}
                 placeholder="Enter your password"
+                autoComplete="off"
                 required
               />
             </div>

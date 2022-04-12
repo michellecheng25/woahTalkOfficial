@@ -22,10 +22,6 @@ function Register() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user) navigate("/");
-  }, [user]);
-
   const onChange = (e) => {
     setFormData((prevState) => {
       return {
@@ -55,7 +51,7 @@ function Register() {
 
       await login({ username, password }, dispatch)
         .then(() => {
-          navigate("/");
+          navigate("/user-settings");
         })
         .catch((error) => {
           toast.error(error.message);
@@ -86,6 +82,7 @@ function Register() {
                 value={name}
                 onChange={onChange}
                 placeholder="Enter your name"
+                autoComplete="off"
                 required
               />
             </div>
@@ -99,6 +96,7 @@ function Register() {
                 value={username}
                 onChange={onChange}
                 placeholder="Enter your username"
+                autoComplete="off"
                 required
               />
             </div>
@@ -112,6 +110,7 @@ function Register() {
                 value={email}
                 onChange={onChange}
                 placeholder="Enter your email"
+                autoComplete="off"
                 required
               />
             </div>
@@ -125,6 +124,7 @@ function Register() {
                 value={password}
                 onChange={onChange}
                 placeholder="Enter your password"
+                autoComplete="off"
                 required
               />
             </div>
@@ -138,6 +138,7 @@ function Register() {
                 value={password2}
                 onChange={onChange}
                 placeholder="Confirm password"
+                autoComplete="off"
                 required
               />
             </div>
