@@ -6,15 +6,19 @@ import { GoComment } from "react-icons/go";
 import UserContext from "../context/users/UserContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import dateConversion from "../utils/dateConversion";
 
 function Post({ post }) {
   const userLink = "/profile/" + post.userId.username;
   const postLink = "/posts/" + post._id;
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
-  const isLiked = post.likes.includes(user._id);
+  let isLiked = false;
+  if (user) isLiked = post.likes.includes(user._id);
   const [like, setLike] = useState(isLiked);
   const token = JSON.parse(localStorage.getItem("token"));
+
+  const postDate = dateConversion(post.updatedAt);
 
   const onLike = () => {
     setLike(!like);
@@ -46,7 +50,10 @@ function Post({ post }) {
             <img src={post.userId.profilePicture} alt="profile-pic" />
           </Link>
           <div>
-            <h2>{post.userId.username}</h2> <h4>{post.updatedAt}</h4>
+            <Link to={userLink}>
+              <h2>{post.userId.username}</h2>
+            </Link>
+            <h4>{postDate}</h4>
           </div>
         </div>
 
@@ -63,9 +70,11 @@ function Post({ post }) {
           )}
         </div>
         <div className="postInteractions">
-          <div className="likeBtn" onClick={onLike}>
-            {like ? <FcLike size={30} /> : <FcLikePlaceholder size={30} />}
-          </div>
+          {user && (
+            <div className="likeBtn" onClick={onLike}>
+              {like ? <FcLike size={30} /> : <FcLikePlaceholder size={30} />}
+            </div>
+          )}
 
           <div
             className="commentBtn"

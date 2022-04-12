@@ -14,6 +14,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "./context/users/UserContext";
 import UserSettings from "./pages/UserSettings";
 import UserCourses from "./pages/UserCourses";
+import PostPage from "./pages/PostPage";
+import Post from "./components/Post";
 
 function App() {
   return (
@@ -52,6 +54,8 @@ function App() {
               <Route path="/courses" element={<PrivateRoute />}>
                 <Route path="/courses" element={<UserCourses />} />
               </Route>
+
+              <Route path="/posts/:postId" element={<PostPage />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>

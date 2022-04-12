@@ -1,0 +1,48 @@
+.create-comment {
+  display: flex;
+}
+
+.create-comment .profile-pic {
+  width: 45px;
+  height: 45px;
+  border-radius: 49.9%;
+  margin-left: 10px;
+}
+
+.commentForm {
+  display: flex;
+  margin: 0 auto;
+  width: 90%;
+  border-radius: 20px;
+  border: 0.3px solid #ccc !important;
+}
+
+.commentForm .commentInput {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  font-size: 18px;
+  width: 100%;
+  margin-left: 20px;
+  padding-left: 0px;
+  border: none;
+  resize: none;
+  height: 20px;
+  overflow: hidden;
+}
+
+.commentForm .commentInput:focus {
+  outline: none;
+}
+
+.commentForm .commentSubmit {
+  background-color: transparent;
+  padding: 3px 20px 3px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.comment-user {
+  color: black;
+  font-weight: bold;
+}

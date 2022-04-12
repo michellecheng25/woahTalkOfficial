@@ -22,6 +22,7 @@
 
 .post .content {
   margin: 10px 0px;
+  white-space: pre-line;
 }
 
 .post .postInteractions {

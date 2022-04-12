@@ -1,0 +1,25 @@
+.comment {
+  display: flex;
+  margin: 15px 10px 0px 10px;
+}
+
+.comment .profile-pic {
+  width: 45px;
+  height: 45px;
+  border-radius: 49.9%;
+}
+
+.comment .comment-box {
+  padding: 15px;
+  width: 90%;
+  background-color: rgb(243, 239, 233);
+  margin-left: 15px;
+  border: none;
+  min-height: 20px;
+  border-radius: 3px;
+}
+.comment .comment-text {
+  margin-top: 7px;
+  font-size: 18px;
+  white-space: pre-line;
+}
