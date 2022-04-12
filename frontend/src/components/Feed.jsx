@@ -1,12 +1,12 @@
 import PostInput from "./PostInput";
 import Post from "./Post";
 
-function Feed({ posts }) {
-  console.log(posts);
+function Feed({ posts, setCurrPost }) {
+  //console.log(posts);
   return (
     <div className="feed-container" style={{ feed }}>
       <div style={form}>
-        <PostInput />
+        <PostInput setCurrPost={setCurrPost} />
       </div>
       <div className="postContainer">
         {posts.map((post) => {

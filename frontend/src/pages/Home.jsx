@@ -6,9 +6,14 @@ import { toast } from "react-toastify";
 
 function Home() {
   const [posts, setPosts] = useState([]);
+  const [currPost, setCurrPost] = useState({});
+
   useEffect(() => {
+    console.log("useeffect");
+    console.log(currPost);
+    console.log(posts);
     getTimelinePosts();
-  }, []);
+  }, [currPost]);
 
   const getTimelinePosts = async () => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -25,7 +30,7 @@ function Home() {
     <>
       <Navbar />
       <div style={{ width: "680px", margin: "30px auto 0px auto" }}>
-        <Feed posts={posts} />
+        <Feed posts={posts} setCurrPost={setCurrPost} />
       </div>
     </>
   );

@@ -23,12 +23,15 @@
 }
 
 .formContent .submitPost {
+  float: right;
+}
+
+.formContent .postBtn {
+  cursor: pointer;
   outline: none;
   border: none;
   color: #2a3725;
   background-color: transparent;
-  float: right;
-  cursor: pointer;
 }
 
 .formContent .attachment {

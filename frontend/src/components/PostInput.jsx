@@ -7,16 +7,19 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import uploadFile from "../utils/uploadFile";
 import setInputHeight from "../utils/setInputHeight";
+import CircularProgress from "@mui/material/CircularProgress";
 
-function PostInput() {
+function PostInput({ setCurrPost }) {
   const { user } = useContext(UserContext);
   const content = useRef();
   const [file, setFile] = useState("");
+  const [isPosting, setIsPosting] = useState(false);
 
   const token = JSON.parse(localStorage.getItem("token"));
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setIsPosting(true);
 
     if (!content.current.value && !file) {
       toast.error("Submit something");
@@ -30,7 +33,7 @@ function PostInput() {
 
     const newPost = {
       ...(content.current.value != "" && { post: content.current.value }),
-      ...(fileUrl !== "" && { upload: fileUrl }),
+      ...(fileUrl && { upload: fileUrl }),
     };
     console.log(newPost);
 
@@ -42,9 +45,13 @@ function PostInput() {
       console.log(error);
     }
 
+    setCurrPost(newPost);
+
     content.current.value = "";
     setFile("");
     content.current.style.height = "50px";
+    //setCurrPost({});
+    setIsPosting(false);
   };
 
   const handleFileInput = (e) => {
@@ -90,9 +97,15 @@ function PostInput() {
               style={{ display: "none" }}
             />
           </label>
-          <button className="submitPost" type="submit">
-            <MdSend size={30} />
-          </button>
+          <div className="submitPost">
+            {isPosting ? (
+              <CircularProgress />
+            ) : (
+              <button type="submit" className="postBtn">
+                <MdSend size={30} />
+              </button>
+            )}
+          </div>
         </div>
       </form>
     </>
