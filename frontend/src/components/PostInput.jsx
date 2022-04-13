@@ -9,7 +9,7 @@ import uploadFile from "../utils/uploadFile";
 import setInputHeight from "../utils/setInputHeight";
 import CircularProgress from "@mui/material/CircularProgress";
 
-function PostInput({ setCurrPost }) {
+function PostInput({ createAPost }) {
   const { user } = useContext(UserContext);
   const content = useRef();
   const [file, setFile] = useState("");
@@ -45,12 +45,11 @@ function PostInput({ setCurrPost }) {
       console.log(error);
     }
 
-    setCurrPost(newPost);
+    createAPost();
 
     content.current.value = "";
     setFile("");
     content.current.style.height = "50px";
-    //setCurrPost({});
     setIsPosting(false);
   };
 

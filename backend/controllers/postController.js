@@ -6,6 +6,11 @@ const { v4: uuidv4 } = require("uuid");
 //@route GET /api/posts/
 //@acess Private
 const getPosts = async (req, res) => {
+  const page = parseInt(req.query.page);
+  const limit = 5;
+
+  const startIndex = (page - 1) * limit;
+
   try {
     const user = await User.findById(req.user.id, "following");
 
@@ -16,7 +21,8 @@ const getPosts = async (req, res) => {
         $in: [user._id, ...user.following],
       },
     })
-      .limit(10)
+      .skip(startIndex)
+      .limit(limit)
       .sort({ createdAt: -1 })
       .populate("userId", { username: 1, name: 1, profilePicture: 1 })
       .populate({
@@ -24,6 +30,7 @@ const getPosts = async (req, res) => {
         model: "User",
         select: { username: 1, name: 1, profilePicture: 1 },
       });
+
     return res.status(200).json(posts);
   } catch (error) {
     return res.status(500).json("no posts retrieved.");

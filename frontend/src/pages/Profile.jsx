@@ -6,8 +6,10 @@ import axios from "axios";
 import CourseBtns from "../components/ConnectBtns";
 import UserContext from "../context/users/UserContext";
 import LanguageProgress from "../components/LanguageProgress";
-import Feed from "../components/Feed";
 import NotFound from "./NotFound";
+import PostInput from "../components/PostInput";
+import Post from "../components/Post";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 function Profile() {
   let { username } = useParams();
@@ -16,12 +18,13 @@ function Profile() {
   const [foundUser, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [currPost, setCurrPost] = useState({});
+  const [pageNumber, setPageNumber] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
 
   useEffect(() => {
     fetchUsers();
     fetchPosts();
-  }, [username, currPost]);
+  }, [username, pageNumber]);
 
   const fetchUsers = async () => {
     await axios
@@ -33,9 +36,21 @@ function Profile() {
     setIsLoading(false);
   };
   const fetchPosts = async () => {
-    await axios.get("/api/profiles/" + username + "/posts").then((response) => {
-      setPosts(response.data);
-    });
+    await axios
+      .get(`/api/profiles/` + username + `/posts/?page=${pageNumber}`)
+      .then((response) => {
+        setPosts((prev) => {
+          return [...prev, ...response.data];
+        });
+        setHasMore(response.data.length > 0);
+      });
+  };
+
+  const createAPost = () => {
+    setPageNumber(1);
+    setHasMore(false);
+    setPosts([]);
+    fetchPosts();
   };
 
   if (isLoading) return <div></div>;
@@ -75,7 +90,26 @@ function Profile() {
           </div>
           <div className="profile-right">
             <div style={{ width: "680px", margin: "auto" }}>
-              <Feed posts={posts} setCurrPost={setCurrPost} />
+              <div className="feed-container" style={{ feed }}>
+                {user && user.username === username && (
+                  <div style={form}>
+                    <PostInput createAPost={createAPost} />
+                  </div>
+                )}
+                <div className="postContainer">
+                  <InfiniteScroll
+                    dataLength={posts.length}
+                    next={() => {
+                      setPageNumber(pageNumber + 1);
+                    }}
+                    hasMore={hasMore}
+                  >
+                    {posts.map((post) => {
+                      return <Post key={post._id} post={post} />;
+                    })}
+                  </InfiniteScroll>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -85,3 +119,21 @@ function Profile() {
 }
 
 export default Profile;
+
+const feed = {
+  backgroundColor: "#F3EFE9",
+  fontFamily: "Open Sans",
+  height: "100vh",
+};
+
+const form = {
+  position: "relative",
+  margin: "auto",
+  width: "100%",
+  margin: "0px auto 20px auto",
+  backgroundColor: "#E9E5DF",
+  padding: "15px",
+  borderRadius: "10px",
+  float: "center",
+  justifyContent: "center",
+};

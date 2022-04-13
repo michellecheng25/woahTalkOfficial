@@ -25,13 +25,19 @@ const getUserInfo = async (req, res) => {
 const getUserPosts = async (req, res) => {
   const username = req.params.username;
 
+  const page = parseInt(req.query.page);
+  const limit = 5;
+
+  const startIndex = (page - 1) * limit;
+
   try {
     const user = await User.findOne({ username });
 
     if (!user) return res.status(404).json("User not found");
 
     const posts = await Post.find({ userId: user._id })
-      .limit(10)
+      .skip(startIndex)
+      .limit(limit)
       .sort({ createdAt: -1 })
       .populate("userId", { username: 1, name: 1, profilePicture: 1 })
       .populate({

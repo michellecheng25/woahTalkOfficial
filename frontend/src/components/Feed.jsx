@@ -1,7 +1,9 @@
+//TODO: DELETE THIS FILE
 import PostInput from "./PostInput";
 import Post from "./Post";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-function Feed({ posts, setCurrPost }) {
+function Feed({ posts, setCurrPost, getNextPage, hasMore }) {
   //console.log(posts);
   return (
     <div className="feed-container" style={{ feed }}>
@@ -9,9 +11,17 @@ function Feed({ posts, setCurrPost }) {
         <PostInput setCurrPost={setCurrPost} />
       </div>
       <div className="postContainer">
-        {posts.map((post) => {
-          return <Post key={post._id} post={post} />;
-        })}
+        <InfiniteScroll
+          dataLength={posts.length}
+          next={() => {
+            getNextPage();
+          }}
+          hasMore={hasMore}
+        >
+          {posts.map((post) => {
+            return <Post key={post._id} post={post} />;
+          })}
+        </InfiniteScroll>
       </div>
     </div>
   );
