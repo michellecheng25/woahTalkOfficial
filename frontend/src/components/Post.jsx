@@ -3,12 +3,13 @@ import "./post.css";
 import { Link, useNavigate } from "react-router-dom";
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { GoComment } from "react-icons/go";
+import { MdDelete } from "react-icons/md";
 import UserContext from "../context/users/UserContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import dateConversion from "../utils/dateConversion";
 
-function Post({ post }) {
+function Post({ post, setPosts }) {
   const userLink = "/profile/" + post.userId.username;
   const postLink = "/posts/" + post._id;
   const { user } = useContext(UserContext);
@@ -42,6 +43,19 @@ function Post({ post }) {
       .catch((error) => toast.error(error.response.data));
   };
 
+  const onDelete = (postId) => {
+    console.log("delete postId: " + postId);
+    axios
+      .delete("api/posts/" + postId, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        setPosts((prev) => prev.filter((post) => post._id !== postId));
+        toast.success(response.data);
+      })
+      .catch((error) => toast.error(error.response.data));
+  };
+
   return (
     <div className="post">
       <div className="postWrapper">
@@ -55,6 +69,16 @@ function Post({ post }) {
             </Link>
             <h4>{postDate}</h4>
           </div>
+
+          {user && user._id === post.userId._id && (
+            <MdDelete
+              className="delete-post"
+              size={30}
+              onClick={() => {
+                onDelete(post._id);
+              }}
+            />
+          )}
         </div>
 
         <div className="content">

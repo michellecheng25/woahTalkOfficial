@@ -10,6 +10,7 @@ import NotFound from "./NotFound";
 import PostInput from "../components/PostInput";
 import Post from "../components/Post";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { toast } from "react-toastify";
 
 function Profile() {
   let { username } = useParams();
@@ -20,6 +21,7 @@ function Profile() {
   const [isLoading, setIsLoading] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
   const [hasMore, setHasMore] = useState(false);
+  const token = JSON.parse(localStorage.getItem("token"));
 
   useEffect(() => {
     fetchUsers();
@@ -105,7 +107,9 @@ function Profile() {
                     hasMore={hasMore}
                   >
                     {posts.map((post) => {
-                      return <Post key={post._id} post={post} />;
+                      return (
+                        <Post key={post._id} post={post} setPosts={setPosts} />
+                      );
                     })}
                   </InfiniteScroll>
                 </div>

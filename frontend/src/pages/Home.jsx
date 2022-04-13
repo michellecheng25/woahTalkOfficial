@@ -57,7 +57,7 @@ function Home() {
               hasMore={hasMore}
             >
               {posts.map((post) => {
-                return <Post key={post._id} post={post} />;
+                return <Post key={post._id} post={post} setPosts={setPosts} />;
               })}
             </InfiniteScroll>
           </div>
