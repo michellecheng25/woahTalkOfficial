@@ -9,7 +9,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import dateConversion from "../utils/dateConversion";
 
-function Post({ post, setPosts }) {
+function Post({ post, resetFeed }) {
   const userLink = "/profile/" + post.userId.username;
   const postLink = "/posts/" + post._id;
   const { user } = useContext(UserContext);
@@ -50,7 +50,7 @@ function Post({ post, setPosts }) {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        setPosts((prev) => prev.filter((post) => post._id !== postId));
+        resetFeed();
         toast.success(response.data);
       })
       .catch((error) => toast.error(error.response.data));

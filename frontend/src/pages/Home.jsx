@@ -33,7 +33,8 @@ function Home() {
     }
   };
 
-  const createAPost = () => {
+  const resetFeed = () => {
+    console.log("Resetting feed");
     setPageNumber(1);
     setHasMore(false);
     setPosts([]);
@@ -46,7 +47,7 @@ function Home() {
       <div style={{ width: "680px", margin: "30px auto 0px auto" }}>
         <div className="feed-container" style={{ feed }}>
           <div style={form}>
-            <PostInput createAPost={createAPost} />
+            <PostInput resetFeed={resetFeed} />
           </div>
           <div className="postContainer">
             <InfiniteScroll
@@ -57,7 +58,9 @@ function Home() {
               hasMore={hasMore}
             >
               {posts.map((post) => {
-                return <Post key={post._id} post={post} setPosts={setPosts} />;
+                return (
+                  <Post key={post._id} post={post} resetFeed={resetFeed} />
+                );
               })}
             </InfiniteScroll>
           </div>

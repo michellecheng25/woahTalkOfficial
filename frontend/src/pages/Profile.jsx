@@ -48,7 +48,7 @@ function Profile() {
       });
   };
 
-  const createAPost = () => {
+  const resetFeed = () => {
     setPageNumber(1);
     setHasMore(false);
     setPosts([]);
@@ -95,7 +95,7 @@ function Profile() {
               <div className="feed-container" style={{ feed }}>
                 {user && user.username === username && (
                   <div style={form}>
-                    <PostInput createAPost={createAPost} />
+                    <PostInput resetFeed={resetFeed} />
                   </div>
                 )}
                 <div className="postContainer">
@@ -108,7 +108,12 @@ function Profile() {
                   >
                     {posts.map((post) => {
                       return (
-                        <Post key={post._id} post={post} setPosts={setPosts} />
+                        <Post
+                          key={post._id}
+                          post={post}
+                          setPosts={setPosts}
+                          resetFeed={resetFeed}
+                        />
                       );
                     })}
                   </InfiniteScroll>

@@ -9,7 +9,7 @@ import uploadFile from "../utils/uploadFile";
 import setInputHeight from "../utils/setInputHeight";
 import CircularProgress from "@mui/material/CircularProgress";
 
-function PostInput({ createAPost }) {
+function PostInput({ resetFeed }) {
   const { user } = useContext(UserContext);
   const content = useRef();
   const [file, setFile] = useState("");
@@ -45,7 +45,7 @@ function PostInput({ createAPost }) {
       console.log(error);
     }
 
-    createAPost();
+    resetFeed();
 
     content.current.value = "";
     setFile("");
