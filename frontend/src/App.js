@@ -15,7 +15,7 @@ import { UserProvider } from "./context/users/UserContext";
 import UserSettings from "./pages/UserSettings";
 import UserCourses from "./pages/UserCourses";
 import PostPage from "./pages/PostPage";
-import Post from "./components/Post";
+import CoursePage from "./pages/CoursePage";
 
 function App() {
   return (
@@ -56,6 +56,8 @@ function App() {
               </Route>
 
               <Route path="/posts/:postId" element={<PostPage />} />
+
+              <Route path="/courses/:courseId" element={<CoursePage />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>

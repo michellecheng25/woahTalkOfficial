@@ -13,11 +13,13 @@ function Post({ post, resetFeed }) {
   const userLink = "/profile/" + post.userId.username;
   const postLink = "/posts/" + post._id;
   const { user } = useContext(UserContext);
-  const navigate = useNavigate();
+
   let isLiked = false;
   if (user) isLiked = post.likes.includes(user._id);
   const [like, setLike] = useState(isLiked);
   const token = JSON.parse(localStorage.getItem("token"));
+
+  const navigate = useNavigate();
 
   const postDate = dateConversion(post.updatedAt);
 
@@ -53,7 +55,9 @@ function Post({ post, resetFeed }) {
         resetFeed();
         toast.success(response.data);
       })
-      .catch((error) => toast.error(error.response.data));
+      .catch((error) => {
+        toast.error(error.response.data);
+      });
   };
 
   return (
@@ -116,6 +120,7 @@ function Post({ post, resetFeed }) {
 
 Post.defaultProps = {
   post: [],
+  resetFeed: function () {},
 };
 
 export default Post;

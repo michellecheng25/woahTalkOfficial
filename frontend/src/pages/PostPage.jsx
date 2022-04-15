@@ -14,6 +14,7 @@ function PostPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [post, setPost] = useState(null);
   const [userComment, setUserComment] = useState({});
+  const [comments, setComments] = useState({});
 
   useEffect(() => {
     fetchPost();
@@ -24,11 +25,15 @@ function PostPage() {
       .get("/api/posts/" + postId)
       .then((response) => {
         setPost(response.data);
+        setComments(response.data.comments);
+        console.log(response.data.comments);
       })
       .catch(console.log);
 
     setIsLoading(false);
   };
+
+  console.log(comments);
 
   if (isLoading) return <div></div>;
   if (!post && !isLoading) {
@@ -52,8 +57,14 @@ function PostPage() {
         {user && (
           <CommentInput postId={postId} setUserComment={setUserComment} />
         )}
-        {post.comments.map((comment) => {
-          return <Comment key={comment._id} comment={comment} />;
+        {comments.map((comment) => {
+          return (
+            <Comment
+              key={comment._id}
+              comment={comment}
+              setComments={setComments}
+            />
+          );
         })}
       </div>
     </div>
