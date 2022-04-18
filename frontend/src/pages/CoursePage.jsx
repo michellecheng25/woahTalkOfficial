@@ -5,13 +5,18 @@ import axios from "axios";
 import UserContext from "../context/users/UserContext";
 import NotFound from "./NotFound";
 import { RiAddBoxFill } from "react-icons/ri";
+import { Button } from "@material-ui/core";
+import { joinCourse, leaveCourse } from "../context/users/UserActions";
 
 function CoursePage() {
   const { courseId } = useParams();
   const [course, setCourse] = useState(null);
-  const { user } = useContext(UserContext);
+  const { user, dispatch } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
-  const [joined, setJoined] = useState(false);
+  const isJoined = user.courses.includes(courseId);
+  console.log(isJoined);
+  const [joined, setJoined] = useState(isJoined);
+  const token = JSON.parse(localStorage.getItem("token"));
 
   useEffect(() => {
     getCourseInfo();
@@ -29,8 +34,21 @@ function CoursePage() {
     setLoading(false);
   };
 
-  const joinCourse = () => {
-    setJoined(!joined);
+  const joinACourse = () => {
+    const userAction = joined ? "leave" : "join";
+    const action = {
+      action: userAction,
+    };
+    console.log(action);
+
+    axios
+      .post("api/courses/" + courseId + "/join", action, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(setJoined(!joined));
+
+    if (userAction === "join") joinCourse(courseId, dispatch);
+    else leaveCourse(courseId, dispatch);
   };
 
   if (loading) return <div></div>;
@@ -50,12 +68,14 @@ function CoursePage() {
                 style={{ marginLeft: "auto", cursor: "pointer" }}
               />
             ) : (
-              <button
+              <Button
+                type="submit"
+                variant="contained"
                 style={{ marginLeft: "auto", cursor: "pointer" }}
-                onClick={joinCourse}
+                onClick={joinACourse}
               >
-                {joined ? "Join Course" : "Leave Course"}
-              </button>
+                {joined ? "Leave Course" : "Join Course"}
+              </Button>
             ))}
         </div>
       </div>

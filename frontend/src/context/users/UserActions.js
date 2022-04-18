@@ -22,29 +22,33 @@ export const logout = async (dispatch) => {
   dispatch({ type: "LOGOUT" });
 };
 
-export const follow = (userId, dispatch) =>
+export const follow = (userId, dispatch) => {
   dispatch({
     type: "FOLLOW",
     payload: userId,
   });
+};
 
-export const unfollow = (userId, dispatch) =>
+export const unfollow = (userId, dispatch) => {
   dispatch({
     type: "UNFOLLOW",
     payload: userId,
   });
+};
 
-export const joinCourse = (courseId, dispatch) =>
+export const joinCourse = (courseId, dispatch) => {
+  console.log(courseId);
   dispatch({
     type: "JOIN",
     payload: courseId,
   });
-
-export const leaveCourse = (courseId, dispatch) =>
+};
+export const leaveCourse = (courseId, dispatch) => {
   dispatch({
     type: "LEAVE",
     payload: courseId,
   });
+};
 
 export const updateProfile = (userInfo, dispatch) => {
   dispatch({ type: "UPDATE", payload: userInfo });

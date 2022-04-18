@@ -12,12 +12,7 @@ function ConnectBtns({ foundUser, followingList }) {
   const token = JSON.parse(localStorage.getItem("token"));
   const { user, dispatch } = useContext(UserContext);
 
-  const onFollow = () => {
-    setFollowing(!following);
-    followUser();
-  };
-
-  const followUser = async () => {
+  const onFollow = async () => {
     const userAction = following ? "unfollow" : "follow";
     const followAction = {
       action: userAction,
@@ -29,6 +24,7 @@ function ConnectBtns({ foundUser, followingList }) {
       })
       .then(() => {
         console.log(following);
+        setFollowing(!following);
       })
       .catch((error) => toast.error(error.response.data));
 

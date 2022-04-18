@@ -24,8 +24,8 @@ function UserItem({ foundUser }) {
             <h4 className="profile_foreignName">{foundUser.foreignName}</h4>
           </div>
           <LanguageProgress
-            nativeLevel={foundUser.foreignProficiency}
-            foreignLevel={foundUser.nativeProficiency}
+            nativeLevel={foundUser.nativeProficiency}
+            foreignLevel={foundUser.foreignProficiency}
             native={foundUser.nativeLanguage}
             foreign={foundUser.foreignLanguage}
           />

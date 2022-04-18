@@ -96,13 +96,13 @@ function Profile() {
               <div className="user-foreignName">{foundUser.foreignName}</div>
               <div className="user-bio">{foundUser.bio}</div>
               <LanguageProgress
-                nativeLevel={foundUser.foreignProficiency}
-                foreignLevel={foundUser.nativeProficiency}
+                nativeLevel={foundUser.nativeProficiency}
+                foreignLevel={foundUser.foreignProficiency}
                 native={foundUser.nativeLanguage}
                 foreign={foundUser.foreignLanguage}
               />
 
-              {foundUser.role === "teacher" && courses.length > 0 && (
+              {foundUser.role === "Teacher" && courses.length > 0 && (
                 <div>
                   <h3 style={{ margin: "10px 0px" }}>
                     <GiTeacher size={20} style={{ marginRight: "10px" }} />
