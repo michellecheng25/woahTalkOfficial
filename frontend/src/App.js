@@ -16,6 +16,7 @@ import UserSettings from "./pages/UserSettings";
 import UserCourses from "./pages/UserCourses";
 import PostPage from "./pages/PostPage";
 import CoursePage from "./pages/CoursePage";
+import Chat from "./pages/Chat";
 
 function App() {
   return (
@@ -57,7 +58,13 @@ function App() {
 
               <Route path="/posts/:postId" element={<PostPage />} />
 
-              <Route path="/courses/:courseId" element={<CoursePage />} />
+              <Route path="/courses/:courseId" element={<PrivateRoute />}>
+                <Route path="/courses/:courseId" element={<CoursePage />} />
+              </Route>
+
+              <Route path="/chat" element={<PrivateRoute />}>
+                <Route path="/chat" element={<Chat />} />
+              </Route>
 
               <Route path="*" element={<NotFound />} />
             </Routes>

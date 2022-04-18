@@ -10,7 +10,7 @@ function ConnectBtns({ foundUser, followingList }) {
   const isfollowing = followingList.includes(foundUser._id);
   const [following, setFollowing] = useState(isfollowing);
   const token = JSON.parse(localStorage.getItem("token"));
-  const { dispatch } = useContext(UserContext);
+  const { user, dispatch } = useContext(UserContext);
 
   const onFollow = () => {
     setFollowing(!following);
@@ -44,20 +44,22 @@ function ConnectBtns({ foundUser, followingList }) {
 
   return (
     <>
-      <div className="connect_btn">
-        <div onClick={onChat}>
-          <BsFillChatFill size={15} />
+      {foundUser._id !== user._id && (
+        <div className="connect_btn">
+          <div onClick={onChat}>
+            <BsFillChatFill size={15} />
+          </div>
+          <div
+            onClick={onFollow}
+            style={{
+              backgroundColor: following && "#1778F2",
+              color: following && "white",
+            }}
+          >
+            {following ? "Following" : "Follow"}
+          </div>
         </div>
-        <div
-          onClick={onFollow}
-          style={{
-            backgroundColor: following && "#1778F2",
-            color: following && "white",
-          }}
-        >
-          {following ? "Following" : "Follow"}
-        </div>
-      </div>
+      )}
     </>
   );
 }

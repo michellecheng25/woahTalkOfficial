@@ -9,10 +9,7 @@ function CourseItem({ course }) {
     <div className="courseBox">
       <Link to={courseLink}>
         <h3 className="courseName">{course.courseName}</h3>
-        <p className="courseDescription">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
+        <p className="courseDescription">{course.description}</p>
 
         <h4 className="join-btn">View Course</h4>
       </Link>

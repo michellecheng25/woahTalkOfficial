@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require("uuid");
 //@route POST /api/courses/
 //@acess private
 const createCourse = async (req, res) => {
-  const { courseName, language, level } = req.body;
+  const { courseName, language, level, description } = req.body;
 
   const user = await User.findById(req.user.id);
   if (!user) return res.status(404).json("Could not find user");
@@ -20,12 +20,14 @@ const createCourse = async (req, res) => {
       creatorId: user._id,
       language: language.toLowerCase(),
       level: level.toLowerCase(),
+      description,
     });
 
     const course = await newCourse.save();
+    await user.updateOne({ $addToSet: { courses: newCourse._id } });
     return res.status(201).json(course);
   } catch (error) {
-    return res.status(500).json("could not create course");
+    return res.status(500).json(error);
   }
 };
 

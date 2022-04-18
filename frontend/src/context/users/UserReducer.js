@@ -60,6 +60,13 @@ const UserReducer = (state, action) => {
           ),
         },
       };
+    case "UPDATE":
+      return {
+        ...state,
+        user: {
+          ...action.payload,
+        },
+      };
   }
 };
 

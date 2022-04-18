@@ -17,11 +17,13 @@ const courseSchema = mongoose.Schema(
     },
     level: {
       type: String,
-      enum: ["novice", "intermediate", "advanced"],
+    },
+    description: {
+      type: String,
     },
     folders: {
       type: Array,
-      default: ["Announcement", "Course Materials", "Assignemnts"],
+      default: ["Announcement", "Course Materials", "Assignments"],
     },
     participants: {
       type: Array,

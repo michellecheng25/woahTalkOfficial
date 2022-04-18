@@ -22,7 +22,7 @@ const userSchema = mongoose.Schema(
     foreignName: {
       type: String,
     },
-    navtiveLanguage: {
+    nativeLanguage: {
       type: String,
     },
     foreignLanguage: {
@@ -30,11 +30,9 @@ const userSchema = mongoose.Schema(
     },
     nativeProficiency: {
       type: String,
-      enum: ["novice", "intermediate", "advanced"],
     },
     foreignProficiency: {
       type: String,
-      enum: ["novice", "intermediate", "advanced"],
     },
     profilePicture: {
       type: String,

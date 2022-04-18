@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const login = async (userCredentials, dispatch) => {
-  //dispatch({ type: "LOGIN_START" });
   let response;
   try {
     response = await axios.post("/api/users/login", userCredentials);
@@ -46,3 +45,7 @@ export const leaveCourse = (courseId, dispatch) =>
     type: "LEAVE",
     payload: courseId,
   });
+
+export const updateProfile = (userInfo, dispatch) => {
+  dispatch({ type: "UPDATE", payload: userInfo });
+};

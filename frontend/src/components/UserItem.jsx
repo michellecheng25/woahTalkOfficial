@@ -21,13 +21,15 @@ function UserItem({ foundUser }) {
         <Link to={userLink} className="profile_info">
           <div className="profile_title">
             <h1 className="profile_name">{foundUser.name}</h1>
-            <h4 className="profile_foreignName">Foreign Name</h4>
+            <h4 className="profile_foreignName">{foundUser.foreignName}</h4>
           </div>
-          <LanguageProgress />
-          <div className="profile_bio">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </div>
+          <LanguageProgress
+            nativeLevel={foundUser.foreignProficiency}
+            foreignLevel={foundUser.nativeProficiency}
+            native={foundUser.nativeLanguage}
+            foreign={foundUser.foreignLanguage}
+          />
+          <div className="profile_bio">{foundUser.bio}</div>
         </Link>
         {user && (
           <ConnectBtns foundUser={foundUser} followingList={user.following} />

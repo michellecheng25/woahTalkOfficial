@@ -1,9 +1,9 @@
 import Navbar from "../components/Navbar";
 import "./profile.css";
 import { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
-import CourseBtns from "../components/ConnectBtns";
+import ConnectBtns from "../components/ConnectBtns";
 import UserContext from "../context/users/UserContext";
 import LanguageProgress from "../components/LanguageProgress";
 import NotFound from "./NotFound";
@@ -11,6 +11,7 @@ import PostInput from "../components/PostInput";
 import Post from "../components/Post";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { toast } from "react-toastify";
+import { GiTeacher } from "react-icons/gi";
 
 function Profile() {
   let { username } = useParams();
@@ -18,6 +19,7 @@ function Profile() {
   const { user, isFetching } = useContext(UserContext);
   const [foundUser, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
   const [hasMore, setHasMore] = useState(false);
@@ -26,6 +28,7 @@ function Profile() {
   useEffect(() => {
     fetchUsers();
     fetchPosts();
+    fetchCourses();
   }, [username, pageNumber]);
 
   const fetchUsers = async () => {
@@ -43,9 +46,19 @@ function Profile() {
       .then((response) => {
         setPosts((prev) => {
           return [...prev, ...response.data];
-        });
+        }).catch(console.log);
         setHasMore(response.data.length > 0);
       });
+  };
+
+  const fetchCourses = async () => {
+    await axios
+      .get(`/api/profiles/` + username + `/courses`)
+      .then((response) => {
+        setCourses(response.data.courses);
+        console.log(response.data.courses);
+      })
+      .catch(console.log);
   };
 
   const resetFeed = () => {
@@ -65,7 +78,7 @@ function Profile() {
       <Navbar />
       <div className="profile">
         <div className="profile-top">
-          <img className="profile-cover" src="https://picsum.photos/1200" />
+          <img className="profile-cover" src={foundUser.coverPicture} />
           <img className="profile-user-img" src={foundUser.profilePicture} />
         </div>
         <div className="profile-content">
@@ -74,20 +87,38 @@ function Profile() {
               <div className="profile-left-top">
                 <h1 className="user-name"> {foundUser.name}</h1>
                 {user && user.username !== foundUser.username && (
-                  <CourseBtns
+                  <ConnectBtns
                     foundUser={foundUser}
                     followingList={user.following}
                   />
                 )}
               </div>
-              <div className="user-foreignName">foreignName</div>
-              <div className="user-bio">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </div>
-              <LanguageProgress />
+              <div className="user-foreignName">{foundUser.foreignName}</div>
+              <div className="user-bio">{foundUser.bio}</div>
+              <LanguageProgress
+                nativeLevel={foundUser.foreignProficiency}
+                foreignLevel={foundUser.nativeProficiency}
+                native={foundUser.nativeLanguage}
+                foreign={foundUser.foreignLanguage}
+              />
+
+              {foundUser.role === "teacher" && courses.length > 0 && (
+                <div>
+                  <h3 style={{ margin: "10px 0px" }}>
+                    <GiTeacher size={20} style={{ marginRight: "10px" }} />
+                    Teaching
+                  </h3>
+                  {courses.map((course) => {
+                    return (
+                      <div>
+                        <Link to={"/courses/" + course._id}>
+                          {course.courseName}
+                        </Link>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
           <div className="profile-right">

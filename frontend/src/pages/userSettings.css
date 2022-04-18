@@ -1,0 +1,142 @@
+.userSetting {
+  background-color: #152e34;
+  height: auto;
+}
+
+.userSetting-form {
+  color: #152e34;
+  width: 800px;
+  background-color: #f3efe9;
+  height: auto;
+  /* padding: 20px; */
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.userSetting h1 {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.setting-subheading {
+  text-align: left;
+  margin: 0px;
+  font-size: 22px;
+  font-weight: bolder;
+  padding: 15px 20px 0px;
+}
+
+.userSetting h5 {
+  color: black;
+  font-size: medium;
+  margin-bottom: 5px;
+}
+.setting-description {
+  text-align: left;
+  font-weight: lighter;
+  font-size: 14px;
+  margin-bottom: 8px;
+  padding: 0px 20px 0px;
+}
+
+.form-section {
+  background-color: white;
+  margin: 0px;
+  padding: 14px 20px 20px;
+}
+
+.userSetting-form .userSetting-btn {
+  background: #2b515c;
+  font-size: 12px;
+  color: white;
+  border-radius: 6px;
+  padding: 9px 12px 9px 12px;
+  height: 37px;
+  width: 175px;
+  margin-right: 10px;
+}
+
+.userSetting-form .userSetting-btn:hover {
+  background: #eca645;
+}
+
+.userSetting-form .form-inner-section {
+  display: flex !important;
+  flex-wrap: wrap;
+}
+
+.userSetting-form .userSetting-form-info {
+  width: 50% !important;
+  margin-bottom: 5px;
+}
+
+.userSetting-form-info select {
+  margin-left: 5px;
+  width: 50%;
+  margin-top: 5px;
+}
+
+.userSetting textarea {
+  width: 100%;
+  font-family: "Times";
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.userSetting-userType {
+  width: 100%;
+}
+
+.userSetting-userType select {
+  margin-left: 184px;
+  font-family: "Times";
+  width: 25%;
+  margin-bottom: 3px;
+}
+.userSetting-form .userSetting-pfp {
+  height: 250px;
+  width: 250px;
+  background-color: #bbb;
+  border-radius: 10%;
+  display: flex;
+  object-fit: cover;
+  position: absolute;
+  margin: 20px auto auto;
+  border: 10px solid white;
+}
+
+.userSetting-cover {
+  height: 250px;
+  width: 100%;
+  background-color: #bbb;
+  display: flex;
+  margin: auto;
+  object-fit: cover;
+}
+
+.userSetting-save-section {
+  text-align: right;
+  padding-top: 15px;
+  padding-bottom: 50px;
+}
+
+.userSetting p {
+  float: right;
+  text-align: right;
+  margin: auto;
+  display: block;
+  width: 100%;
+}
+
+.userSetting-top {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-section input {
+  margin-bottom: 4px;
+}

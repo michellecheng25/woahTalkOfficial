@@ -34,7 +34,10 @@ const registerUser = async (req, res) => {
       username: username.toLowerCase(),
       email: email.toLowerCase(),
       password: hashedPassword,
-      profilePicture: req.body.profilePicURl || "https://picsum.photos/250/250",
+      profilePicture:
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+      coverPicture:
+        "https://i.picsum.photos/id/180/1200/300.jpg?hmac=Df_92YaIFVykvDS9AyJd822spFaZUUki5doXg2Terdo",
     });
 
     const user = await newUser.save();

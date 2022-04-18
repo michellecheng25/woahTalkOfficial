@@ -2,7 +2,7 @@ const Post = require("../models/postModel");
 const User = require("../models/userModel");
 
 //@desc Get profile of a  user
-//@route POST /api/profiles/:username
+//@route GET /api/profiles/:username
 //@access Public
 const getUserInfo = async (req, res) => {
   const username = req.params.username;
@@ -20,7 +20,7 @@ const getUserInfo = async (req, res) => {
 };
 
 //@desc Get all posts of a user
-//@route POST /api/profiles/:username/posts
+//@route GET /api/profiles/:username/posts
 //@access Public
 const getUserPosts = async (req, res) => {
   const username = req.params.username;
@@ -52,7 +52,29 @@ const getUserPosts = async (req, res) => {
   }
 };
 
+//@desc Get profile of a  user
+//@route GET /api/profiles/:username/courses
+//@access PUBLIC
+const getUserCourses = async (req, res) => {
+  const username = req.params.username;
+
+  try {
+    const myCourses = await User.findOne({ username })
+      .select("courses")
+      .populate({
+        path: "courses",
+        model: "Course",
+      });
+
+    if (!myCourses) return res.status(404).json("User not found");
+    res.status(200).json(myCourses);
+  } catch (error) {
+    return res.status(404).json("Could not get user's courses");
+  }
+};
+
 module.exports = {
   getUserInfo,
   getUserPosts,
+  getUserCourses,
 };
