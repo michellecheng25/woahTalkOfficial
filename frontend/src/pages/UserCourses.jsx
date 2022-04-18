@@ -6,15 +6,22 @@ import UserContext from "../context/users/UserContext";
 import { MdOutlineAddCircle } from "react-icons/md";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
+import { Button } from "@material-ui/core";
+import { joinCourse } from "../context/users/UserActions";
 
 Modal.setAppElement("body");
 
 function UserCourses() {
   const [courses, setCourses] = useState([]);
   const token = JSON.parse(localStorage.getItem("token"));
-  const { user } = useContext(UserContext);
+  const { user, dispatch } = useContext(UserContext);
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [newCourse, setNewCourse] = useState(null);
+  const [newCourse, setNewCourse] = useState({
+    courseName: "",
+    language: "English",
+    level: "Novice",
+    description: "",
+  });
 
   useEffect(() => {
     getCourses();
@@ -35,21 +42,36 @@ function UserCourses() {
     setIsOpen(false);
   };
 
-  const createCourse = async () => {
-    if (!newCourse) toast.error("Create course info !");
-    else
-      await axios
-        .post("/api/courses", newCourse, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((response) => {
-          console.log(response.data);
-          setNewCourse(null);
-          setCourses((prev) => {
-            return [response.data, ...courses];
-          });
-        })
-        .catch(console.log);
+  const onChange = (e) => {
+    setNewCourse((prevState) => {
+      return {
+        ...prevState,
+        [e.target.name]: e.target.value,
+      };
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("submit");
+
+    await axios
+      .post("/api/courses", newCourse, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        setNewCourse({
+          courseName: "",
+          language: "English",
+          level: "Novice",
+          description: "",
+        });
+        joinCourse(response.data._id, dispatch);
+        toast.success("successfully create course!");
+        getCourses();
+      });
+
+    closeModal();
   };
 
   return (
@@ -80,7 +102,63 @@ function UserCourses() {
         onRequestClose={closeModal}
         style={customStyles}
       >
-        <h3>Create a new Course</h3>
+        <h3 style={{ textAlign: "center" }}>Create a new Course</h3>
+        <form className="createCourse" onSubmit={handleSubmit}>
+          <h5 style={{ marginTop: "10px" }}>Course name</h5>
+          <input
+            type="text"
+            name="courseName"
+            placeholder="course name"
+            onChange={onChange}
+            value={newCourse.courseName}
+            autoComplete="off"
+            required
+          />
+          <h5 style={{ marginTop: "10px" }}>
+            What is the target language of this course?
+          </h5>
+          <select
+            id="language"
+            name="language"
+            onChange={onChange}
+            value={newCourse.language}
+          >
+            <option value="English">English</option>
+            <option value="Chinese">Chinese</option>
+            <option value="Spanish">Spanish</option>
+            <option value="French">French</option>
+          </select>
+          <h5 style={{ marginTop: "10px" }}>What the level of this course?</h5>
+          <select
+            id="level"
+            name="level"
+            onChange={onChange}
+            value={newCourse.level}
+          >
+            <option value="Beginner">Novice</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </select>
+
+          <h5 style={{ marginTop: "10px" }}>Course Description</h5>
+          <textarea
+            type="text"
+            name="description"
+            placeholder="description"
+            rows="3"
+            style={{ width: "100%" }}
+            onChange={onChange}
+            value={newCourse.description}
+          />
+
+          <Button
+            type="submit"
+            variant="contained"
+            style={{ marginTop: "10px" }}
+          >
+            Submit
+          </Button>
+        </form>
       </Modal>
 
       <CourseResults courses={courses} />

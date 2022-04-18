@@ -32,6 +32,7 @@ function UserSettings() {
     courses: "",
     ...user,
   });
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const onChange = async (e) => {
     setUserSettingData((prevState) => {
@@ -44,15 +45,16 @@ function UserSettings() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setIsUpdating(true);
 
     let pfpUrl = user.profilePicture;
     let coverpicUrl = user.coverPicture;
 
-    if (pfp != userSettingData.profilePicture) {
+    if (pfp !== userSettingData.profilePicture) {
       console.log("uploading1");
       pfpUrl = await uploadFile(pfp, token);
     }
-    if (coverPic != userSettingData.coverPicture) {
+    if (coverPic !== userSettingData.coverPicture) {
       console.log("uploading2");
       coverpicUrl = await uploadFile(coverPic, token);
     }
@@ -72,6 +74,8 @@ function UserSettings() {
         toast.success("sucessfully updated profile");
       })
       .catch((error) => console.log(error.response.data));
+
+    setIsUpdating(false);
   };
 
   const cancelChanges = () => {
@@ -291,9 +295,14 @@ function UserSettings() {
           </div>
 
           <div className="userSetting-save-section">
-            <Button className="userSetting-btn" type="submit">
-              Save
+            <Button
+              className="userSetting-btn"
+              type="submit"
+              disabled={isUpdating ? true : false}
+            >
+              {isUpdating ? <CircularProgress size={30} /> : "Save"}
             </Button>
+
             <Button className="userSetting-btn" onClick={cancelChanges}>
               Cancel
             </Button>
