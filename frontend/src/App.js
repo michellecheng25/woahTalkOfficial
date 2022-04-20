@@ -16,6 +16,7 @@ import UserSettings from "./pages/UserSettings";
 import UserCourses from "./pages/UserCourses";
 import PostPage from "./pages/PostPage";
 import CoursePage from "./pages/CoursePage";
+import CreateCourseContent from "./pages/CreateCourseContent";
 import Chat from "./pages/Chat";
 
 function App() {
@@ -60,6 +61,16 @@ function App() {
 
               <Route path="/courses/:courseId" element={<PrivateRoute />}>
                 <Route path="/courses/:courseId" element={<CoursePage />} />
+              </Route>
+
+              <Route
+                path="/courses/:courseId/create-content"
+                element={<PrivateRoute />}
+              >
+                <Route
+                  path="/courses/:courseId/create-content"
+                  element={<CreateCourseContent />}
+                />
               </Route>
 
               <Route path="/chat" element={<PrivateRoute />}>

@@ -1,0 +1,21 @@
+.courseSidebar {
+  flex: 2;
+  padding-top: 20px;
+}
+
+.courseSidebar a {
+  padding: 15px 0px 15px 10px;
+  font-size: 20px;
+  display: block;
+  font-family: sans-serif !important;
+  color: #58686a;
+  font-weight: bold;
+}
+
+.courseSidebar a:hover {
+  background-color: rgb(236, 232, 225);
+}
+
+.courseSidebar .active {
+  color: black !important;
+}

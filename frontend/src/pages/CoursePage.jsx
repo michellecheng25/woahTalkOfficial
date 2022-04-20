@@ -1,12 +1,13 @@
 import Navbar from "../components/Navbar";
 import { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../context/users/UserContext";
 import NotFound from "./NotFound";
 import { RiAddBoxFill } from "react-icons/ri";
 import { Button } from "@material-ui/core";
 import { joinCourse, leaveCourse } from "../context/users/UserActions";
+import CourseSidebar from "../components/CourseSidebar";
 
 function CoursePage() {
   const { courseId } = useParams();
@@ -17,6 +18,7 @@ function CoursePage() {
   console.log(isJoined);
   const [joined, setJoined] = useState(isJoined);
   const token = JSON.parse(localStorage.getItem("token"));
+  const location = useLocation();
 
   useEffect(() => {
     getCourseInfo();
@@ -45,7 +47,11 @@ function CoursePage() {
       .post("api/courses/" + courseId + "/join", action, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then(setJoined(!joined));
+      .then((response) => {
+        console.log(response.data);
+        setJoined(!joined);
+      })
+      .catch(console.log);
 
     if (userAction === "join") joinCourse(courseId, dispatch);
     else leaveCourse(courseId, dispatch);
@@ -59,24 +65,38 @@ function CoursePage() {
       <Navbar />
       <div style={{ padding: "30px" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <h1>{course.courseName}</h1>
+          <h1 style={{ marginLeft: "30px" }}>{course.courseName}</h1>
 
           {user &&
             (user._id === course.creatorId ? (
-              <RiAddBoxFill
-                size={40}
-                style={{ marginLeft: "auto", cursor: "pointer" }}
-              />
-            ) : (
-              <Button
-                type="submit"
-                variant="contained"
-                style={{ marginLeft: "auto", cursor: "pointer" }}
-                onClick={joinACourse}
+              <Link
+                to={location.pathname + "/create-content"}
+                style={{
+                  marginLeft: "auto",
+                  cursor: "pointer",
+                  color: "black",
+                }}
               >
-                {joined ? "Leave Course" : "Join Course"}
-              </Button>
+                <RiAddBoxFill size={40} />
+              </Link>
+            ) : (
+              user.role === "Student" && (
+                <Button
+                  type="submit"
+                  variant="contained"
+                  style={{ marginLeft: "auto", cursor: "pointer" }}
+                  onClick={joinACourse}
+                >
+                  {joined ? "Leave Course" : "Join Course"}
+                </Button>
+              )
             ))}
+        </div>
+        <div style={{ display: "flex" }}>
+          <CourseSidebar currentActive={"Announcements"} />
+          <div style={{ flex: "10", padding: "40px 0px 20px 10px" }}>
+            content
+          </div>
         </div>
       </div>
     </div>

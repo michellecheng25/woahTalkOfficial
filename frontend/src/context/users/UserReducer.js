@@ -38,7 +38,7 @@ const UserReducer = (state, action) => {
         user: {
           ...state.user,
           following: state.user.following.filter(
-            (following) => following != action.payload
+            (following) => following !== action.payload
           ),
         },
       };
@@ -56,7 +56,7 @@ const UserReducer = (state, action) => {
         user: {
           ...state.user,
           courses: state.user.courses.filter(
-            (course) => course != action.payload
+            (course) => course !== action.payload
           ),
         },
       };
@@ -67,6 +67,8 @@ const UserReducer = (state, action) => {
           ...action.payload,
         },
       };
+    default:
+      return state;
   }
 };
 
