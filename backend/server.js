@@ -23,6 +23,7 @@ app.use("/api/profiles", require("./routes/profileRoute"));
 app.use("/api/courses", require("./routes/courseRoute"));
 app.use("/api/chat", require("./routes/conversationRoute"));
 app.use("/api/search", require("./routes/searchRoute"));
+app.use("/api/coursepage", require("./routes/coursePageRoute"));
 
 //serve frontend
 if (process.env.NODE_ENV === "production") {

@@ -18,6 +18,9 @@ import PostPage from "./pages/PostPage";
 import CoursePage from "./pages/CoursePage";
 import CreateCourseContent from "./pages/CreateCourseContent";
 import Chat from "./pages/Chat";
+import CourseMaterials from "./pages/CourseMaterials";
+import CourseAssignments from "./pages/CourseAssignments";
+import Assignment from "./pages/Assignment";
 
 function App() {
   return (
@@ -70,6 +73,46 @@ function App() {
                 <Route
                   path="/courses/:courseId/create-content"
                   element={<CreateCourseContent />}
+                />
+              </Route>
+
+              <Route
+                path="/courses/:courseId/course-materials"
+                element={<PrivateRoute />}
+              >
+                <Route
+                  path="/courses/:courseId/course-materials"
+                  element={<CourseMaterials />}
+                />
+              </Route>
+
+              <Route
+                path="/courses/:courseId/course-materials/:assignmentId"
+                element={<PrivateRoute />}
+              >
+                <Route
+                  path="/courses/:courseId/course-materials/:assignmentId"
+                  element={<Assignment />}
+                />
+              </Route>
+
+              <Route
+                path="/courses/:courseId/assignments"
+                element={<PrivateRoute />}
+              >
+                <Route
+                  path="/courses/:courseId/assignments"
+                  element={<CourseAssignments />}
+                />
+              </Route>
+
+              <Route
+                path="/courses/:courseId/assignments/:assignmentId"
+                element={<PrivateRoute />}
+              >
+                <Route
+                  path="/courses/:courseId/assignments/:assignmentId"
+                  element={<Assignment />}
                 />
               </Route>
 

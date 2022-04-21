@@ -1,6 +1,6 @@
 import Navbar from "../components/Navbar";
 import { useEffect, useState, useContext } from "react";
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../context/users/UserContext";
 import NotFound from "./NotFound";
@@ -8,25 +8,28 @@ import { RiAddBoxFill } from "react-icons/ri";
 import { Button } from "@material-ui/core";
 import { joinCourse, leaveCourse } from "../context/users/UserActions";
 import CourseSidebar from "../components/CourseSidebar";
+import Announcement from "../components/Announcement";
+import { ReactComponent as Teaching } from "../assets/svg/undraw_teaching_re_g7e3.svg";
 
+//annoucements displayed
 function CoursePage() {
   const { courseId } = useParams();
   const [course, setCourse] = useState(null);
   const { user, dispatch } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
   const isJoined = user.courses.includes(courseId);
-  console.log(isJoined);
   const [joined, setJoined] = useState(isJoined);
   const token = JSON.parse(localStorage.getItem("token"));
-  const location = useLocation();
+  const [courseAnnouncements, setCourseAnnouncements] = useState([]);
 
   useEffect(() => {
     getCourseInfo();
-  }, []);
+    getCourseAnnouncement();
+  }, [joined]);
 
   const getCourseInfo = async () => {
     await axios
-      .get("/api/courses/" + courseId)
+      .get("/api/coursepage/" + courseId)
       .then((response) => {
         setCourse(response.data);
         console.log(response.data);
@@ -34,6 +37,18 @@ function CoursePage() {
       .catch(console.log);
 
     setLoading(false);
+  };
+
+  const getCourseAnnouncement = async () => {
+    await axios
+      .get("/api/coursepage/" + courseId + "/announcements", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        setCourseAnnouncements(response.data);
+        console.log(response.data);
+      })
+      .catch(console.log);
   };
 
   const joinACourse = () => {
@@ -65,12 +80,16 @@ function CoursePage() {
       <Navbar />
       <div style={{ padding: "30px" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <h1 style={{ marginLeft: "30px" }}>{course.courseName}</h1>
+          <Link to={"/courses/" + courseId}>
+            <h1 style={{ color: "black", paddingLeft: "10px" }}>
+              {course.courseName}
+            </h1>
+          </Link>
 
           {user &&
             (user._id === course.creatorId ? (
               <Link
-                to={location.pathname + "/create-content"}
+                to={"/courses/" + courseId + "/create-content"}
                 style={{
                   marginLeft: "auto",
                   cursor: "pointer",
@@ -84,7 +103,12 @@ function CoursePage() {
                 <Button
                   type="submit"
                   variant="contained"
-                  style={{ marginLeft: "auto", cursor: "pointer" }}
+                  style={{
+                    marginLeft: "auto",
+                    cursor: "pointer",
+                    marginRight: "20px",
+                    marginBottom: "10px",
+                  }}
                   onClick={joinACourse}
                 >
                   {joined ? "Leave Course" : "Join Course"}
@@ -93,9 +117,27 @@ function CoursePage() {
             ))}
         </div>
         <div style={{ display: "flex" }}>
-          <CourseSidebar currentActive={"Announcements"} />
-          <div style={{ flex: "10", padding: "40px 0px 20px 10px" }}>
-            content
+          {isJoined && <CourseSidebar currentActive={"Announcements"} />}
+          <div style={{ flex: "8", padding: "20px" }}>
+            {isJoined ? (
+              <>
+                {courseAnnouncements.map((announcement) => {
+                  return (
+                    <Announcement
+                      key={announcement._id}
+                      announcement={announcement}
+                    />
+                  );
+                })}
+              </>
+            ) : (
+              <>
+                <Teaching style={{ margin: "0 auto", display: "block" }} />
+                <p style={{ textAlign: "center" }}>
+                  Join course to view course content
+                </p>
+              </>
+            )}
           </div>
         </div>
       </div>

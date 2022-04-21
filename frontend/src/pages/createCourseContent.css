@@ -1,0 +1,50 @@
+.create-content {
+  padding-top: 20px;
+  font-size: 20px;
+}
+
+.create-content input,
+.create-content select,
+.create-content textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 6px 0px 16px 0px;
+  font-size: 18px;
+  background-color: transparent;
+}
+
+.create-content-inline {
+  display: flex;
+}
+
+.create-content #folder {
+  width: 200px !important;
+  margin: 0px 20px !important;
+}
+.create-content #points {
+  width: 100px !important;
+  margin: 0px 20px !important;
+}
+
+.create-content #dueDate {
+  width: 200px !important;
+  display: inline-block !important;
+}
+
+.createCourseContentBtn {
+  font-size: 18px;
+  background-color: #04aa6d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  float: right;
+  margin: 0px 0px 5px 0px;
+}
+
+.createCourseContentBtn:hover {
+  background-color: #45a049;
+}

@@ -4,7 +4,7 @@ const Assignment = require("../models/assignmentModel");
 const { v4: uuidv4 } = require("uuid");
 
 //@desc GET an assignment from a course
-//@route GET /api/courses/:courseId/assignment
+//@route GET /api/courses/:courseId/assignments
 //@acess private
 const getAssignments = async (req, res) => {
   try {
@@ -31,7 +31,7 @@ const getAssignments = async (req, res) => {
 };
 
 //@desc Create an assignment for a course
-//@route POST /api/courses/:courseId/assignment
+//@route POST /api/courses/:courseId/assignments
 //@acess private
 const createAssignment = async (req, res) => {
   if (!req.body.title) return res.status(400).json("Please add a title ");
@@ -64,7 +64,7 @@ const createAssignment = async (req, res) => {
 };
 
 //@desc Gets an assignment for a course
-//@route GET /api/courses/:courseId/assignment/:assignmentId
+//@route GET /api/courses/:courseId/assignments/:assignmentId
 //@acess private
 const getAssignment = async (req, res) => {
   try {
@@ -89,7 +89,7 @@ const getAssignment = async (req, res) => {
 };
 
 //@desc Edit an assignment for a course
-//@route PUT /api/courses/:courseId/assignment/:assignmentId
+//@route PUT /api/courses/:courseId/assignments/:assignmentId
 //@acess private
 const editAssignment = async (req, res) => {
   try {
@@ -114,7 +114,7 @@ const editAssignment = async (req, res) => {
 };
 
 //@desc Delete an assignment for a course
-//@route DELETE /api/courses/:courseId/assignment/:assignmentId
+//@route DELETE /api/courses/:courseId/assignments/:assignmentId
 //@acess private
 const deleteAssignment = async (req, res) => {
   try {

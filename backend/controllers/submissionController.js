@@ -6,7 +6,7 @@ const Submission = require("../models/submissionModel");
 const { v4: uuidv4 } = require("uuid");
 
 //@desc GET submissions of an assignment
-//@route GET /api/courses/:courseId/assignment/:assignmentId/submissions
+//@route GET /api/courses/:courseId/assignments/:assignmentId/submissions
 //@acess private
 const getSubmissions = async (req, res) => {
   try {
@@ -36,7 +36,7 @@ const getSubmissions = async (req, res) => {
 };
 
 //@desc POST a submission of an assignment
-//@route POST /api/courses/:courseId/assignment/:assignmentId/submissions
+//@route POST /api/courses/:courseId/assignments/:assignmentId/submissions
 //@acess private
 const createSubmission = async (req, res) => {
   try {
@@ -72,7 +72,7 @@ const createSubmission = async (req, res) => {
 };
 
 //@desc GET submission of an assignment
-//@route GET /api/courses/:courseId/assignment/:assignmentId/submissions/:submissionId
+//@route GET /api/courses/:courseId/assignments/:assignmentId/submissions/:submissionId
 //@acess private
 const getSubmission = async (req, res) => {
   try {
@@ -105,7 +105,7 @@ const getSubmission = async (req, res) => {
 };
 
 //@desc Edit submission of an assignment
-//@route PUT /api/courses/:courseId/assignment/:assignmentId/submissions/:submissionId
+//@route PUT /api/courses/:courseId/assignments/:assignmentId/submissions/:submissionId
 //@acess private
 const editSubmission = async (req, res) => {
   try {
@@ -136,7 +136,7 @@ const editSubmission = async (req, res) => {
 };
 
 //@desc Delete submission of an assignment
-//@route DELETE /api/courses/:courseId/assignment/:assignmentId/submissions/:submissionId
+//@route DELETE /api/courses/:courseId/assignments/:assignmentId/submissions/:submissionId
 //@acess private
 const deleteSubmission = async (req, res) => {
   try {
@@ -163,7 +163,7 @@ const deleteSubmission = async (req, res) => {
 };
 
 //@desc  Grade a submission
-//@route PUT/api/courses/:courseId/assignment/:assignmentId/submissions/:submissionId/grade
+//@route PUT/api/courses/:courseId/assignments/:assignmentId/submissions/:submissionId/grade
 //@acess private
 const gradeSubmission = async (req, res) => {
   try {

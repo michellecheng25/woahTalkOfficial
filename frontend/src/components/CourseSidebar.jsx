@@ -1,21 +1,31 @@
 import "./courseSidebar.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 function CourseSidebar({ currentActive }) {
-  const location = useLocation();
+  const { courseId } = useParams();
 
   return (
     <div className="courseSidebar">
       <Link
-        to={location.pathname}
-        className={currentActive === "Announcements" && "active"}
+        to={"/courses/" + courseId}
+        className={currentActive === "Announcements" ? "active" : ""}
       >
         Announcements
       </Link>
 
-      <Link to={location.pathname + "/course-materials"}>Course Materials</Link>
+      <Link
+        to={"/courses/" + courseId + "/course-materials"}
+        className={currentActive === "Course Materials" ? "active" : ""}
+      >
+        Course Materials
+      </Link>
 
-      <Link to={location.pathname + "/assignments"}>Assignments</Link>
+      <Link
+        to={"/courses/" + courseId + "/assignments"}
+        className={currentActive === "Assignments" ? "active" : ""}
+      >
+        Assignments
+      </Link>
     </div>
   );
 }

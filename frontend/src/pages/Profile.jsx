@@ -46,9 +46,10 @@ function Profile() {
       .then((response) => {
         setPosts((prev) => {
           return [...prev, ...response.data];
-        }).catch(console.log);
+        });
         setHasMore(response.data.length > 0);
-      });
+      })
+      .catch(console.log);
   };
 
   const fetchCourses = async () => {
@@ -110,7 +111,7 @@ function Profile() {
                   </h3>
                   {courses.map((course) => {
                     return (
-                      <div>
+                      <div key={course._id}>
                         <Link to={"/courses/" + course._id}>
                           {course.courseName}
                         </Link>

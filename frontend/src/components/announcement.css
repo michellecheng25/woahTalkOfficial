@@ -1,0 +1,24 @@
+.announcement {
+  background-color: #e9e5df;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 7px;
+}
+
+.announcement .heading {
+  display: flex;
+}
+.announcement .title {
+  flex: 11;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.announcement .date {
+  flex: 1;
+}
+
+.announcement .description {
+  padding: 10px 0px 10px 0px;
+  white-space: pre-wrap;
+}
