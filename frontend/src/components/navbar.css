@@ -2,6 +2,8 @@
   background-color: white;
   border-bottom: 0.7px solid #e9e5df;
   border-bottom: 0.1px solid #ccc;
+  position: relative;
+  z-index: 999;
 }
 
 .navbar-container {
