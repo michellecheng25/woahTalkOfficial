@@ -182,7 +182,7 @@ function Assignment() {
           <div>{studentSubmission[0].content}</div>
         )}
 
-        {user.role === "Teacher" && (
+        {user.role === "Teacher" && assignment.folder === "Assignment" && (
           <div>
             <div style={{ marginTop: "20px" }}>All Submissions</div>
             {studentSubmission.length > 0 &&
