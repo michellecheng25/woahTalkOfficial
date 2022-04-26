@@ -33,11 +33,11 @@ const createConversation = async (req, res) => {
 //@acess private
 const getConversations = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id, "following");
+    const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json("users could not be found");
 
     const conversations = await Conversation.find({
-      userId: {
+      members: {
         $in: [user._id],
       },
     })

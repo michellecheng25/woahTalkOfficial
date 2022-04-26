@@ -17,7 +17,7 @@ import UserCourses from "./pages/UserCourses";
 import PostPage from "./pages/PostPage";
 import CoursePage from "./pages/CoursePage";
 import CreateCourseContent from "./pages/CreateCourseContent";
-import Chat from "./pages/Chat";
+import MessageScreen from "./pages/MessageScreen";
 import CourseMaterials from "./pages/CourseMaterials";
 import CourseAssignments from "./pages/CourseAssignments";
 import Assignment from "./pages/Assignment";
@@ -117,7 +117,7 @@ function App() {
               </Route>
 
               <Route path="/chat" element={<PrivateRoute />}>
-                <Route path="/chat" element={<Chat />} />
+                <Route path="/chat" element={<MessageScreen />} />
               </Route>
 
               <Route path="*" element={<NotFound />} />
