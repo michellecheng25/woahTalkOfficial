@@ -16,13 +16,13 @@ const createMessage = async (req, res) => {
 
     const savedMessage = await newMessage.save();
 
-    const result = await savedMessage.populate("sender", {
-      username: 1,
-      name: 1,
-      profilePicture: 1,
-    });
+    // const result = await savedMessage.populate("sender", {
+    //   username: 1,
+    //   name: 1,
+    //   profilePicture: 1,
+    // });
 
-    res.status(200).json(result);
+    res.status(200).json(savedMessage);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -36,7 +36,8 @@ const getMessages = async (req, res) => {
   try {
     const messages = await Message.find({
       conversationId: req.params.conversationId,
-    }).populate("sender", { username: 1, name: 1, profilePicture: 1 });
+    });
+    // .populate("sender", { username: 1, name: 1, profilePicture: 1 });
 
     res.status(200).json(messages);
   } catch (error) {

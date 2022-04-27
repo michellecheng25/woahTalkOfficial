@@ -5,19 +5,58 @@ import Message from "../components/Message";
 import { useState, useEffect, useContext, useRef } from "react";
 import UserContext from "../context/users/UserContext";
 import axios from "axios";
+import baseUrl from "../utils/baseUrl";
+import { io } from "socket.io-client";
 
 function MessageScreen() {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [arrivalMessage, setArrivalMessage] = useState(null);
   const { user } = useContext(UserContext);
   const scrollRef = useRef();
   const token = JSON.parse(localStorage.getItem("token"));
+  const socket = useRef();
 
   useEffect(() => {
+    if (!socket.current) socket.current = io(baseUrl);
+
+    if (socket.current) {
+      socket.current.emit("addUser", user._id);
+    }
+
+    socket.current.on("getMessage", (data) => {
+      console.log("setting arrival message");
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+
     getConversations();
   }, []);
+
+  useEffect(() => {
+    console.log("arrival");
+
+    if (arrivalMessage && currentChat) {
+      for (const [index, member] of Object.entries(currentChat.members)) {
+        console.log(member);
+
+        if (member._id === arrivalMessage.sender) {
+          console.log("new message");
+          console.log(arrivalMessage);
+          setMessages((prev) => {
+            return [...prev, arrivalMessage];
+          });
+        }
+      }
+    }
+  }, [arrivalMessage, currentChat]);
+
+  //console.log(messages);
 
   const getConversations = async () => {
     try {
@@ -32,8 +71,7 @@ function MessageScreen() {
   };
 
   const getMessages = async (conversation) => {
-    console.log(conversation);
-    setCurrentChat(conversation._id);
+    setCurrentChat(conversation);
     try {
       const res = await axios.get(
         "/api/chat/" + conversation._id + "/messages",
@@ -50,25 +88,42 @@ function MessageScreen() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const message = {
-      conversationId: currentChat,
-      sender: user._id,
-      text: newMessage,
-    };
+    if (newMessage.trim().length > 0) {
+      const message = {
+        conversationId: currentChat._id,
+        sender: user._id,
+        text: newMessage,
+      };
 
-    try {
-      const res = await axios.post(
-        `api/chat/${currentChat}/messages`,
-        message,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+      console.log("find reciever");
+      console.log(currentChat.members);
+
+      const reciever = currentChat.members.find(
+        (member) => member._id !== user._id
       );
 
-      setMessages([...messages, res.data]);
-      setNewMessage("");
-    } catch (error) {
-      console.log(error);
+      console.log(reciever);
+
+      socket.current.emit("sendMessage", {
+        senderId: user._id,
+        recieverId: reciever._id,
+        text: newMessage,
+      });
+
+      try {
+        const res = await axios.post(
+          `api/chat/${currentChat._id}/messages`,
+          message,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        setMessages([...messages, res.data]);
+        setNewMessage("");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -82,13 +137,16 @@ function MessageScreen() {
       <div className="messenger">
         <div className="chatMenu">
           <div className="chatMenuWrapper">
-            <input placeholder="Search for friends" className="chatMenuInput" />
             {conversations.map((conversation) => (
               <div
                 key={conversation._id}
                 onClick={() => getMessages(conversation)}
               >
-                <Conversation conversation={conversation} CurrentUser={user} />
+                <Conversation
+                  key={conversation._id}
+                  conversation={conversation}
+                  currentUser={user}
+                />
               </div>
             ))}
           </div>
@@ -100,11 +158,13 @@ function MessageScreen() {
                 <div className="chatBoxTop">
                   {messages.map((message) => {
                     return (
-                      <div ref={scrollRef}>
+                      <div ref={scrollRef} key={message._id}>
                         <Message
                           key={message._id}
                           message={message}
-                          own={message.sender._id === user._id}
+                          conversation={currentChat}
+                          currentUser={user}
+                          own={message.sender === user._id}
                         />
                       </div>
                     );

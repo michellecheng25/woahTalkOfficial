@@ -1,9 +1,9 @@
 import "./conversation.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-function Conversation({ conversation, CurrentUser }) {
+function Conversation({ conversation, currentUser }) {
   const [participant, setParticipant] = useState(
-    conversation.members.find((member) => member._id !== CurrentUser._id)
+    conversation.members.find((member) => member._id !== currentUser._id)
   );
 
   return (
