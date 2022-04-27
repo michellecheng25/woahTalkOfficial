@@ -5,12 +5,14 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import UserContext from "../context/users/UserContext";
 import { unfollow, follow } from "../context/users/UserActions";
+import { useNavigate } from "react-router-dom";
 
 function ConnectBtns({ foundUser, followingList }) {
   const isfollowing = followingList.includes(foundUser._id);
   const [following, setFollowing] = useState(isfollowing);
   const token = JSON.parse(localStorage.getItem("token"));
   const { user, dispatch } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const onFollow = async () => {
     const userAction = following ? "unfollow" : "follow";
@@ -34,8 +36,20 @@ function ConnectBtns({ foundUser, followingList }) {
     }
   };
 
-  const onChat = () => {
-    console.log("chat " + foundUser.username);
+  const onChat = async () => {
+    try {
+      await axios.post(
+        "api/chat",
+        { username: foundUser.username },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      navigate("/chat");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

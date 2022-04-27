@@ -16,11 +16,20 @@ const createConversation = async (req, res) => {
   const reciever = await User.findOne({ username });
   if (!reciever) return res.status(404).json("user not found");
 
-  const newConversation = new Conversation({
-    members: [sender._id, reciever._id],
+  const existingConversation = await Conversation.find({
+    $or: [
+      { members: [sender._id, reciever._id] },
+      { members: [reciever._id, sender._id] },
+    ],
   });
 
+  if (existingConversation) return res.status(201).json(existingConversation);
+
   try {
+    const newConversation = new Conversation({
+      members: [sender._id, reciever._id],
+    });
+
     const createdConversation = await newConversation.save();
     res.status(201).json(createdConversation);
   } catch (error) {
