@@ -23,7 +23,8 @@ const createConversation = async (req, res) => {
     ],
   });
 
-  if (existingConversation) return res.status(201).json(existingConversation);
+  if (existingConversation.length > 0)
+    return res.status(201).json(existingConversation);
 
   try {
     const newConversation = new Conversation({

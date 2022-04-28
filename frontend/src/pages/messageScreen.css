@@ -1,5 +1,5 @@
 .messenger {
-  height: calc(100vh - 70px);
+  height: 92.5vh;
   display: flex;
   background-color: white !important;
 }
@@ -28,13 +28,13 @@
 }
 
 .chatBoxTop {
-  height: 670px;
+  height: 79vh;
   overflow-y: scroll;
   /* padding-right: 10px; */
 }
 
 .chatBoxBottom {
-  margin-top: 5px;
+  height: 12vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -42,7 +42,7 @@
 
 .chatBoxInput {
   width: 92.5%;
-  height: 70px;
+  height: 100%;
   padding: 10px;
 }
 
