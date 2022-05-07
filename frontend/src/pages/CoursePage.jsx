@@ -116,6 +116,7 @@ function CoursePage() {
               )
             ))}
         </div>
+        
         <div style={{ display: "flex" }}>
           {isJoined && <CourseSidebar currentActive={"Announcements"} />}
           <div style={{ flex: "8", padding: "20px" }}>

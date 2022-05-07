@@ -122,7 +122,7 @@ function UserSettings() {
         <form className="userSetting-form" onSubmit={onSubmit}>
           <div className="userSetting-top">
             <img src={pfp} alt="pic" className="userSetting-pfp" />
-            )
+            
             <img src={coverPic} alt="Cover" className="userSetting-cover" />
           </div>
           <h1>Profile Setting</h1>

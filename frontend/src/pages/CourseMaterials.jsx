@@ -6,6 +6,7 @@ import UserContext from "../context/users/UserContext";
 import NotFound from "./NotFound";
 import { RiAddBoxFill } from "react-icons/ri";
 import CourseSidebar from "../components/CourseSidebar";
+import CourseHeader from "../components/CourseHeader";
 import { dateConversionNums } from "../utils/dateConversion";
 
 function CourseMaterials() {
@@ -51,6 +52,16 @@ function CourseMaterials() {
   return (
     <div>
       <Navbar />
+      <div style= {{margin: "10px auto", display: "block"}} > 
+        <div style={{margin: "10px auto", display: "block"}}>
+          <h1 style={{ color: "black", paddingLeft: "10px" }}>
+              {course.courseName}               
+          </h1>
+          <p>{course.description}</p>
+          </div>
+      </div>
+      <CourseHeader currentActive={"Course Materials"} />
+
       <div style={{ padding: "30px" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <Link to={"/courses/" + courseId}>
@@ -71,22 +82,31 @@ function CourseMaterials() {
             </Link>
           )}
         </div>
-        <div style={{ display: "flex" }}>
+
+
+        <div style={{ display: "flex",  }}>
           <CourseSidebar currentActive={"Course Materials"} />
           <div
             style={{
               flex: "8",
-              padding: "20px",
+              padding: "28px",
               fontSize: "20px",
+              backgroundColor: "white",
+              borderRadius: "15px",
+              marginLeft: "10px"
             }}
           >
-            <div style={{ display: "flex", borderBottom: "1px solid black" }}>
-              <div style={{ flex: "10", fontWeight: "bold" }}>Name</div>
-              <div style={{ flex: "2", fontWeight: "bold" }}>Uploaded</div>
+            <div style={{ display: "flex", marginBottom: "9px" }}>
+              <div style={{ flex: "10", fontWeight: "bold", marginLeft: "10px" }}>Name</div>
+              <div style={{ flex: "2", fontWeight: "bold", textAlign: "center" }}>Uploaded</div>
             </div>
+
+            <hr style={{border: "1.5px solid black", borderRadius: "5px", marginBottom: "5px"}}></hr>
+
             {courseMaterials.map((material) => {
               const date = dateConversionNums(material.updatedAt);
               return (
+                <>
                 <Link
                   to={
                     "/courses/" + courseId + "/course-materials/" + material._id
@@ -95,14 +115,16 @@ function CourseMaterials() {
                   style={{
                     display: "flex",
                     padding: "15px 0px 15px 0px",
-                    borderBottom: "1px solid black",
+                    // borderBottom: "1px solid black",
                     fontSize: "20px",
                     color: "black",
                   }}
                 >
-                  <div style={{ flex: "10" }}>{material.title}</div>
-                  <div style={{ flex: "2" }}>{date}</div>
+                  <div style={{ flex: "10", fontSize: "18px", marginLeft: "10px"}}>{material.title}</div>
+                  <div style={{ flex: "2", textAlign:"center", fontSize: "18px"}}>{date}</div>
                 </Link>
+                <hr style={{border: "1.5px solid #d6cfc5", borderRadius: "5px", marginBottom: "5px"}}></hr>
+                </>
               );
             })}
           </div>
