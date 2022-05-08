@@ -1,23 +1,29 @@
 .courseBox {
   color: black;
-  width: 293.33px;
+  width: 310.95px;
   padding: 10px;
   border: 1px solid black;
   border-radius: 10px;
-  margin: 20px;
-  background-color: rgb(255, 255, 255);
-  box-shadow: 2px 2px #9e9c9cb3;
+  margin: 10px;
+  background-color: #ffffff;
+  /* box-shadow: 2px 2px #9e9c9cb3; */
   position: relative;
-  height: 200px;
+  height: 240px;
 }
 
 .courseBox .courseName,
 .courseBox .courseDescription {
   padding: 10px 5px 0px;
-  display: -webkit-box;
+}
+
+.courseDescription{
+    /* Display weird border line  */
+  /* display: -webkit-box;
   -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
-  overflow: scroll;
+  -webkit-box-orient: vertical; */
+  /* overflow: scroll; */
+  overflow: auto;
+  height: 136.5px;
 }
 
 .courseBox a {
@@ -27,7 +33,7 @@
 .courseBox .join-btn {
   margin: 10px 0px 0px 0px;
   padding: 10px;
-  border-top: 1px solid black;
+  /* border-top: 1px solid black; */
   width: 100%;
   text-align: center;
   position: absolute;

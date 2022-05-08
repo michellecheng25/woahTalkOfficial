@@ -4,10 +4,14 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../context/users/UserContext";
 import NotFound from "./NotFound";
-import { RiAddBoxFill } from "react-icons/ri";
+import { MdNoteAdd } from "react-icons/md";
+import {BsFileEarmarkPdf} from "react-icons/bs";
 import CourseSidebar from "../components/CourseSidebar";
 import CourseHeader from "../components/CourseHeader";
 import { dateConversionNums } from "../utils/dateConversion";
+import { Divider } from "@material-ui/core";
+import {MdDelete} from "react-icons/md";
+
 
 function CourseMaterials() {
   const { courseId } = useParams();
@@ -52,83 +56,103 @@ function CourseMaterials() {
   return (
     <div>
       <Navbar />
-      <div style= {{margin: "10px auto", display: "block"}} > 
-        <div style={{margin: "10px auto", display: "block"}}>
-          <h1 style={{ color: "black", paddingLeft: "10px" }}>
+      <div style= {{margin: "25px auto", display: "flex", flexDirection: "column", width: "1000px",}} > 
+        <div style= {{display: "flex", marginBottom: "4px"}}>
+          <h1 style={{ color: "black", marginRight: "10px", fontSize: "48px"}}>
               {course.courseName}               
           </h1>
-          <p>{course.description}</p>
-          </div>
+          {course.level === "novice" && <p style= {{backgroundColor: "#F8CB86", borderRadius: "10px", color: "white", padding: "7px 7px 7px 7px", height: "30px", fontSize: "14px", marginTop: "13px", marginRight: "10px"}}>Novice</p>}
+          {course.level === "intermediate" && <p style= {{backgroundColor: "#ECA645", borderRadius: "10px", color: "white", padding: "7px 7px 7px 7px", height: "30px", fontSize: "14px", marginTop: "13px", marginRight: "10px"}}>Intermediate</p>}
+          {course.level === "advanced" && <p style= {{backgroundColor: "#336D49", borderRadius: "10px", color: "white", padding: "7px 7px 7px 7px", height: "30px", fontSize: "14px", marginTop: "13px", marginRight: "10px"}}>Advanced</p>}
+
+
+          {course.language === "english" && <p style= {{backgroundColor: "#547DDE", borderRadius: "10px", color: "white", padding: "7px 7px 7px 7px", height: "30px", fontSize: "14px", marginTop: "13px", marginRight: "10px"}}>English</p>}
+          {course.language === "chinese" && <p style= {{backgroundColor: "#547DDE", borderRadius: "10px", color: "white", padding: "7px 7px 7px 7px", height: "30px", fontSize: "14px", marginTop: "13px", marginRight: "10px"}}>Chinese</p>}
+          {course.language === "french" && <p style= {{backgroundColor: "#547DDE", borderRadius: "10px", color: "white", padding: "7px 7px 7px 7px", height: "30px", fontSize: "14px", marginTop: "13px", marginRight: "10px"}}>French</p>}
+          {course.language === "spanish" && <p style= {{backgroundColor: "#547DDE", borderRadius: "10px", color: "white", padding: "7px 7px 7px 7px", height: "30px", fontSize: "14px", marginTop: "13px", marginRight: "10px"}}>Spanish</p>}
+
       </div>
-      <CourseHeader currentActive={"Course Materials"} />
+       
+        <p style= {{fontWeight: "normal"}}>{course.description}</p>
+        <CourseHeader currentActive={"Course Materials"} />         
+         {user && user._id === course.creatorId ? (
+           <Link
+             to={"/courses/" + courseId + "/create-content"}
+             style={{
+               marginRight: "auto",
+               cursor: "pointer",
+               color: "black",
+               width: "33%", 
+               display: "block", 
+               marginTop: "25px",
+               flexWrap: "wrap",
+               marginBottom: "10px",
 
-      <div style={{ padding: "30px" }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <Link to={"/courses/" + courseId}>
-            <h1 style={{ color: "black", paddingLeft: "10px" }}>
-              {course.courseName}
-            </h1>
-          </Link>
-          {user && user._id === course.creatorId && (
-            <Link
-              to={"/courses/" + courseId + "/create-content"}
-              style={{
-                marginLeft: "auto",
-                cursor: "pointer",
-                color: "black",
-              }}
-            >
-              <RiAddBoxFill size={40} />
-            </Link>
-          )}
-        </div>
+             }}
+           >
+             <div style={{backgroundColor:"#234831", height: "68px", borderRadius: "10px", padding: "5px", width: "324", border: "1px solid #234831", display: "flex"}}>
+               <div style= {{marginTop: "10px"}}> <MdNoteAdd size={40} style= {{padding: "6px", color: "white", marginBottom: "0px !important"}} /> </div>
+               <div style={{color: "white", fontWeight: "bold", marginTop: "21px"}}> Add a course file </div>
+             </div>
+           </Link>
+         ):
+             (<div style={{marginTop:"25px"}}> </div>)
+         }
 
-
-        <div style={{ display: "flex",  }}>
-          <CourseSidebar currentActive={"Course Materials"} />
-          <div
-            style={{
-              flex: "8",
-              padding: "28px",
-              fontSize: "20px",
-              backgroundColor: "white",
-              borderRadius: "15px",
-              marginLeft: "10px"
-            }}
-          >
-            <div style={{ display: "flex", marginBottom: "9px" }}>
-              <div style={{ flex: "10", fontWeight: "bold", marginLeft: "10px" }}>Name</div>
-              <div style={{ flex: "2", fontWeight: "bold", textAlign: "center" }}>Uploaded</div>
-            </div>
-
-            <hr style={{border: "1.5px solid black", borderRadius: "5px", marginBottom: "5px"}}></hr>
-
+          <div style={{display: "flex", flexWrap: "wrap"}}>
             {courseMaterials.map((material) => {
               const date = dateConversionNums(material.updatedAt);
               return (
                 <>
-                <Link
-                  to={
-                    "/courses/" + courseId + "/course-materials/" + material._id
-                  }
-                  key={material._id}
-                  style={{
-                    display: "flex",
-                    padding: "15px 0px 15px 0px",
-                    // borderBottom: "1px solid black",
+                <div style={{
                     fontSize: "20px",
                     color: "black",
-                  }}
-                >
-                  <div style={{ flex: "10", fontSize: "18px", marginLeft: "10px"}}>{material.title}</div>
-                  <div style={{ flex: "2", textAlign:"center", fontSize: "18px"}}>{date}</div>
-                </Link>
-                <hr style={{border: "1.5px solid #d6cfc5", borderRadius: "5px", marginBottom: "5px"}}></hr>
+                    width: "33%", 
+                    display: "block", 
+                    flexWrap: "wrap"
+                  }}>
+                <div style = {{fontSize: "18px",  borderRadius: "10px", padding: "6px", marginBottom:"10px", marginRight: "5px",
+                    border: "1px solid black", maxHeight: "190px", backgroundColor: "#D7E0D5", display: "flex"}}>
+                    {/* THERE ARE TWO LINK TO THE COURSE MATERIAL PAGE BECAUSE THE DELETE NEEDS TO BE TRIGGER TOO */}
+                    <Link
+                      to={
+                        "/courses/" + courseId + "/course-materials/" + material._id
+                      }
+                      key={material._id}
+                      style = {{color:"black"}}
+                    > 
+                      <div style={{marginTop: "14px", marginRight: "10px", paddingBottom: "4px", paddingLeft: "5px", marginBottom: "0px"}}>
+                        <BsFileEarmarkPdf size={30}/>
+                      </div>  
+                    </Link> 
+                    <div style={{marginTop: "10px", marginRight: "8px", fontWeight: "bold", width: "100%", }}>
+                      <div style= {{display:"flex", marginRight: "0px", }}>
+                        <div style={{flex: "8", textOverflow: "hidden", width: "80px", overflow: "hidden", whiteSpace: "nowrap"}}>
+                          <Link
+                              to={
+                                "/courses/" + courseId + "/course-materials/" + material._id
+                              }
+                              key={material._id}
+                              style={{color: "black"}}
+                            > 
+                            {material.title}  </Link>
+                          </div>
+                       
+                        {user && user._id === course.creatorId && (
+                          <div style={{flex: "2"}}> <MdDelete style={{color: "#336D49", marginLeft:"10px"}}/>
+                        </div>)}
+                      
+                      </div> 
+                      <p style={{fontSize: "13px",fontWeight: "normal", textAlign: "right", marginTop: "8px"}}>Uploaded on {date}</p>
+                  </div>
+                </div>
+                  
+                
+                </div>
                 </>
               );
             })}
           </div>
-        </div>
       </div>
     </div>
   );

@@ -225,3 +225,121 @@ function CreateCourseContent() {
 }
 
 export default CreateCourseContent;
+
+// <Modal
+//         isOpen={modalIsOpen}
+//         onRequestClose={closeModal}
+//         style={customStyles}
+//       >
+//         {/* TITLE OF THE MODAL: THE COURSE NAME = {course.courseName} */}
+//         <h2 style={{ textAlign: "center", color: "#234831", marginBottom: "10px" }}>ENG 101</h2>   
+//         <form className="createCourse" onSubmit={handleSubmit}>
+//           <div style={customStyles.contentWrapper}>
+//             {/* ASK TEACHER WHAT FOLDER IS IT? ANNOUNCEMENT? ASSIGNMENT? COURSE MATERIAL?  */}
+//             <div style={customStyles.contentFormat}>
+//                 <h5 style={{marginTop: "8.5px", alignItems: "center"}}>Folder:</h5>
+//                 <select
+//                 id="folder"
+//                 name="folder"
+//                 onChange={onChange}
+//                 value={assignment.folder}
+//                 style = {{marginLeft: "10px", borderRadius: "10px", paddingLeft: "4px", paddingTop: "4px", textAlign: "Center", paddingBottom: "5px", border: "1.9px solid #58716C", color: "#58716C"}}
+//               >
+//                <option value="Announcement">Announcement</option>
+//                 <option value="Course Material">Course Material</option>
+//                 <option value="Assignment">Assignment</option>
+
+//               </select>
+//             </div> 
+
+//             {/* ASK TEACHER WHAT FOR THE TITLE*/}
+//             <div style={customStyles.contentFormat}>
+//                   <h5 style={{marginTop: "10px", alignItems: "center", marginRight: "15px", }}>Title:</h5>
+//                   <input
+//                   type="text"
+//                   name="courseName"
+//                   // placeholder="Course name"
+//                   onChange={onChange}
+//                   value={assignment.title}
+//                   autoComplete="off"
+//                   style = {{marginLeft: "10px", paddingLeft: "10px", paddingTop: "4px", paddingBottom: "4px",
+//                   width: "120px",  borderRadius: "10px",  border: "1.9px solid #58716C"}}
+//                   required
+//                 /> 
+//             </div>
+//             {assignment.folder === "Assignment" && (
+//               /* DATE PICKER AND POINT */
+//               <div style={customStyles.contentFormat}>
+//                 {/* DATE PICKER */}
+//                 <h5 style={{ marginTop: "8.5px" }}>
+//                   Due Date
+//                 </h5>
+            
+//                 <DatePicker
+//                   id="dueDate"
+//                   // className = {customStyles.datePicker}
+//                   selected={dueDate}
+//                   onChange={(date) => setDueDate(date)}
+//                   timeInputLabel="Time:"
+//                   dateFormat="MM/dd/yyyy h:mm aa"
+//                   minDate={new Date()}
+//                   // style={{backgroundColor: "red !important"}}
+//                   showTimeInput
+//                   // wrapperClassName="datePicker"
+//                 />
+
+//                 {/* POINT */}
+//                 <h5 style={{ marginTop: "8.5px", marginLeft: "20px" }}>Points</h5>
+//                 <input
+//                     id="points"
+//                     type="number"
+//                     name="totalPOints"
+//                     autoComplete="off"
+//                     placeholder="100"
+//                     onChange={onChange}
+//                     value={assignment.points}
+//                     style = {{marginLeft: "10px", paddingLeft: "10px", paddingTop: "4px", paddingBottom: "4px",
+//                     width: "120px",  borderRadius: "10px",  border: "1.9px solid #58716C"}}
+//                   /> 
+                  
+//               </div>
+//             )}
+         
+//           {assignment.folder !== "Announcement" && (
+//             /* FILE UPLOAD */
+//             <div style={customStyles.contentFormat}>
+//                 <h5 style={{ marginTop: "8.5px" }}>Upload a file:</h5>
+//                 <input
+//                       type="file"
+//                       name="uploads"
+//                       id="upload"
+//                       onChange={handleFileInput}
+//                     />
+//             </div>
+//           )}
+
+//           {/* DESCRIPTION INPUT */}
+//           <h5 style={{ marginTop: "8px", color: "#152e34" }}>Description: </h5>
+//           <textarea
+//             type="text"
+//             name="description"
+//             rows="3"
+//             style={{ width: "100%", marginTop: "10px", padding:"10px", borderRadius: "10px",  border: "1.9px solid #58716C" }}
+//             onChange={(e) => {
+//                 setInputHeight(e, "200px");
+//                 onChange(e);
+//               }}
+//             value={assignment.description}
+//           />
+//           </div>
+
+//           <Button
+//             type="submit"
+//             className="createCourseContentBtn"
+//             disabled={isCreatingAssigment ? true : false}
+//             style={{  margin: "10px auto", display: "block", backgroundColor: "#152e34", color: "white", borderRadius: "10px", width: "293.33px" }}
+//           >
+//             {isCreatingAssigment ? <CircularProgress /> : "Submit"}
+//           </Button>
+//         </form>
+//       </Modal>

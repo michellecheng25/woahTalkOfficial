@@ -4,7 +4,6 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import UserContext from "../context/users/UserContext";
 import { CgAddR } from "react-icons/cg";
-
 import Modal from "react-modal";
 import { toast } from "react-toastify";
 import { Button } from "@material-ui/core";
@@ -84,7 +83,7 @@ function UserCourses() {
             display: "flex",
             alignItems: "center",
             margin: "20px auto",
-            maxWidth: "293.33px",
+            maxWidth: "310px",
             border: "1px solid #152E34",
             borderRadius: "10px",
             padding: "15px",
@@ -98,12 +97,12 @@ function UserCourses() {
           <span style={{marginLeft: "10px", fontWeight: "bold" }}>Create New Course </span>
         </div>
       )}
-
+        
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
-      >
+        >
         <h2 style={{ textAlign: "center", color: "#234831", marginBottom: "10px" }}>Create New Course</h2>
         <form className="createCourse" onSubmit={handleSubmit}>
           <div style={customStyles.contentWrapper}>
@@ -174,8 +173,8 @@ function UserCourses() {
             Publish
           </Button>
         </form>
-      </Modal>
-
+      </Modal> 
+      
       <CourseResults courses={courses} />
     </div>
   );
@@ -208,5 +207,15 @@ const customStyles = {
     height: "auto",
     margin: "5px auto auto",
     display: "flex",
+  }, 
+  datePicker:{
+    marginLeft: "10px", 
+    borderRadius: "10px", 
+    paddingLeft: "4px", 
+    paddingTop: "4px", 
+    textAlign: "Center", 
+    paddingBottom: "5px", 
+    border: "1.9px solid #58716C", 
+    color: "#58716C"
   }
 };
