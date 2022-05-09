@@ -69,9 +69,8 @@ function UserCourses() {
         joinCourse(response.data._id, dispatch);
         toast.success("successfully create course!");
         getCourses();
+        closeModal();
       });
-
-    closeModal();
   };
 
   return (
@@ -89,38 +88,56 @@ function UserCourses() {
             padding: "15px",
             backgroundColor: "rgb(245, 250, 250)",
             cursor: "pointer",
-            textAlign: "center"
+            textAlign: "center",
           }}
           onClick={openModal}
         >
-          <CgAddR size={30} style={{color: "#152E34", marginLeft:"32px"}} />
-          <span style={{marginLeft: "10px", fontWeight: "bold" }}>Create New Course </span>
+          <CgAddR size={30} style={{ color: "#152E34", marginLeft: "32px" }} />
+          <span style={{ marginLeft: "10px", fontWeight: "bold" }}>
+            Create New Course{" "}
+          </span>
         </div>
       )}
-        
+
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
+      >
+        <h2
+          style={{
+            textAlign: "center",
+            color: "#234831",
+            marginBottom: "10px",
+          }}
         >
-        <h2 style={{ textAlign: "center", color: "#234831", marginBottom: "10px" }}>Create New Course</h2>
+          Create New Course
+        </h2>
         <form className="createCourse" onSubmit={handleSubmit}>
           <div style={customStyles.contentWrapper}>
             <div style={customStyles.contentFormat}>
-                <h5 style={{marginTop: "8.5px", alignItems: "center"}}>Course Name:</h5>
-                <input
-                  type="text"
-                  name="courseName"
-                  // placeholder="Course name"
-                  onChange={onChange}
-                  value={newCourse.courseName}
-                  autoComplete="off"
-                  style = {{marginLeft: "10px", paddingLeft: "10px", paddingTop: "4px", paddingBottom: "4px", borderRadius: "10px",  border: "1.9px solid #58716C"}}
-                  required
-                />
-            </div>  
-          <div style={customStyles.contentFormat}>
-
+              <h5 style={{ marginTop: "8.5px", alignItems: "center" }}>
+                Course Name:
+              </h5>
+              <input
+                type="text"
+                name="courseName"
+                // placeholder="Course name"
+                onChange={onChange}
+                value={newCourse.courseName}
+                autoComplete="off"
+                style={{
+                  marginLeft: "10px",
+                  paddingLeft: "10px",
+                  paddingTop: "4px",
+                  paddingBottom: "4px",
+                  borderRadius: "10px",
+                  border: "1.9px solid #58716C",
+                }}
+                required
+              />
+            </div>
+            <div style={customStyles.contentFormat}>
               <h5 style={{ marginTop: "8.5px" }}>
                 What is the target language of this course?
               </h5>
@@ -129,7 +146,16 @@ function UserCourses() {
                 name="language"
                 onChange={onChange}
                 value={newCourse.language}
-                style = {{marginLeft: "10px", borderRadius: "10px", paddingLeft: "4px", paddingTop: "4px", textAlign: "Center", paddingBottom: "5px", border: "1.9px solid #58716C", color: "#58716C"}}
+                style={{
+                  marginLeft: "10px",
+                  borderRadius: "10px",
+                  paddingLeft: "4px",
+                  paddingTop: "4px",
+                  textAlign: "Center",
+                  paddingBottom: "5px",
+                  border: "1.9px solid #58716C",
+                  color: "#58716C",
+                }}
               >
                 <option value="English">English</option>
                 <option value="Chinese">Chinese</option>
@@ -137,30 +163,49 @@ function UserCourses() {
                 <option value="French">French</option>
               </select>
 
-              <h5 style={{ marginTop: "8.5px", marginLeft: "20px" }}>What the level of this course?</h5>
+              <h5 style={{ marginTop: "8.5px", marginLeft: "20px" }}>
+                What the level of this course?
+              </h5>
               <select
                 id="level"
                 name="level"
                 onChange={onChange}
                 value={newCourse.level}
-                style = {{marginLeft: "10px", borderRadius: "10px", paddingLeft: "4px", paddingTop: "4px", paddingBottom: "5px", border: "1.9px solid #58716C", color: "#58716C"}}
+                style={{
+                  marginLeft: "10px",
+                  borderRadius: "10px",
+                  paddingLeft: "4px",
+                  paddingTop: "4px",
+                  paddingBottom: "5px",
+                  border: "1.9px solid #58716C",
+                  color: "#58716C",
+                }}
               >
                 <option value="Beginner">Novice</option>
                 <option value="Intermediate">Intermediate</option>
                 <option value="Advanced">Advanced</option>
               </select>
-                
             </div>
-
           </div>
-          
-          <h5 style={{ marginTop: "8px", color: "#152e34" }}>Course Description: </h5>
-          <p style={{ marginTop: "2px", color: "#58716C", fontSize: "13px" }}>The description your write below will help students decide if your course is the one for them.</p>
+
+          <h5 style={{ marginTop: "8px", color: "#152e34" }}>
+            Course Description:{" "}
+          </h5>
+          <p style={{ marginTop: "2px", color: "#58716C", fontSize: "13px" }}>
+            The description your write below will help students decide if your
+            course is the one for them.
+          </p>
           <textarea
             type="text"
             name="description"
             rows="3"
-            style={{ width: "100%", marginTop: "10px", padding:"10px", borderRadius: "10px",  border: "1.9px solid #58716C" }}
+            style={{
+              width: "100%",
+              marginTop: "10px",
+              padding: "10px",
+              borderRadius: "10px",
+              border: "1.9px solid #58716C",
+            }}
             onChange={onChange}
             value={newCourse.description}
           />
@@ -168,13 +213,20 @@ function UserCourses() {
           <Button
             type="submit"
             variant="contained"
-            style={{  margin: "10px auto", display: "block", backgroundColor: "#152e34", color: "white", borderRadius: "10px", width: "293.33px" }}
+            style={{
+              margin: "10px auto",
+              display: "block",
+              backgroundColor: "#152e34",
+              color: "white",
+              borderRadius: "10px",
+              width: "293.33px",
+            }}
           >
             Publish
           </Button>
         </form>
-      </Modal> 
-      
+      </Modal>
+
       <CourseResults courses={courses} />
     </div>
   );
@@ -191,31 +243,30 @@ const customStyles = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     width: "800px",
-    borderRadius:"10px",
-    border: "1px solid #152E34", 
-    fontSize: "18px"
-    
+    borderRadius: "10px",
+    border: "1px solid #152E34",
+    fontSize: "18px",
   },
   contentWrapper: {
     display: "flex !important",
     flexDirection: "column",
     flexWrap: "wrap",
-    width: "100%"
+    width: "100%",
   },
   contentFormat: {
     color: "#152e34",
     height: "auto",
     margin: "5px auto auto",
     display: "flex",
-  }, 
-  datePicker:{
-    marginLeft: "10px", 
-    borderRadius: "10px", 
-    paddingLeft: "4px", 
-    paddingTop: "4px", 
-    textAlign: "Center", 
-    paddingBottom: "5px", 
-    border: "1.9px solid #58716C", 
-    color: "#58716C"
-  }
+  },
+  datePicker: {
+    marginLeft: "10px",
+    borderRadius: "10px",
+    paddingLeft: "4px",
+    paddingTop: "4px",
+    textAlign: "Center",
+    paddingBottom: "5px",
+    border: "1.9px solid #58716C",
+    color: "#58716C",
+  },
 };
