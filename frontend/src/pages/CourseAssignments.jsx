@@ -320,7 +320,7 @@ function CourseAssignments() {
               </div>
             )}
 
-            <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
               <h2
                 style={{
                   textAlign: "center",
@@ -331,8 +331,8 @@ function CourseAssignments() {
                 {course.name}
               </h2>
               <form className="createCourse" onSubmit={handleSubmit}>
-                <div>
-                  <div>
+                <div style={customStyles.contentWrapper}>
+                  <div style={customStyles.contentFormat}>
                     <h5
                       style={{
                         marginTop: "10px",
@@ -352,16 +352,20 @@ function CourseAssignments() {
                         paddingLeft: "10px",
                         paddingTop: "4px",
                         paddingBottom: "4px",
-                        width: "100%",
-                        height: "40px",
+                        width: "40%",
+                        height: "28px",
                         borderRadius: "10px",
                         border: "1.9px solid #58716C",
                       }}
                       required
                     />
                   </div>
-                  <div>
-                    <label>Points</label>
+                  <div style={customStyles.contentFormat}>
+                    <h5 style={{
+                        marginTop: "6px",
+                        alignItems: "center",
+                        marginRight: "15px",
+                      }}>Points:</h5>
                     <input
                       id="points"
                       type="number"
@@ -370,10 +374,19 @@ function CourseAssignments() {
                       autoComplete="off"
                       value={assignment.points}
                       onChange={onChange}
+                      style={{
+                        paddingLeft: "10px",
+                        paddingTop: "4px",
+                        paddingBottom: "4px",
+                        width: "40%",
+                        height: "28px",
+                        borderRadius: "10px",
+                        border: "1.9px solid #58716C",
+                      }}
                     />
                   </div>
                   <div style={{ display: "flex", alignItems: "center" }}>
-                    <label style={{ width: "100px" }}>Due Date</label>
+                    <h5 style={{ width: "100px" }}>Due Date:</h5>
                     <DatePicker
                       id="dueDate"
                       selected={dueDate}
@@ -382,6 +395,7 @@ function CourseAssignments() {
                       dateFormat="MM/dd/yyyy h:mm aa"
                       minDate={new Date()}
                       showTimeInput
+               
                     />
                   </div>
                   <div>
@@ -481,9 +495,11 @@ function CourseAssignments() {
                   </div>
                   <div style={{ flex: "2" }}>
                     {date}{" "}
-                    <MdDelete
-                      style={{ color: "#336D49", marginLeft: "10px" }}
-                    />
+                    {user && user._id === course.creatorId && (
+                      <MdDelete
+                        style={{ color: "#336D49", marginLeft: "10px" }}
+                      /> 
+                    )}
                   </div>
                 </Link>
               );
@@ -497,3 +513,32 @@ function CourseAssignments() {
 }
 
 export default CourseAssignments;
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    width: "800px",
+    borderRadius: "10px",
+    border: "1px solid #152E34",
+    fontSize: "18px",
+    marginTop: "20px"
+  },
+  contentWrapper: {
+    display: "flex !important",
+    flexDirection: "column",
+    flexWrap: "wrap",
+    width: "100%",
+  },
+  contentFormat: {
+    color: "#152e34",
+    height: "auto",
+    margin: "5px auto auto",
+    display: "flex",
+  }
+};
+

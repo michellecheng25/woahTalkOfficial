@@ -323,7 +323,8 @@ function CoursePage() {
           <div style={{ marginTop: "25px" }}> </div>
         )}
 
-        <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+        <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
+       
           <h2
             style={{
               textAlign: "center",
@@ -333,12 +334,12 @@ function CoursePage() {
           >
             {course.name}
           </h2>
-          <form className="createCourse" onSubmit={handleSubmit}>
-            <div>
-              <div>
+          <form className="createCourse" onSubmit={handleSubmit}>           
+            <div style={customStyles.contentWrapper}>
+              <div style={customStyles.contentFormat}>
                 <h5
                   style={{
-                    marginTop: "10px",
+                    marginTop: "6px",
                     alignItems: "center",
                     marginRight: "15px",
                   }}
@@ -355,8 +356,8 @@ function CoursePage() {
                     paddingLeft: "10px",
                     paddingTop: "4px",
                     paddingBottom: "4px",
-                    width: "100%",
-                    height: "40px",
+                    width: "40%",
+                    height: "28px",
                     borderRadius: "10px",
                     border: "1.9px solid #58716C",
                   }}
@@ -395,6 +396,7 @@ function CoursePage() {
                 color: "white",
                 borderRadius: "10px",
                 width: "293.33px",
+                float: "unset"
               }}
             >
               Create
@@ -431,3 +433,33 @@ function CoursePage() {
 }
 
 export default CoursePage;
+
+
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    width: "800px",
+    borderRadius: "10px",
+    border: "1px solid #152E34",
+    fontSize: "18px",
+    marginTop: "20px"
+  },
+  contentWrapper: {
+    display: "flex !important",
+    flexDirection: "column",
+    flexWrap: "wrap",
+    width: "100%",
+  },
+  contentFormat: {
+    color: "#152e34",
+    height: "auto",
+    margin: "5px auto auto",
+    display: "flex",
+  }
+};

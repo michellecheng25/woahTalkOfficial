@@ -315,7 +315,7 @@ function CourseMaterials() {
           <div style={{ marginTop: "25px" }}> </div>
         )}
 
-        <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+        <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
           <h2
             style={{
               textAlign: "center",
@@ -325,7 +325,7 @@ function CourseMaterials() {
           >
             {course.name}
           </h2>
-          <form className="createCourse" onSubmit={handleSubmit}>
+          <form className="createCourse" onSubmit={handleSubmit} >
             <div>
               <div>
                 <h5
@@ -355,10 +355,10 @@ function CourseMaterials() {
                   required
                 />
               </div>
-              <h5 style={{ marginTop: "8px", color: "#152e34" }}>
+              <h5 style={{ marginTop: "10px", color: "#152e34" }}>
                 Upload a file:{" "}
               </h5>
-              <div className="create-content">
+              <div className="create-content" style={{marginTop: "5px !important"}}>
                 <input
                   type="file"
                   name="uploads"
@@ -380,6 +380,7 @@ function CourseMaterials() {
                 color: "white",
                 borderRadius: "10px",
                 width: "293.33px",
+                flost: "unset"
               }}
             >
               {isCreatingAssigment ? <CircularProgress size={20} /> : "Create"}
@@ -493,3 +494,32 @@ function CourseMaterials() {
 }
 
 export default CourseMaterials;
+
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    width: "800px",
+    borderRadius: "10px",
+    border: "1px solid #152E34",
+    fontSize: "18px",
+    marginTop: "20px"
+  },
+  contentWrapper: {
+    display: "flex !important",
+    flexDirection: "column",
+    flexWrap: "wrap",
+    width: "100%",
+  },
+  contentFormat: {
+    color: "#152e34",
+    height: "auto",
+    margin: "5px auto auto",
+    display: "flex",
+  }
+};

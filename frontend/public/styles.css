@@ -18,7 +18,10 @@ textarea::-webkit-scrollbar {
   width: 0px;
 }
 
-.datePicker{
+.react-datepicker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__input-container input{
+  background-color: "#58716C";
   margin-left: "10px"; 
   border-radius: "10px"; 
   padding-left: "4px"; 
