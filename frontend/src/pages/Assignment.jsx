@@ -20,8 +20,9 @@ function Assignment() {
   const [assignment, setAssignment] = useState({});
   const token = JSON.parse(localStorage.getItem("token"));
   const [isCreatingAssigment, setIsCreatingAssigment] = useState(false);
-  const [studentSubmission, setStudentSubmission] = useState([]);
-  const [submission, setSubmission] = useState(null);
+  const [studentSubmissions, setStudentSubmissions] = useState([]);
+  const [submission, setSubmission] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     getCourseInfo();
@@ -37,8 +38,6 @@ function Assignment() {
         console.log(response.data);
       })
       .catch(console.log);
-
-    setLoading(false);
   };
 
   const getAssignment = async () => {
@@ -62,29 +61,28 @@ function Assignment() {
         }
       )
       .then((response) => {
-        setStudentSubmission(response.data);
+        setStudentSubmissions(response.data);
+        if (response.data.length === 1) setSubmission(response.data[0].content);
         console.log(response.data);
       })
       .catch(console.log);
+    setLoading(false);
   };
 
   const onChange = async (e) => {
-    setSubmission((prevState) => {
-      return {
-        ...prevState,
-        [e.target.name]: e.target.value,
-      };
-    });
+    setSubmission(e.target.value);
   };
 
   const onSubmit = async (e) => {
+    console.log("create new sub");
+    console.log(submission);
     setIsCreatingAssigment(true);
     e.preventDefault();
 
     await axios
       .post(
         `/api/courses/${courseId}/assignments/${assignmentId}/submissions`,
-        submission,
+        { content: submission },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -92,9 +90,31 @@ function Assignment() {
       .then((response) => {
         console.log(response.data);
         toast.success("submission created!");
-        setStudentSubmission([response.data]);
+        setStudentSubmissions([response.data]);
       })
       .catch(console.log);
+
+    setIsCreatingAssigment(false);
+  };
+
+  const onEdit = async (e) => {
+    setIsCreatingAssigment(true);
+    e.preventDefault();
+
+    await axios
+      .put(
+        `/api/courses/${courseId}/assignments/${assignmentId}/submissions/${studentSubmissions[0]._id}`,
+        { content: submission },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then((response) => {
+        toast.success("sucessfully updated submission");
+        console.log(response);
+        setIsEditing(false);
+      })
+      .catch((error) => console.log(error.response.data));
 
     setIsCreatingAssigment(false);
   };
@@ -110,35 +130,67 @@ function Assignment() {
           padding: "50px",
           fontSize: "20px",
           // Make the Assignment centered
-          marginLeft: "15%", 
-          marginRight: "15%"
+          marginLeft: "15%",
+          marginRight: "15%",
         }}
       >
-
         <div
           style={{
-            display: "flex", 
-          }}>
+            display: "flex",
+          }}
+        >
           {/* Course Page Title */}
           <h1>{assignment.title}</h1>
-          
-          {/* Submission Status - AVALIABLE FOR STUDENT ONLY */} 
-          {(user.role == "Student" && assignment.folder === "Assignment" && studentSubmission.length > 0 ) && 
-            <p style={{height: "fit-content", marginTop: "8px", backgroundColor: "Green", borderRadius: "4px", fontWeight: "light", 
-                      padding: "7px", color: "White", marginLeft: "10px", fontSize: "16px"}}>
-              Submitted
-            </p>
-          }
-          {(user.role == "Student" && assignment.folder === "Assignment" && studentSubmission.length <= 0 ) && 
-            <p style={{height: "fit-content", marginTop: "8px", backgroundColor: "Red", borderRadius: "4px", fontWeight: "light", 
-                      padding: "7px", color: "White", marginLeft: "10px", fontSize: "16px"}}>
-              Not Submitted
-            </p>
-          }
+
+          {/* Submission Status - AVALIABLE FOR STUDENT ONLY */}
+          {user.role == "Student" &&
+            assignment.folder === "Assignment" &&
+            studentSubmissions.length > 0 && (
+              <p
+                style={{
+                  height: "fit-content",
+                  marginTop: "8px",
+                  backgroundColor: "Green",
+                  borderRadius: "4px",
+                  fontWeight: "light",
+                  padding: "7px",
+                  color: "White",
+                  marginLeft: "10px",
+                  fontSize: "16px",
+                }}
+              >
+                Submitted
+              </p>
+            )}
+          {user.role == "Student" &&
+            assignment.folder === "Assignment" &&
+            studentSubmissions.length <= 0 && (
+              <p
+                style={{
+                  height: "fit-content",
+                  marginTop: "8px",
+                  backgroundColor: "Red",
+                  borderRadius: "4px",
+                  fontWeight: "light",
+                  padding: "7px",
+                  color: "White",
+                  marginLeft: "10px",
+                  fontSize: "16px",
+                }}
+              >
+                Not Submitted
+              </p>
+            )}
         </div>
-        
-        <hr style={{border: "2px solid black", borderRadius: "5px", marginBottom: "5px"}}></hr>
-        
+
+        <hr
+          style={{
+            border: "2px solid black",
+            borderRadius: "5px",
+            marginBottom: "5px",
+          }}
+        ></hr>
+
         <div
           style={{
             padding: "10px 0px",
@@ -146,14 +198,22 @@ function Assignment() {
             // borderBottom: "3px solid  #e0dcd5",
           }}
         >
-         
           <div style={{ flex: "10" }}>
             {/* Description */}
             {assignment.description && (
               <div style={{ whiteSpace: "pre-wrap" }}>
                 {/* Assignment Page Description SubHeader  */}
-                {assignment.folder === "Assignment"  && (
-                  <p style={{textDecoration: "none", marginTop: "10px", fontWeight: "bold", fontSize: "22px"}}>Assignment Information</p>
+                {assignment.folder === "Assignment" && (
+                  <p
+                    style={{
+                      textDecoration: "none",
+                      marginTop: "10px",
+                      fontWeight: "bold",
+                      fontSize: "22px",
+                    }}
+                  >
+                    Assignment Information
+                  </p>
                 )}
                 {assignment.description}
               </div>
@@ -167,7 +227,13 @@ function Assignment() {
             )}
             {/* Due Date */}
             {assignment.dueDate && (
-              <div style={{ marginTop: "10px", fontSize: "20px", fontWeight: "light" }}>
+              <div
+                style={{
+                  marginTop: "10px",
+                  fontSize: "20px",
+                  fontWeight: "light",
+                }}
+              >
                 <b>Due Date:</b> {dateTimeConversion(assignment.dueDate)}
               </div>
             )}
@@ -175,10 +241,23 @@ function Assignment() {
 
           {/* Assignment Score */}
           {assignment.totalPoints && (
-            <div style={{ flex: "2", display: "flex", justifyContent: "flex-end"}}>
-              <div style= {{border:"2px", backgroundColor: "transparent", marginTop: "10px", border: "3px solid black", borderWidth: "2px",height: "fit-content", padding: "4px", borderRadius: "4px",}}>
-                {user.role !== "Teacher" && studentSubmission.length === 1
-                  ? studentSubmission[0].grade
+            <div
+              style={{ flex: "2", display: "flex", justifyContent: "flex-end" }}
+            >
+              <div
+                style={{
+                  border: "2px",
+                  backgroundColor: "transparent",
+                  marginTop: "10px",
+                  border: "3px solid black",
+                  borderWidth: "2px",
+                  height: "fit-content",
+                  padding: "4px",
+                  borderRadius: "4px",
+                }}
+              >
+                {user.role !== "Teacher" && studentSubmissions.length === 1
+                  ? studentSubmissions[0].grade
                   : "-"}{" "}
                 /{assignment.totalPoints}
               </div>
@@ -186,19 +265,34 @@ function Assignment() {
           )}
         </div>
 
-        <hr style={{border: "2px solid #d6cfc5", borderRadius: "5px", marginBottom: "5px"}}></hr>
+        <hr
+          style={{
+            border: "2px solid #d6cfc5",
+            borderRadius: "5px",
+            marginBottom: "5px",
+          }}
+        ></hr>
 
         {assignment.folder === "Assignment" &&
-          user.role !== "Teacher" &&
-          studentSubmission.length === 0 && (
+          user.role === "Student" &&
+          (studentSubmissions.length === 0 || isEditing) && (
             <div style={{ marginTop: "20px" }}>
-              <form onSubmit={onSubmit}>
+              <form onSubmit={!isEditing ? onSubmit : onEdit}>
                 <textarea
                   type="text"
                   name="content"
                   placeholder="Type your submission"
+                  value={submission}
+                  required
                   // rows = "4"
-                  style={{ width: "100%", minWidth: "50px", padding: "15px", marginBottom: "10px", border: "3px solid #d6cfc5", borderRadius: "5px" }}
+                  style={{
+                    width: "100%",
+                    minWidth: "50px",
+                    padding: "15px",
+                    marginBottom: "10px",
+                    border: "3px solid #d6cfc5",
+                    borderRadius: "5px",
+                  }}
                   onChange={(e) => {
                     setInputHeight(e, "50px");
                     onChange(e);
@@ -216,15 +310,27 @@ function Assignment() {
             </div>
           )}
 
-        {user.role === "Student" && studentSubmission.length > 0 && (
-          <div style={{ marginTop: "20px" }}>{studentSubmission[0].content}</div>
-        )}
+        {user.role === "Student" &&
+          studentSubmissions.length > 0 &&
+          !isEditing && (
+            <>
+              <div style={{ marginTop: "20px" }}>{submission}</div>
+              <button
+                className="createCourseContentBtn"
+                onClick={() => {
+                  setIsEditing(true);
+                }}
+              >
+                Edit Submission
+              </button>
+            </>
+          )}
 
         {user.role === "Teacher" && assignment.folder === "Assignment" && (
           <div>
             <div style={{ marginTop: "20px" }}>All Submissions</div>
-            {studentSubmission.length > 0 &&
-              studentSubmission.map((submission) => {
+            {studentSubmissions.length > 0 &&
+              studentSubmissions.map((submission) => {
                 const totalPoints = assignment.totalPoints
                   ? assignment.totalPoints
                   : 0;

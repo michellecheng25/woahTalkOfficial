@@ -55,6 +55,23 @@ function CoursePage() {
     });
   };
 
+  const onDelete = async (assignmentId) => {
+    console.log("delete assignment");
+    axios
+      .delete("/api/courses/" + courseId + "/assignments/" + assignmentId, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        setCourseAnnouncements((prev) =>
+          prev.filter((annoucement) => annoucement._id !== assignmentId)
+        );
+        toast.success(response.data);
+      })
+      .catch((error) => {
+        toast.error(error.response.data);
+      });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -416,6 +433,9 @@ function CoursePage() {
                     <Announcement
                       key={announcement._id}
                       announcement={announcement}
+                      course={course}
+                      user={user}
+                      onDelete={onDelete}
                     />
                   );
                 })}

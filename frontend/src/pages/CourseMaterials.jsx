@@ -64,6 +64,23 @@ function CourseMaterials() {
     });
   };
 
+  const onDelete = async (materialsId) => {
+    console.log("delete assignment");
+    axios
+      .delete("/api/courses/" + courseId + "/assignments/" + materialsId, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        setCourseMaterials((prev) =>
+          prev.filter((materials) => materials._id !== materialsId)
+        );
+        toast.success(response.data);
+      })
+      .catch((error) => {
+        toast.error(error.response.data);
+      });
+  };
+
   const handleSubmit = async (e) => {
     setIsCreatingAssigment(true);
     e.preventDefault();
@@ -315,7 +332,11 @@ function CourseMaterials() {
           <div style={{ marginTop: "25px" }}> </div>
         )}
 
-        <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+        >
           <h2
             style={{
               textAlign: "center",
@@ -325,7 +346,7 @@ function CourseMaterials() {
           >
             {course.name}
           </h2>
-          <form className="createCourse" onSubmit={handleSubmit} >
+          <form className="createCourse" onSubmit={handleSubmit}>
             <div>
               <div>
                 <h5
@@ -358,7 +379,10 @@ function CourseMaterials() {
               <h5 style={{ marginTop: "10px", color: "#152e34" }}>
                 Upload a file:{" "}
               </h5>
-              <div className="create-content" style={{marginTop: "5px !important"}}>
+              <div
+                className="create-content"
+                style={{ marginTop: "5px !important" }}
+              >
                 <input
                   type="file"
                   name="uploads"
@@ -380,7 +404,7 @@ function CourseMaterials() {
                 color: "white",
                 borderRadius: "10px",
                 width: "293.33px",
-                flost: "unset"
+                flost: "unset",
               }}
             >
               {isCreatingAssigment ? <CircularProgress size={20} /> : "Create"}
@@ -466,7 +490,14 @@ function CourseMaterials() {
                           <div style={{ flex: "2" }}>
                             {" "}
                             <MdDelete
-                              style={{ color: "#336D49", marginLeft: "10px" }}
+                              style={{
+                                color: "#336D49",
+                                marginLeft: "10px",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => {
+                                onDelete(material._id);
+                              }}
                             />
                           </div>
                         )}
@@ -495,7 +526,6 @@ function CourseMaterials() {
 
 export default CourseMaterials;
 
-
 const customStyles = {
   content: {
     top: "50%",
@@ -508,7 +538,7 @@ const customStyles = {
     borderRadius: "10px",
     border: "1px solid #152E34",
     fontSize: "18px",
-    marginTop: "20px"
+    marginTop: "20px",
   },
   contentWrapper: {
     display: "flex !important",
@@ -521,5 +551,5 @@ const customStyles = {
     height: "auto",
     margin: "5px auto auto",
     display: "flex",
-  }
+  },
 };

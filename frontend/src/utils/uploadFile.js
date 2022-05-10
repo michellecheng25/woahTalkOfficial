@@ -1,5 +1,6 @@
 import axios from "axios";
 const uploadFile = async (base64EncodedImage, token) => {
+  console.log(base64EncodedImage);
   try {
     const response = await axios.post(
       "/api/uploads",
