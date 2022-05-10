@@ -4,9 +4,17 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../context/users/UserContext";
 import NotFound from "./NotFound";
-import { RiAddBoxFill } from "react-icons/ri";
-import CourseSidebar from "../components/CourseSidebar";
+import { MdAddToPhotos } from "react-icons/md";
 import { dateTimeConversion } from "../utils/dateConversion";
+import CourseHeader from "../components/CourseHeader";
+import { MdDelete } from "react-icons/md";
+import Modal from "react-modal";
+import { toast } from "react-toastify";
+import uploadFile from "../utils/uploadFile";
+import CircularProgress from "@mui/material/CircularProgress";
+import { Button } from "@material-ui/core";
+import setInputHeight from "../utils/setInputHeight";
+import DatePicker from "react-datepicker";
 
 function CourseAssignments() {
   const { courseId } = useParams();
@@ -15,11 +23,48 @@ function CourseAssignments() {
   const [loading, setLoading] = useState(true);
   const token = JSON.parse(localStorage.getItem("token"));
   const [assignments, setCourseAssignments] = useState([]);
+  const [dueDate, setDueDate] = useState(new Date());
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [assignment, setAssigment] = useState({
+    title: "",
+    folder: "Assignment",
+    description: "",
+    totalPoints: "",
+  });
+  const [file, setFile] = useState(null);
+  const [isCreatingAssigment, setIsCreatingAssigment] = useState(false);
 
   useEffect(() => {
     getCourseInfo();
     getCourseAssignments();
   }, []);
+
+  const openModal = () => {
+    setIsOpen(true);
+    setDueDate(new Date());
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const handleFileInput = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setFile(reader.result);
+    };
+  };
+
+  const onChange = async (e) => {
+    setAssigment((prevState) => {
+      return {
+        ...prevState,
+        [e.target.name]: e.target.value,
+      };
+    });
+  };
 
   const getCourseInfo = async () => {
     await axios
@@ -45,45 +90,390 @@ function CourseAssignments() {
       .catch(console.log);
   };
 
+  const handleSubmit = async (e) => {
+    setIsCreatingAssigment(true);
+    e.preventDefault();
+
+    let fileUrl;
+    if (file && assignment.folder !== "Announcement") {
+      fileUrl = await uploadFile(file, token);
+    }
+
+    const newAssignment = {
+      ...assignment,
+      dueDate,
+      ...(fileUrl && { upload: fileUrl }),
+    };
+
+    console.log(newAssignment);
+
+    try {
+      const response = await axios.post(
+        "/api/courses/" + courseId + "/assignments",
+        newAssignment,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      console.log(response.data);
+
+      toast.success("created!");
+      setCourseAssignments((prevState) => [...prevState, response.data]);
+      setAssigment({
+        title: "",
+        folder: "Assignment",
+        description: "",
+        totalPoints: "",
+      });
+      setFile(null);
+      closeModal();
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data);
+    }
+
+    setIsCreatingAssigment(false);
+  };
+
   if (loading) return <div></div>;
   if (!user.courses.includes(courseId)) return <NotFound />;
 
   return (
     <div>
       <Navbar />
-      <div style={{ padding: "30px" }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <Link to={"/courses/" + courseId}>
-            <h1 style={{ color: "black", paddingLeft: "10px" }}>
-              {course.courseName}
-            </h1>
-          </Link>
-          {user && user._id === course.creatorId && (
-            <Link
-              to={"/courses/" + courseId + "/create-content"}
+      <div
+        style={{
+          margin: "25px auto",
+          display: "flex",
+          flexDirection: "column",
+          width: "1000px",
+        }}
+      >
+        <div style={{ display: "flex", marginBottom: "4px" }}>
+          <h1 style={{ color: "black", marginRight: "10px", fontSize: "48px" }}>
+            {course.courseName}
+          </h1>
+          {course.level === "novice" && (
+            <p
               style={{
-                marginLeft: "auto",
-                cursor: "pointer",
-                color: "black",
+                backgroundColor: "#F8CB86",
+                borderRadius: "10px",
+                color: "white",
+                padding: "7px 7px 7px 7px",
+                height: "30px",
+                fontSize: "14px",
+                marginTop: "13px",
+                marginRight: "10px",
               }}
             >
-              <RiAddBoxFill size={40} />
-            </Link>
+              Novice
+            </p>
+          )}
+          {course.level === "intermediate" && (
+            <p
+              style={{
+                backgroundColor: "#ECA645",
+                borderRadius: "10px",
+                color: "white",
+                padding: "7px 7px 7px 7px",
+                height: "30px",
+                fontSize: "14px",
+                marginTop: "13px",
+                marginRight: "10px",
+              }}
+            >
+              Intermediate
+            </p>
+          )}
+          {course.level === "advanced" && (
+            <p
+              style={{
+                backgroundColor: "#336D49",
+                borderRadius: "10px",
+                color: "white",
+                padding: "7px 7px 7px 7px",
+                height: "30px",
+                fontSize: "14px",
+                marginTop: "13px",
+                marginRight: "10px",
+              }}
+            >
+              Advanced
+            </p>
+          )}
+
+          {course.language === "english" && (
+            <p
+              style={{
+                backgroundColor: "#547DDE",
+                borderRadius: "10px",
+                color: "white",
+                padding: "7px 7px 7px 7px",
+                height: "30px",
+                fontSize: "14px",
+                marginTop: "13px",
+                marginRight: "10px",
+              }}
+            >
+              English
+            </p>
+          )}
+          {course.language === "chinese" && (
+            <p
+              style={{
+                backgroundColor: "#547DDE",
+                borderRadius: "10px",
+                color: "white",
+                padding: "7px 7px 7px 7px",
+                height: "30px",
+                fontSize: "14px",
+                marginTop: "13px",
+                marginRight: "10px",
+              }}
+            >
+              Chinese
+            </p>
+          )}
+          {course.language === "french" && (
+            <p
+              style={{
+                backgroundColor: "#547DDE",
+                borderRadius: "10px",
+                color: "white",
+                padding: "7px 7px 7px 7px",
+                height: "30px",
+                fontSize: "14px",
+                marginTop: "13px",
+                marginRight: "10px",
+              }}
+            >
+              French
+            </p>
+          )}
+          {course.language === "spanish" && (
+            <p
+              style={{
+                backgroundColor: "#547DDE",
+                borderRadius: "10px",
+                color: "white",
+                padding: "7px 7px 7px 7px",
+                height: "30px",
+                fontSize: "14px",
+                marginTop: "13px",
+                marginRight: "10px",
+              }}
+            >
+              Spanish
+            </p>
           )}
         </div>
+
+        <p style={{ fontWeight: "normal" }}>{course.description}</p>
+        <CourseHeader currentActive={"Assignments"} />
         <div style={{ display: "flex" }}>
-          <CourseSidebar currentActive={"Assignments"} />
           <div
             style={{
               flex: "8",
-              padding: "20px",
               fontSize: "20px",
             }}
           >
-            <div style={{ display: "flex", borderBottom: "1px solid black" }}>
-              <div style={{ flex: "10", fontWeight: "bold" }}>Name</div>
+            {user && user._id === course.creatorId && (
+              <div
+                style={{
+                  cursor: "pointer",
+                  color: "black",
+                }}
+                onClick={openModal}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    padding: "15px 0px 15px 0px",
+                    borderRadius: "10px",
+                    border: "1px solid black",
+                    marginBottom: "10px",
+                    fontSize: "20px",
+                    color: "black",
+                    backgroundColor: "#234831",
+                    marginTop: "25px",
+                  }}
+                >
+                  <div style={{ display: "flex" }}>
+                    <div>
+                      <MdAddToPhotos
+                        size={30}
+                        style={{ marginLeft: "15px", color: "white" }}
+                      />
+                    </div>
+                    <p
+                      style={{
+                        marginLeft: "10px",
+                        marginTop: "6px",
+                        color: "white",
+                      }}
+                    >
+                      Create a new assignment
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
+              <h2
+                style={{
+                  textAlign: "center",
+                  color: "#234831",
+                  marginBottom: "10px",
+                }}
+              >
+                {course.name}
+              </h2>
+              <form className="createCourse" onSubmit={handleSubmit}>
+                <div style={customStyles.contentWrapper}>
+                  <div style={customStyles.contentFormat}>
+                    <h5
+                      style={{
+                        marginTop: "10px",
+                        alignItems: "center",
+                        marginRight: "15px",
+                      }}
+                    >
+                      Title:
+                    </h5>
+                    <input
+                      type="text"
+                      name="title"
+                      onChange={onChange}
+                      value={assignment.title}
+                      autoComplete="off"
+                      style={{
+                        paddingLeft: "10px",
+                        paddingTop: "4px",
+                        paddingBottom: "4px",
+                        width: "40%",
+                        height: "28px",
+                        borderRadius: "10px",
+                        border: "1.9px solid #58716C",
+                      }}
+                      required
+                    />
+                  </div>
+                  <div style={customStyles.contentFormat}>
+                    <h5 style={{
+                        marginTop: "6px",
+                        alignItems: "center",
+                        marginRight: "15px",
+                      }}>Points:</h5>
+                    <input
+                      id="points"
+                      type="number"
+                      name="totalPoints"
+                      placeholder="100"
+                      autoComplete="off"
+                      value={assignment.points}
+                      onChange={onChange}
+                      style={{
+                        paddingLeft: "10px",
+                        paddingTop: "4px",
+                        paddingBottom: "4px",
+                        width: "40%",
+                        height: "28px",
+                        borderRadius: "10px",
+                        border: "1.9px solid #58716C",
+                      }}
+                    />
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <h5 style={{ width: "100px" }}>Due Date:</h5>
+                    <DatePicker
+                      id="dueDate"
+                      selected={dueDate}
+                      onChange={(date) => setDueDate(date)}
+                      timeInputLabel="Time:"
+                      dateFormat="MM/dd/yyyy h:mm aa"
+                      minDate={new Date()}
+                      showTimeInput
+               
+                    />
+                  </div>
+                  <div>
+                    <h5 style={{ marginTop: "8px", color: "#152e34" }}>
+                      Upload a file:{" "}
+                    </h5>
+                    <div className="create-content">
+                      <input
+                        type="file"
+                        name="uploads"
+                        id="upload"
+                        onChange={handleFileInput}
+                      />
+                    </div>
+                  </div>
+                  <h5 style={{ marginTop: "8px", color: "#152e34" }}>
+                    Description:{" "}
+                  </h5>
+                  <textarea
+                    type="text"
+                    name="description"
+                    rows="3"
+                    style={{
+                      width: "100%",
+                      marginTop: "10px",
+                      padding: "10px",
+                      borderRadius: "10px",
+                      border: "1.9px solid #58716C",
+                    }}
+                    onChange={(e) => {
+                      setInputHeight(e, "200px");
+                      onChange(e);
+                    }}
+                    value={assignment.description}
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={isCreatingAssigment ? true : false}
+                  style={{
+                    margin: "10px auto",
+                    display: "block",
+                    backgroundColor: "#152e34",
+                    color: "white",
+                    borderRadius: "10px",
+                    width: "293.33px",
+                  }}
+                >
+                  {isCreatingAssigment ? (
+                    <CircularProgress size={20} />
+                  ) : (
+                    "Submit"
+                  )}
+                </Button>
+              </form>
+            </Modal>
+
+            <div
+              style={{
+                display: "flex",
+                marginTop: "20px",
+                marginBottom: "4px",
+              }}
+            >
+              <div style={{ flex: "6", fontWeight: "bold" }}>Name</div>
               <div style={{ flex: "2", fontWeight: "bold" }}>Due Date</div>
             </div>
+
+            <hr
+              style={{
+                borderRadius: "10px",
+                border: "1.5px solid black",
+                marginBottom: "10px",
+                backgroundColor: "#000000",
+              }}
+            />
+
             {assignments.map((assignment) => {
               const date = dateTimeConversion(assignment.updatedAt);
               return (
@@ -93,13 +483,24 @@ function CourseAssignments() {
                   style={{
                     display: "flex",
                     padding: "15px 0px 15px 0px",
-                    borderBottom: "1px solid black",
+                    borderRadius: "10px",
+                    border: "1px solid black",
+                    marginBottom: "10px",
                     fontSize: "20px",
                     color: "black",
                   }}
                 >
-                  <div style={{ flex: "10" }}>{assignment.title}</div>
-                  <div style={{ flex: "2" }}>{date}</div>
+                  <div style={{ flex: "6", marginLeft: "15px" }}>
+                    {assignment.title}
+                  </div>
+                  <div style={{ flex: "2" }}>
+                    {date}{" "}
+                    {user && user._id === course.creatorId && (
+                      <MdDelete
+                        style={{ color: "#336D49", marginLeft: "10px" }}
+                      /> 
+                    )}
+                  </div>
                 </Link>
               );
             })}
@@ -107,7 +508,37 @@ function CourseAssignments() {
         </div>
       </div>
     </div>
+    // </div>
   );
 }
 
 export default CourseAssignments;
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    width: "800px",
+    borderRadius: "10px",
+    border: "1px solid #152E34",
+    fontSize: "18px",
+    marginTop: "20px"
+  },
+  contentWrapper: {
+    display: "flex !important",
+    flexDirection: "column",
+    flexWrap: "wrap",
+    width: "100%",
+  },
+  contentFormat: {
+    color: "#152e34",
+    height: "auto",
+    margin: "5px auto auto",
+    display: "flex",
+  }
+};
+

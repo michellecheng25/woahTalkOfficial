@@ -2,7 +2,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Times";
+  font-family: Helvetica, sans-serif;;
 }
 
 a {
@@ -10,9 +10,24 @@ a {
 }
 
 body {
-  background-color: rgb(243, 239, 233);
+  /* background-color: rgb(243, 239, 233); */
+  background-color: white;
 }
 
 textarea::-webkit-scrollbar {
   width: 0px;
+}
+
+.react-datepicker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__input-container input{
+  background-color: "#58716C";
+  margin-left: "10px"; 
+  border-radius: "10px"; 
+  padding-left: "4px"; 
+  padding-top: "4px"; 
+  text-align: "Center"; 
+  padding-bottom: "5px"; 
+  border: "1.9px solid #58716C"; 
+  color: "#58716C"
 }

@@ -5,13 +5,13 @@
 
 .userSetting-form {
   color: #152e34;
-  width: 800px;
   background-color: #f3efe9;
   height: auto;
   /* padding: 20px; */
   margin: auto;
   display: flex;
   flex-direction: column;
+  width: 800px;
 }
 
 .userSetting h1 {
