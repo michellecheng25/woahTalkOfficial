@@ -55,6 +55,23 @@ function CoursePage() {
     });
   };
 
+  const onDelete = async (assignmentId) => {
+    console.log("delete assignment");
+    axios
+      .delete("/api/courses/" + courseId + "/assignments/" + assignmentId, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        setCourseAnnouncements((prev) =>
+          prev.filter((annoucement) => annoucement._id !== assignmentId)
+        );
+        toast.success(response.data);
+      })
+      .catch((error) => {
+        toast.error(error.response.data);
+      });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -70,7 +87,7 @@ function CoursePage() {
       );
 
       toast.success("created!");
-      setCourseAnnouncements((prevState) => [assignment, ...prevState]);
+      setCourseAnnouncements((prevState) => [response.data, ...prevState]);
 
       setAssigment({
         title: "",
@@ -323,8 +340,11 @@ function CoursePage() {
           <div style={{ marginTop: "25px" }}> </div>
         )}
 
-        <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
-       
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+        >
           <h2
             style={{
               textAlign: "center",
@@ -334,7 +354,7 @@ function CoursePage() {
           >
             {course.name}
           </h2>
-          <form className="createCourse" onSubmit={handleSubmit}>           
+          <form className="createCourse" onSubmit={handleSubmit}>
             <div style={customStyles.contentWrapper}>
               <div style={customStyles.contentFormat}>
                 <h5
@@ -396,7 +416,7 @@ function CoursePage() {
                 color: "white",
                 borderRadius: "10px",
                 width: "293.33px",
-                float: "unset"
+                float: "unset",
               }}
             >
               Create
@@ -413,6 +433,9 @@ function CoursePage() {
                     <Announcement
                       key={announcement._id}
                       announcement={announcement}
+                      course={course}
+                      user={user}
+                      onDelete={onDelete}
                     />
                   );
                 })}
@@ -434,8 +457,6 @@ function CoursePage() {
 
 export default CoursePage;
 
-
-
 const customStyles = {
   content: {
     top: "50%",
@@ -448,7 +469,7 @@ const customStyles = {
     borderRadius: "10px",
     border: "1px solid #152E34",
     fontSize: "18px",
-    marginTop: "20px"
+    marginTop: "20px",
   },
   contentWrapper: {
     display: "flex !important",
@@ -461,5 +482,5 @@ const customStyles = {
     height: "auto",
     margin: "5px auto auto",
     display: "flex",
-  }
+  },
 };

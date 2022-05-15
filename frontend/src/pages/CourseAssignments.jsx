@@ -66,6 +66,23 @@ function CourseAssignments() {
     });
   };
 
+  const onDelete = async (assignmentId) => {
+    console.log("delete assignment");
+    axios
+      .delete("/api/courses/" + courseId + "/assignments/" + assignmentId, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        setCourseAssignments((prev) =>
+          prev.filter((assignment) => assignment._id !== assignmentId)
+        );
+        toast.success(response.data);
+      })
+      .catch((error) => {
+        toast.error(error.response.data);
+      });
+  };
+
   const getCourseInfo = async () => {
     await axios
       .get("/api/coursepage/" + courseId)
@@ -320,7 +337,11 @@ function CourseAssignments() {
               </div>
             )}
 
-            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
+            <Modal
+              isOpen={modalIsOpen}
+              onRequestClose={closeModal}
+              style={customStyles}
+            >
               <h2
                 style={{
                   textAlign: "center",
@@ -361,11 +382,15 @@ function CourseAssignments() {
                     />
                   </div>
                   <div style={customStyles.contentFormat}>
-                    <h5 style={{
+                    <h5
+                      style={{
                         marginTop: "6px",
                         alignItems: "center",
                         marginRight: "15px",
-                      }}>Points:</h5>
+                      }}
+                    >
+                      Points:
+                    </h5>
                     <input
                       id="points"
                       type="number"
@@ -395,7 +420,6 @@ function CourseAssignments() {
                       dateFormat="MM/dd/yyyy h:mm aa"
                       minDate={new Date()}
                       showTimeInput
-               
                     />
                   </div>
                   <div>
@@ -477,7 +501,7 @@ function CourseAssignments() {
             {assignments.map((assignment) => {
               const date = dateTimeConversion(assignment.updatedAt);
               return (
-                <Link
+                <div
                   to={"/courses/" + courseId + "/assignments/" + assignment._id}
                   key={assignment._id}
                   style={{
@@ -487,21 +511,42 @@ function CourseAssignments() {
                     border: "1px solid black",
                     marginBottom: "10px",
                     fontSize: "20px",
-                    color: "black",
                   }}
                 >
-                  <div style={{ flex: "6", marginLeft: "15px" }}>
+                  <Link
+                    to={
+                      "/courses/" + courseId + "/assignments/" + assignment._id
+                    }
+                    style={{ flex: "6", marginLeft: "15px", color: "black" }}
+                  >
                     {assignment.title}
-                  </div>
+                  </Link>
                   <div style={{ flex: "2" }}>
-                    {date}{" "}
+                    <Link
+                      to={
+                        "/courses/" +
+                        courseId +
+                        "/assignments/" +
+                        assignment._id
+                      }
+                      style={{ color: "black" }}
+                    >
+                      {date}{" "}
+                    </Link>
                     {user && user._id === course.creatorId && (
                       <MdDelete
-                        style={{ color: "#336D49", marginLeft: "10px" }}
-                      /> 
+                        style={{
+                          color: "#336D49",
+                          marginLeft: "10px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          onDelete(assignment._id);
+                        }}
+                      />
                     )}
                   </div>
-                </Link>
+                </div>
               );
             })}
           </div>
@@ -526,7 +571,7 @@ const customStyles = {
     borderRadius: "10px",
     border: "1px solid #152E34",
     fontSize: "18px",
-    marginTop: "20px"
+    marginTop: "20px",
   },
   contentWrapper: {
     display: "flex !important",
@@ -539,6 +584,5 @@ const customStyles = {
     height: "auto",
     margin: "5px auto auto",
     display: "flex",
-  }
+  },
 };
-

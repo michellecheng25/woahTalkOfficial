@@ -9,12 +9,19 @@ const { json } = require("express");
 const createMessage = async (req, res) => {
   try {
     const newMessage = new Message({
-      coversationId: req.params.conversationId,
+      conversationId: req.params.conversationId,
       sender: req.user.id,
       text: req.body.text,
     });
 
     const savedMessage = await newMessage.save();
+
+    // const result = await savedMessage.populate("sender", {
+    //   username: 1,
+    //   name: 1,
+    //   profilePicture: 1,
+    // });
+
     res.status(200).json(savedMessage);
   } catch (error) {
     res.status(500).json(error);
@@ -25,12 +32,12 @@ const createMessage = async (req, res) => {
 //@route GET /api/chat/:conversationId/messages
 //@acess private
 const getMessages = async (req, res) => {
+  console.log(req.params.conversationId);
   try {
     const messages = await Message.find({
       conversationId: req.params.conversationId,
-    })
-      .sort({ createdAt: -1 })
-      .populate("sender", { username: 1, name: 1, profilePicture: 1 });
+    });
+    // .populate("sender", { username: 1, name: 1, profilePicture: 1 });
 
     res.status(200).json(messages);
   } catch (error) {
