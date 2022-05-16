@@ -13,7 +13,7 @@ function Announcement({ announcement, user, course, onDelete }) {
         {user && user._id === course.creatorId && (
           <MdDelete
             size={20}
-            style={{ color: "#336D49", marginLeft: "10px", cursor: "pointer" }}
+            style={{ color: "#234831", marginLeft: "10px", cursor: "pointer" }}
             onClick={() => {
               onDelete(announcement._id);
             }}

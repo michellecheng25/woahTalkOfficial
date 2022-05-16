@@ -122,10 +122,15 @@ function UserSettings() {
         <form className="userSetting-form" onSubmit={onSubmit}>
           <div className="userSetting-top">
             <img src={pfp} alt="pic" className="userSetting-pfp" />
-            
             <img src={coverPic} alt="Cover" className="userSetting-cover" />
           </div>
-          <h1>Profile Setting</h1>
+          <div style={{height: "90px"}}>
+
+          </div>
+          <div style={{
+            border: "1px solid black",
+            borderRadius: "10px",
+          }}>
           <h2 className="setting-subheading">Personal Info</h2>
           <h4 className="setting-description">
             Update your photo and personal details
@@ -141,6 +146,7 @@ function UserSettings() {
                   name="username"
                   value={userSettingData.username}
                   disabled={true}
+                  className= "inputText"
                 />
               </div>
               <div className="userSetting-form-info">
@@ -151,6 +157,7 @@ function UserSettings() {
                   name="email"
                   value={userSettingData.email}
                   onChange={onChange}
+                  className= "inputText"
                 />
               </div>
               <div className="userSetting-form-info">
@@ -161,6 +168,7 @@ function UserSettings() {
                   name="name"
                   value={userSettingData.name}
                   onChange={onChange}
+                  className= "inputText"
                 />
               </div>
               <div className="userSetting-form-info">
@@ -171,34 +179,54 @@ function UserSettings() {
                   name="foreignName"
                   value={userSettingData.foreignName}
                   onChange={onChange}
+                  className= "inputText"
                 />
               </div>
-            </div>
-
-            <h5>Upload a profile picture</h5>
-            <input
-              type="file"
-              accept="image/*"
-              name="profilePicture"
-              id="input"
-              ref={pic}
-              onChange={handleFileInput}
-            />
-
-            <h5>Upload a cover picture</h5>
-            <input
-              type="file"
-              accept="image/*"
-              name="coverPicture"
-              id="input"
-              ref={cover}
-              onChange={handleFileInput}
-            />
+              <div className="userSetting-form-info">
+                <h5>Upload a profile picture</h5>
+                <input
+                  style ={{
+                    border: "1.9px solid #58716C",
+                    height: "35px",
+                    borderRadius: "10px",
+                    padding: "5px",
+                  }}
+                  type="file"
+                  accept="image/*"
+                  name="profilePicture"
+                  id="input"
+                  ref={pic}
+                  onChange={handleFileInput}
+                />
+              </div>
+              <div className="userSetting-form-info">
+                <h5>Upload a cover picture</h5>
+                <input
+                  style ={{
+                    border: "1.9px solid #58716C",
+                    height: "35px",
+                    borderRadius: "10px",
+                    padding: "5px",
+                  }}
+                  type="file"
+                  accept="image/*"
+                  name="coverPicture"
+                  id="input"
+                  ref={cover}
+                  onChange={handleFileInput}
+                />
+              </div>
+            </div>  
+          </div>
           </div>
 
           <br></br>
           {/* User setting: section 2 profile userSetting-form-information */}
-          <h2 className="setting-subheading">Profile</h2>
+          <div style={{
+            border: "1px solid black",
+            borderRadius: "10px",
+          }}>
+            <h2 className="setting-subheading">Profile</h2>
           <h4 className="setting-description">Update your profile</h4>
           <div className="form-section">
             <div className="form-inner-section">
@@ -217,10 +245,15 @@ function UserSettings() {
                 }}
               />
               <p>{count}/ 300</p>
-              <div className="userSetting-userType">
-                <h5>
-                  Are you a student or teacher?
+             
+
+              <div className="userSetting-form-info">
+                  <h5>Are you a student or teacher? <br></br>
+                  <span style={{ fontWeight: "lighter !important", color: "red", fontSize: "12px", marginBottom: "5px !important"}}>
+                    *This can't be changed after it is submitted 
+                  </span>
                   <select
+                    className= "selectText"
                     id="userType"
                     name="role"
                     value={userSettingData.role}
@@ -236,8 +269,12 @@ function UserSettings() {
                 </h5>
               </div>
               <div className="userSetting-form-info">
+                
+              </div>
+              <div className="userSetting-form-info">
                 <h5>What is your native language?</h5>
                 <select
+                  className= "selectText"                
                   id="sourceLanguage"
                   name="nativeLanguage"
                   value={userSettingData.nativeLanguage}
@@ -252,6 +289,7 @@ function UserSettings() {
               <div className="userSetting-form-info">
                 <h5>What is your level of proficiency?</h5>
                 <select
+                  className= "selectText"                
                   id="sourceLanguageProficiency"
                   name="nativeProficiency"
                   value={userSettingData.nativeProficiency}
@@ -266,6 +304,7 @@ function UserSettings() {
                 <div className="userSetting-form-info">
                   <h5>What is your target language?</h5>
                   <select
+                    className= "selectText"                
                     id="targetLanguage"
                     name="foreignLanguage"
                     value={userSettingData.foreignLanguage}
@@ -280,6 +319,7 @@ function UserSettings() {
                 <div className="userSetting-form-info">
                   <h5>What is your level of proficiency?</h5>
                   <select
+                    className= "selectText"                
                     id="targetLanguageProficiency"
                     name="foreignProficiency"
                     value={userSettingData.foreignProficiency}
@@ -292,6 +332,8 @@ function UserSettings() {
                 </div>
               </>
             </div>
+          </div>
+          
           </div>
 
           <div className="userSetting-save-section">

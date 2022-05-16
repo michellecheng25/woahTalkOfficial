@@ -15,6 +15,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { Button } from "@material-ui/core";
 import setInputHeight from "../utils/setInputHeight";
 import DatePicker from "react-datepicker";
+import { CgEnter } from "react-icons/cg";
 
 function CourseAssignments() {
   const { courseId } = useParams();
@@ -174,7 +175,7 @@ function CourseAssignments() {
           {course.level === "novice" && (
             <p
               style={{
-                backgroundColor: "#F8CB86",
+                backgroundColor: "#455EE3",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -190,7 +191,7 @@ function CourseAssignments() {
           {course.level === "intermediate" && (
             <p
               style={{
-                backgroundColor: "#ECA645",
+                backgroundColor: "#45C7E3",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -206,7 +207,7 @@ function CourseAssignments() {
           {course.level === "advanced" && (
             <p
               style={{
-                backgroundColor: "#336D49",
+                backgroundColor: "#45E3BD",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -223,7 +224,7 @@ function CourseAssignments() {
           {course.language === "english" && (
             <p
               style={{
-                backgroundColor: "#547DDE",
+                backgroundColor: "#E345B7",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -239,7 +240,7 @@ function CourseAssignments() {
           {course.language === "chinese" && (
             <p
               style={{
-                backgroundColor: "#547DDE",
+                backgroundColor: "#8445EC",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -255,7 +256,7 @@ function CourseAssignments() {
           {course.language === "french" && (
             <p
               style={{
-                backgroundColor: "#547DDE",
+                backgroundColor: "#E36945",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -271,7 +272,7 @@ function CourseAssignments() {
           {course.language === "spanish" && (
             <p
               style={{
-                backgroundColor: "#547DDE",
+                backgroundColor: "#ECA645",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -308,29 +309,27 @@ function CourseAssignments() {
                     display: "flex",
                     padding: "15px 0px 15px 0px",
                     borderRadius: "10px",
-                    border: "1px solid black",
+                    border: "1px dashed black",
                     marginBottom: "10px",
                     fontSize: "20px",
                     color: "black",
-                    backgroundColor: "#234831",
+                    // backgroundColor: "#f2f2f2",
                     marginTop: "25px",
                   }}
                 >
-                  <div style={{ display: "flex" }}>
-                    <div>
-                      <MdAddToPhotos
-                        size={30}
-                        style={{ marginLeft: "15px", color: "white" }}
-                      />
-                    </div>
+                  <div style={{ display: "flex 6", width:"100%", textAlign: "center" }}>
+                    
                     <p
                       style={{
                         marginLeft: "10px",
-                        marginTop: "6px",
-                        color: "white",
+                        letterSpacing: "1px",
+                        textAlign: "center",
+                        fontSize: "16px"
                       }}
                     >
-                      Create a new assignment
+                    <MdAddToPhotos
+                        size={22}
+                        /> Create a new assignment
                     </p>
                   </div>
                 </div>
@@ -356,7 +355,7 @@ function CourseAssignments() {
                   <div style={customStyles.contentFormat}>
                     <h5
                       style={{
-                        marginTop: "10px",
+                        marginTop: "6px",
                         alignItems: "center",
                         marginRight: "15px",
                       }}
@@ -382,50 +381,58 @@ function CourseAssignments() {
                     />
                   </div>
                   <div style={customStyles.contentFormat}>
-                    <h5
-                      style={{
-                        marginTop: "6px",
-                        alignItems: "center",
-                        marginRight: "15px",
-                      }}
-                    >
-                      Points:
-                    </h5>
-                    <input
-                      id="points"
-                      type="number"
-                      name="totalPoints"
-                      placeholder="100"
-                      autoComplete="off"
-                      value={assignment.points}
-                      onChange={onChange}
-                      style={{
-                        paddingLeft: "10px",
-                        paddingTop: "4px",
-                        paddingBottom: "4px",
-                        width: "40%",
-                        height: "28px",
-                        borderRadius: "10px",
-                        border: "1.9px solid #58716C",
-                      }}
-                    />
+                      <div style={{display: "flex"}}>
+                          <h5
+                            style={{
+                              marginTop: "6px",
+                              alignItems: "center",
+                              marginRight: "15px",
+                            }}
+                          >
+                            Points:
+                          </h5>
+                          <input
+                            id="points"
+                            type="number"
+                            name="totalPoints"
+                            placeholder="100"
+                            autoComplete="off"
+                            value={assignment.points}
+                            onChange={onChange}
+                            style={{
+                              paddingLeft: "10px",
+                              paddingTop: "4px",
+                              paddingBottom: "4px",
+                              width: "100%",
+                              height: "28px",
+                              borderRadius: "10px",
+                              marginRight: "10px",
+                              border: "1.9px solid #58716C",
+                            }}
+                          />
+                      </div>
+                      <div style={{display: "flex"}}>
+                          <h5 style={{ width: "100px", marginTop: "6px" }}>Due Date:</h5>
+                          <DatePicker
+                            id="dueDate"
+                            selected={dueDate}
+                            onChange={(date) => setDueDate(date)}
+                            timeInputLabel="Time:"
+                            dateFormat="MM/dd/yyyy h:mm aa"
+                            minDate={new Date()}
+                            style ={{border: "none"}}
+                            showTimeInput
+                          />
+                      </div>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <h5 style={{ width: "100px" }}>Due Date:</h5>
-                    <DatePicker
-                      id="dueDate"
-                      selected={dueDate}
-                      onChange={(date) => setDueDate(date)}
-                      timeInputLabel="Time:"
-                      dateFormat="MM/dd/yyyy h:mm aa"
-                      minDate={new Date()}
-                      showTimeInput
-                    />
-                  </div>
+               
                   <div>
-                    <h5 style={{ marginTop: "8px", color: "#152e34" }}>
+                    <h5 style={{ marginTop: "10px", color: "#152e34" }}>
                       Upload a file:{" "}
                     </h5>
+                    <p style={{ marginTop: "2px", color: "#58716C", fontSize: "13px" }}>
+                      Supported formats PNG, JPG, or PDF. 
+                    </p>
                     <div className="create-content">
                       <input
                         type="file"
@@ -497,6 +504,25 @@ function CourseAssignments() {
                 backgroundColor: "#000000",
               }}
             />
+            {assignments == 0 && user.role === "Student" && (
+              <p style={{ textAlign: "center", marginTop: "120px", fontWeight: "bold", color: "#58716C", fontSize: "13px" }}>
+                <span style={{fontWeight: "bolder", fontSize: "24px", color: "#2C4733"}}>
+                No Assignments Due Yet
+                </span> <br></br>
+                Your teacher haven't created any assignment
+              </p>
+            )
+            }
+
+            {assignments == 0 && user.role === "Teacher" && (
+              <p style={{ textAlign: "center", marginTop: "120px", fontWeight: "bold", color: "#58716C", fontSize: "13px" }}>
+                <span style={{fontWeight: "bolder", fontSize: "24px", color: "#2C4733"}}>
+                No Assignments Created Yet
+                </span> <br></br>
+                Click "Create a new assignment" to create an assignment
+              </p>
+            )
+            }
 
             {assignments.map((assignment) => {
               const date = dateTimeConversion(assignment.updatedAt);
@@ -536,7 +562,7 @@ function CourseAssignments() {
                     {user && user._id === course.creatorId && (
                       <MdDelete
                         style={{
-                          color: "#336D49",
+                          color: "#234831",
                           marginLeft: "10px",
                           cursor: "pointer",
                         }}
@@ -549,6 +575,7 @@ function CourseAssignments() {
                 </div>
               );
             })}
+
           </div>
         </div>
       </div>
@@ -582,7 +609,7 @@ const customStyles = {
   contentFormat: {
     color: "#152e34",
     height: "auto",
-    margin: "5px auto auto",
+    margin: "5px auto 7px",
     display: "flex",
   },
 };
