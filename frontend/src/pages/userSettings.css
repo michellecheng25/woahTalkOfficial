@@ -1,11 +1,11 @@
 .userSetting {
-  background-color: #152e34;
+  /* background-color: #152e34; */
   height: auto;
 }
 
 .userSetting-form {
   color: #152e34;
-  background-color: #f3efe9;
+  /* background-color: #f3efe9; */
   height: auto;
   /* padding: 20px; */
   margin: auto;
@@ -21,6 +21,8 @@
 }
 
 .setting-subheading {
+  background-color: #D9E0D6;
+  border-radius: 10px 10px 0px 0px;
   text-align: left;
   margin: 0px;
   font-size: 22px;
@@ -34,15 +36,16 @@
   margin-bottom: 5px;
 }
 .setting-description {
+  background-color: #D9E0D6;
   text-align: left;
   font-weight: lighter;
   font-size: 14px;
-  margin-bottom: 8px;
-  padding: 0px 20px 0px;
+  /* margin-bottom: 4px; */
+  padding: 0px 20px 10px;
 }
 
 .form-section {
-  background-color: white;
+  /* background-color: white; */
   margin: 0px;
   padding: 14px 20px 20px;
 }
@@ -75,7 +78,7 @@
 .userSetting-form-info select {
   margin-left: 5px;
   width: 50%;
-  margin-top: 5px;
+  /* margin-top: 5px; */
 }
 
 .userSetting textarea {
@@ -90,7 +93,7 @@
 }
 
 .userSetting-userType select {
-  margin-left: 184px;
+  margin-left: 160px;
   font-family: "Times";
   width: 25%;
   margin-bottom: 3px;
@@ -108,7 +111,7 @@
 }
 
 .userSetting-cover {
-  height: 250px;
+  height: 230px;
   width: 100%;
   background-color: #bbb;
   display: flex;
@@ -117,7 +120,7 @@
 }
 
 .userSetting-save-section {
-  text-align: right;
+  text-align: center;
   padding-top: 15px;
   padding-bottom: 50px;
 }
@@ -137,6 +140,31 @@
   align-items: center;
 }
 
-.form-section input {
+.form-section .inputText {
   margin-bottom: 4px;
+  background-color: "#58716C";
+  /* margin-left: 5px;  */
+  border-radius: 10px; 
+  padding-left: 6px; 
+  padding-top: 4px; 
+  padding-bottom: 5px; 
+  border: 1.9px solid #58716C; 
+  color: #58716C;
+  height: 28px;
 }
+
+
+.form-section .selectText {
+  margin-bottom: 4px;
+  background-color: "#58716C";
+  /* margin-left: 5px;  */
+  border-radius: 10px; 
+  padding-left: 6px; 
+  padding-top: 4px; 
+  padding-bottom: 5px; 
+  border: 1.9px solid #58716C; 
+  color: #58716C;
+  height: 28px;
+}
+
+

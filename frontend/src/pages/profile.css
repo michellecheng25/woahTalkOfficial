@@ -17,6 +17,7 @@
   left: 175px;
   margin: auto;
   top: 100px;
+  object-fit: cover;
   border: 10px solid white;
 }
 

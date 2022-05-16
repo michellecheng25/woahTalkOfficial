@@ -18,16 +18,21 @@ textarea::-webkit-scrollbar {
   width: 0px;
 }
 
-.react-datepicker-wrapper,
-.react-datepicker__input-container,
+/* .react-datepicker-wrapper,
+.react-datepicker__input-container, */
 .react-datepicker__input-container input{
   background-color: "#58716C";
-  margin-left: "10px"; 
-  border-radius: "10px"; 
-  padding-left: "4px"; 
-  padding-top: "4px"; 
-  text-align: "Center"; 
-  padding-bottom: "5px"; 
-  border: "1.9px solid #58716C"; 
-  color: "#58716C"
+  margin-left: 10px; 
+  border-radius: 10px; 
+  padding-left: 4px; 
+  padding-top: 4px; 
+  text-align: center; 
+  padding-bottom: 5px; 
+  border: 1.9px solid #58716C; 
+  color: #58716C;
+  height: 28px;
+}
+
+img {
+  object-fit: cover;
 }

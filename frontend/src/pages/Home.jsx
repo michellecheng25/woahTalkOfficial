@@ -83,7 +83,7 @@ const form = {
   margin: "auto",
   width: "100%",
   margin: "0px auto 20px auto",
-  backgroundColor: "#E9E5DF",
+  backgroundColor: "#f2f2f2",
   padding: "15px",
   borderRadius: "10px",
   float: "center",

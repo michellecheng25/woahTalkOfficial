@@ -161,14 +161,14 @@ function CoursePage() {
           width: "1000px",
         }}
       >
-        <div style={{ display: "flex", marginBottom: "4px" }}>
+         <div style={{ display: "flex", marginBottom: "4px" }}>
           <h1 style={{ color: "black", marginRight: "10px", fontSize: "48px" }}>
             {course.courseName}
           </h1>
           {course.level === "novice" && (
             <p
               style={{
-                backgroundColor: "#F8CB86",
+                backgroundColor: "#455EE3",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -184,7 +184,7 @@ function CoursePage() {
           {course.level === "intermediate" && (
             <p
               style={{
-                backgroundColor: "#ECA645",
+                backgroundColor: "#45C7E3",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -200,7 +200,7 @@ function CoursePage() {
           {course.level === "advanced" && (
             <p
               style={{
-                backgroundColor: "#336D49",
+                backgroundColor: "#45E3BD",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -217,7 +217,7 @@ function CoursePage() {
           {course.language === "english" && (
             <p
               style={{
-                backgroundColor: "#547DDE",
+                backgroundColor: "#E345B7",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -233,7 +233,7 @@ function CoursePage() {
           {course.language === "chinese" && (
             <p
               style={{
-                backgroundColor: "#547DDE",
+                backgroundColor: "#8445EC",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -249,7 +249,7 @@ function CoursePage() {
           {course.language === "french" && (
             <p
               style={{
-                backgroundColor: "#547DDE",
+                backgroundColor: "#E36945",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -265,7 +265,7 @@ function CoursePage() {
           {course.language === "spanish" && (
             <p
               style={{
-                backgroundColor: "#547DDE",
+                backgroundColor: "#ECA645",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -278,6 +278,7 @@ function CoursePage() {
               Spanish
             </p>
           )}
+      
 
           {user && user.role === "Student" && (
             <Button
@@ -428,6 +429,27 @@ function CoursePage() {
           <div style={{ flex: "8" }}>
             {isJoined ? (
               <>
+
+                {courseAnnouncements == 0 && user.role === "Student" && (
+                <p style={{ textAlign: "center", marginTop: "120px", fontWeight: "bold", color: "#58716C", fontSize: "13px" }}>
+                  <span style={{fontWeight: "bolder", fontSize: "24px", color: "#2C4733"}}>
+                  No Announcements Made Yet
+                  </span> <br></br>
+                  Your teacher haven't made any annoucement
+                </p>
+              )
+              }
+
+              {courseAnnouncements == 0 && user.role === "Teacher" && (
+                <p style={{ textAlign: "center", marginTop: "120px", fontWeight: "bold", color: "#58716C", fontSize: "13px" }}>
+                  <span style={{fontWeight: "bolder", fontSize: "24px", color: "#2C4733"}}>
+                  No Announcements Made Yet
+                  </span> <br></br>
+                  Click above to make an annoucement 
+                </p>
+              )
+              }
+
                 {courseAnnouncements.map((announcement) => {
                   return (
                     <Announcement

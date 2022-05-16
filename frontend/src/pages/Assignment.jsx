@@ -129,7 +129,7 @@ function Assignment() {
         style={{
           padding: "50px",
           fontSize: "20px",
-          // Make the Assignment centered
+          // Makes the Assignment centered
           marginLeft: "15%",
           marginRight: "15%",
         }}
@@ -140,7 +140,7 @@ function Assignment() {
           }}
         >
           {/* Course Page Title */}
-          <h1>{assignment.title}</h1>
+          <h1 style={{fontSize: "48px"}}>{assignment.title}</h1>
 
           {/* Submission Status - AVALIABLE FOR STUDENT ONLY */}
           {user.role == "Student" &&
@@ -149,10 +149,10 @@ function Assignment() {
               <p
                 style={{
                   height: "fit-content",
-                  marginTop: "8px",
+                  marginTop: "10px",
                   backgroundColor: "Green",
                   borderRadius: "4px",
-                  fontWeight: "light",
+                  fontWeight: "bold",
                   padding: "7px",
                   color: "White",
                   marginLeft: "10px",
@@ -168,10 +168,10 @@ function Assignment() {
               <p
                 style={{
                   height: "fit-content",
-                  marginTop: "8px",
+                  marginTop: "10px",
                   backgroundColor: "Red",
                   borderRadius: "4px",
-                  fontWeight: "light",
+                  fontWeight: "bold",
                   padding: "7px",
                   color: "White",
                   marginLeft: "10px",
@@ -183,60 +183,28 @@ function Assignment() {
             )}
         </div>
 
-        <hr
-          style={{
-            border: "2px solid black",
-            borderRadius: "5px",
-            marginBottom: "5px",
-          }}
-        ></hr>
-
         <div
           style={{
-            padding: "10px 0px",
+            padding: "4px 0px",
             display: "flex",
             // borderBottom: "3px solid  #e0dcd5",
           }}
         >
           <div style={{ flex: "10" }}>
-            {/* Description */}
-            {assignment.description && (
-              <div style={{ whiteSpace: "pre-wrap" }}>
-                {/* Assignment Page Description SubHeader  */}
-                {assignment.folder === "Assignment" && (
-                  <p
-                    style={{
-                      textDecoration: "none",
-                      marginTop: "10px",
-                      fontWeight: "bold",
-                      fontSize: "22px",
-                    }}
-                  >
-                    Assignment Information
-                  </p>
-                )}
-                {assignment.description}
-              </div>
-            )}
-            {/* Upload Component */}
-            {assignment.upload && (
-              <a target="_blank" href={assignment.upload}>
-                <CgAttachment size={25} />
-                {assignment.upload}
-              </a>
-            )}
-            {/* Due Date */}
-            {assignment.dueDate && (
+
+          {/* Due Date */}
+         {assignment.dueDate && (
               <div
                 style={{
-                  marginTop: "10px",
-                  fontSize: "20px",
+                  // marginTop: "10px",
+                  fontSize: "18px",
                   fontWeight: "light",
                 }}
               >
-                <b>Due Date:</b> {dateTimeConversion(assignment.dueDate)}
+                <b>Due Date:</b> <br></br>{dateTimeConversion(assignment.dueDate)}
               </div>
             )}
+           
           </div>
 
           {/* Assignment Score */}
@@ -248,36 +216,58 @@ function Assignment() {
                 style={{
                   border: "2px",
                   backgroundColor: "transparent",
-                  marginTop: "10px",
                   border: "3px solid black",
                   borderWidth: "2px",
                   height: "fit-content",
                   padding: "4px",
-                  borderRadius: "4px",
+                  borderRadius: "8px",
                 }}
               >
                 {user.role !== "Teacher" && studentSubmissions.length === 1
                   ? studentSubmissions[0].grade
                   : "-"}{" "}
-                /{assignment.totalPoints}
+                / {assignment.totalPoints}
               </div>
             </div>
           )}
         </div>
 
-        <hr
-          style={{
-            border: "2px solid #d6cfc5",
-            borderRadius: "5px",
-            marginBottom: "5px",
-          }}
-        ></hr>
-
+        <div>
+          {/* Description */}
+          {assignment.description && (
+              <div style={{ whiteSpace: "pre-wrap" }}>
+                {/* Assignment Page Description SubHeader  */}
+                {assignment.folder === "Assignment" && (
+                  <p
+                    style={{
+                      textDecoration: "none",
+                      marginTop: "10px",
+                      fontSize: "18px",
+                    }}
+                  >
+                    <span style={{fontWeight: "bold",}}>
+                    Assignment Description: 
+                    </span><br></br>
+                    {assignment.description}
+                  </p>
+                )}
+                
+              </div>
+            )}
+            {/* Upload Component */}
+            {assignment.upload && (
+              <a target="_blank" href={assignment.upload}>
+                <CgAttachment size={25} />
+                {assignment.upload}
+              </a>
+            )}
+        </div>
         {assignment.folder === "Assignment" &&
           user.role === "Student" &&
           (studentSubmissions.length === 0 || isEditing) && (
-            <div style={{ marginTop: "20px" }}>
+            <div style={{ marginTop: "10px" }}>
               <form onSubmit={!isEditing ? onSubmit : onEdit}>
+                <p style={{fontWeight: "bold", fontSize: "18px", marginBottom: "5px"}}>Type your response here:</p> 
                 <textarea
                   type="text"
                   name="content"
@@ -290,8 +280,9 @@ function Assignment() {
                     minWidth: "50px",
                     padding: "15px",
                     marginBottom: "10px",
-                    border: "3px solid #d6cfc5",
-                    borderRadius: "5px",
+                    border: "1px solid black",
+                    borderRadius: "8px",
+                    height: "150px"
                   }}
                   onChange={(e) => {
                     setInputHeight(e, "50px");
@@ -304,7 +295,7 @@ function Assignment() {
                   className="createCourseContentBtn"
                   disabled={isCreatingAssigment ? true : false}
                 >
-                  {isCreatingAssigment ? <CircularProgress /> : "Submit"}
+                  {isCreatingAssigment ? <CircularProgress   style={{width: "20px", height: "20px"}}/> : "Submit"}
                 </button>
               </form>
             </div>
@@ -314,7 +305,12 @@ function Assignment() {
           studentSubmissions.length > 0 &&
           !isEditing && (
             <>
-              <div style={{ marginTop: "20px" }}>{submission}</div>
+              <div style={{ marginTop: "10px", }}>
+                <span style={{fontWeight: "bold", fontSize: "18px"}}>
+                  Submitted: 
+                </span>
+                <br></br>{submission}
+              </div>
               <button
                 className="createCourseContentBtn"
                 onClick={() => {
@@ -328,7 +324,24 @@ function Assignment() {
 
         {user.role === "Teacher" && assignment.folder === "Assignment" && (
           <div>
-            <div style={{ marginTop: "20px" }}>All Submissions</div>
+            <hr
+              style={{
+                color: "black",
+                borderRadius: "10px",
+                border: "3px solid black",
+                marginTop: "10px"
+              }}
+            >
+            </hr>
+            <div style={{ marginTop: "15px", fontWeight: "bold" }}>All Students Submissions</div>
+            {studentSubmissions.length == 0 && 
+              <p style={{ textAlign: "center", marginTop: "120px", fontWeight: "bold", color: "#58716C", fontSize: "13px" }}>
+                  <span style={{fontWeight: "bolder", fontSize: "24px", color: "#2C4733"}}>
+                  No Submissions Made Yet
+                  </span> <br></br>
+                  Your students haven't submitted their assignment yet
+                </p>
+            }
             {studentSubmissions.length > 0 &&
               studentSubmissions.map((submission) => {
                 const totalPoints = assignment.totalPoints

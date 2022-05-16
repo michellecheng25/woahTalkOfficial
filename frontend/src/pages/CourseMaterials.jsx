@@ -159,14 +159,14 @@ function CourseMaterials() {
           width: "1000px",
         }}
       >
-        <div style={{ display: "flex", marginBottom: "4px" }}>
+         <div style={{ display: "flex", marginBottom: "4px" }}>
           <h1 style={{ color: "black", marginRight: "10px", fontSize: "48px" }}>
             {course.courseName}
           </h1>
           {course.level === "novice" && (
             <p
               style={{
-                backgroundColor: "#F8CB86",
+                backgroundColor: "#455EE3",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -182,7 +182,7 @@ function CourseMaterials() {
           {course.level === "intermediate" && (
             <p
               style={{
-                backgroundColor: "#ECA645",
+                backgroundColor: "#45C7E3",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -198,7 +198,7 @@ function CourseMaterials() {
           {course.level === "advanced" && (
             <p
               style={{
-                backgroundColor: "#336D49",
+                backgroundColor: "#45E3BD",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -215,7 +215,7 @@ function CourseMaterials() {
           {course.language === "english" && (
             <p
               style={{
-                backgroundColor: "#547DDE",
+                backgroundColor: "#E345B7",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -231,7 +231,7 @@ function CourseMaterials() {
           {course.language === "chinese" && (
             <p
               style={{
-                backgroundColor: "#547DDE",
+                backgroundColor: "#8445EC",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -247,7 +247,7 @@ function CourseMaterials() {
           {course.language === "french" && (
             <p
               style={{
-                backgroundColor: "#547DDE",
+                backgroundColor: "#E36945",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -263,7 +263,7 @@ function CourseMaterials() {
           {course.language === "spanish" && (
             <p
               style={{
-                backgroundColor: "#547DDE",
+                backgroundColor: "#ECA645",
                 borderRadius: "10px",
                 color: "white",
                 padding: "7px 7px 7px 7px",
@@ -281,53 +281,38 @@ function CourseMaterials() {
         <p style={{ fontWeight: "normal" }}>{course.description}</p>
         <CourseHeader currentActive={"Course Materials"} />
         {user && user._id === course.creatorId ? (
-          <div
-            style={{
-              marginRight: "auto",
-              cursor: "pointer",
-              color: "black",
-              width: "33%",
-              display: "block",
-              marginTop: "25px",
-              flexWrap: "wrap",
-              marginBottom: "10px",
-            }}
-          >
+         
             <div
               style={{
-                backgroundColor: "#234831",
+                marginTop: "25px",
+                marginBottom: "10px",
+                // marginRight: "auto",
+                cursor: "pointer",
                 height: "68px",
                 borderRadius: "10px",
                 padding: "5px",
                 width: "324",
-                border: "1px solid #234831",
+                border: "1px dashed #234831",
                 display: "flex",
+                color: "black"
               }}
               onClick={openModal}
             >
-              <div style={{ marginTop: "10px" }}>
-                {" "}
-                <MdNoteAdd
-                  size={40}
-                  style={{
-                    padding: "6px",
-                    color: "white",
-                    marginBottom: "0px !important",
-                  }}
-                />{" "}
-              </div>
-              <div
+              <div style={{ marginTop: "10px",display: "flex 6", width:"100%", textAlign: "center" }}>
+              <p
                 style={{
-                  color: "white",
-                  fontWeight: "bold",
-                  marginTop: "21px",
+                  fontSize: "16px",
+                  letterSpacing: "1px",
                 }}
-              >
-                {" "}
-                Add a course file{" "}
+              ><MdNoteAdd
+                  size={25}
+                  style={{
+                  }}
+                /> Add a course file
+              </p>
               </div>
             </div>
-          </div>
+        
         ) : (
           <div style={{ marginTop: "25px" }}> </div>
         )}
@@ -347,13 +332,14 @@ function CourseMaterials() {
             {course.name}
           </h2>
           <form className="createCourse" onSubmit={handleSubmit}>
-            <div>
-              <div>
+            <div style={customStyles.contentWrapper} >
+              <div style={customStyles.contentFormat} >
                 <h5
                   style={{
-                    marginTop: "10px",
+                    marginTop: "6px",
                     alignItems: "center",
                     marginRight: "15px",
+                    marginBottom: "5px"
                   }}
                 >
                   Title:
@@ -368,8 +354,8 @@ function CourseMaterials() {
                     paddingLeft: "10px",
                     paddingTop: "4px",
                     paddingBottom: "4px",
-                    width: "100%",
-                    height: "40px",
+                    width: "40%",
+                    height: "28px",
                     borderRadius: "10px",
                     border: "1.9px solid #58716C",
                   }}
@@ -379,9 +365,12 @@ function CourseMaterials() {
               <h5 style={{ marginTop: "10px", color: "#152e34" }}>
                 Upload a file:{" "}
               </h5>
+              <p style={{ marginTop: "2px", color: "#58716C", fontSize: "13px" }}>
+                Supported formats PNG, JPG, or PDF. 
+              </p>
               <div
                 className="create-content"
-                style={{ marginTop: "5px !important" }}
+                style={{ marginTop: "3px !important" }}
               >
                 <input
                   type="file"
@@ -404,13 +393,34 @@ function CourseMaterials() {
                 color: "white",
                 borderRadius: "10px",
                 width: "293.33px",
-                flost: "unset",
+                float: "unset",
               }}
             >
               {isCreatingAssigment ? <CircularProgress size={20} /> : "Create"}
             </Button>
           </form>
         </Modal>
+
+
+        {courseMaterials == 0 && user.role === "Student" && (
+              <p style={{ textAlign: "center", marginTop: "120px", fontWeight: "bold", color: "#58716C", fontSize: "13px" }}>
+                <span style={{fontWeight: "bolder", fontSize: "24px", color: "#2C4733"}}>
+                No Files Yet
+                </span> <br></br>
+                Your teacher haven't uploaded any material
+              </p>
+            )
+            }
+
+            {courseMaterials == 0 && user.role === "Teacher" && (
+              <p style={{ textAlign: "center", marginTop: "120px", fontWeight: "bold", color: "#58716C", fontSize: "13px" }}>
+                <span style={{fontWeight: "bolder", fontSize: "24px", color: "#2C4733"}}>
+                No Files Uploaded Yet
+                </span> <br></br>
+                Click "Add a course file" to upload a PNG, JPG or PDF file 
+              </p>
+            )
+            }
 
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           {courseMaterials.map((material) => {
@@ -423,20 +433,21 @@ function CourseMaterials() {
                     color: "black",
                     width: "33%",
                     display: "block",
-                    flexWrap: "wrap",
+                    flexWrap: "wrap"
                   }}
                 >
                   <div
                     style={{
                       fontSize: "18px",
                       borderRadius: "10px",
-                      padding: "6px",
+                      padding: "6px 6px 10px",
                       marginBottom: "10px",
                       marginRight: "5px",
                       border: "1px solid black",
                       maxHeight: "190px",
                       backgroundColor: "#D7E0D5",
                       display: "flex",
+                      
                     }}
                   >
                     {/* THERE ARE TWO LINK TO THE COURSE MATERIAL PAGE BECAUSE THE DELETE NEEDS TO BE TRIGGER TOO */}
@@ -491,8 +502,8 @@ function CourseMaterials() {
                             {" "}
                             <MdDelete
                               style={{
-                                color: "#336D49",
-                                marginLeft: "10px",
+                                color: "#234831",
+                                float: "Right",
                                 cursor: "pointer",
                               }}
                               onClick={() => {

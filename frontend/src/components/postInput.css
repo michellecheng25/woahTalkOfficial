@@ -1,13 +1,15 @@
 .formContent {
   display: inline-block;
   width: 100%;
+  background-color: #f2f2f2 !important;
+
 }
 
 .formContent .postInput {
   font-size: 18px;
   outline: none;
   border: none;
-  background-color: #e9e5df;
+  background-color: #f2f2f2;
   padding: 5px 5px 5px 5px;
   resize: none;
   width: 100%;
