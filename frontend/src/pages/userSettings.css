@@ -21,7 +21,7 @@
 }
 
 .setting-subheading {
-  background-color: #D9E0D6;
+  background-color: #eee;
   border-radius: 10px 10px 0px 0px;
   text-align: left;
   margin: 0px;
@@ -36,7 +36,7 @@
   margin-bottom: 5px;
 }
 .setting-description {
-  background-color: #D9E0D6;
+  background-color: #eee;
   text-align: left;
   font-weight: lighter;
   font-size: 14px;
@@ -51,7 +51,7 @@
 }
 
 .userSetting-form .userSetting-btn {
-  background: #2b515c;
+  background: black;
   font-size: 12px;
   color: white;
   border-radius: 6px;
