@@ -4,8 +4,8 @@
   width: 100%;
   margin: auto;
   margin-bottom: 15px;
-  background-color: white;
-  border: 0.2px solid #ccc;
+  background-color: #ffffff;
+  border: 0.2px solid #aaa;
 }
 
 .user-info {
@@ -32,10 +32,11 @@
 }
 
 .post .postInteractions {
-  border-top: 0.2px solid rgb(61, 61, 61);
+  /* border-top: 0.2px solid rgb(61, 61, 61); */
   display: flex;
   padding: 10px 0px;
   justify-content: space-around;
+  margin-right: 10px;
 }
 
 .post a {

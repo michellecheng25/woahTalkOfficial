@@ -1,5 +1,5 @@
 import "./commentInput.css";
-import { MdSend } from "react-icons/md";
+import { BiSend } from "react-icons/bi";
 import { useContext, useState, useRef } from "react";
 import UserContext from "../context/users/UserContext";
 import setInputHeight from "../utils/setInputHeight";
@@ -54,7 +54,7 @@ function CommentInput({ postId, setUserComment }) {
           ref={comment}
         />
         <button type="submit" value="Submit" className="commentSubmit">
-          <MdSend size={30} />
+          <BiSend size={22} />
         </button>
       </form>
     </div>

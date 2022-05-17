@@ -146,7 +146,11 @@ function UserSettings() {
                   name="username"
                   value={userSettingData.username}
                   disabled={true}
-                  className= "inputText"
+                  style ={{border: "none", 
+                  color: "#58716C",
+                  fontSize: "15px",
+                  backgroundColor: "transparent"}}
+
                 />
               </div>
               <div className="userSetting-form-info">
@@ -249,7 +253,7 @@ function UserSettings() {
 
               <div className="userSetting-form-info">
                   <h5>Are you a student or teacher? <br></br>
-                  <span style={{ fontWeight: "lighter !important", color: "red", fontSize: "12px", marginBottom: "5px !important"}}>
+                  <span style={{ fontWeight: "lighter !important", color: "#E3454E", fontSize: "12px", marginBottom: "5px !important"}}>
                     *This can't be changed after it is submitted 
                   </span>
                   <select

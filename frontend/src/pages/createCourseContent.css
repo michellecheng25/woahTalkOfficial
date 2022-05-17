@@ -35,16 +35,19 @@
 
 .createCourseContentBtn {
   font-size: 18px;
-  background-color: #04aa6d;
+  background-color: #000000;
   color: white;
   padding: 10px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   float: right;
-  margin: 0px 0px 0px 5px;
+  margin: 3px 0px 0px 5px;
 }
 
 .createCourseContentBtn:hover {
-  background-color: #45a049;
+  background-color: #98EC45;
+  color: black;
+  border: 1px solid black ;
 }
+

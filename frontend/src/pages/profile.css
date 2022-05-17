@@ -29,10 +29,10 @@
 
 .profile-info {
   background-color: white;
-  border-radius: 20px;
+  border-radius: 15px;
   padding: 20px;
   width: 300px;
-  box-shadow: 10px 10px 10px #dbdbd2;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   position: sticky;
   top: 2rem;
 }

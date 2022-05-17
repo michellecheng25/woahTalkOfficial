@@ -2,7 +2,9 @@
   margin-top: 20px;
   display: flex;
   justify-content: center;
+  font-weight: normal;
 }
+
 .explore-toggle-btns a {
   color: black;
 }
@@ -19,8 +21,11 @@
 
 .users-toggle {
   border-radius: 10px 0px 0px 10px;
+  border: 1px solid black;
 }
 
 .courses-toggle {
   border-radius: 0px 10px 10px 0px;
+  border: 1px solid black;
+
 }

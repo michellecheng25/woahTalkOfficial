@@ -6,6 +6,9 @@ import { toast } from "react-toastify";
 import UserContext from "../context/users/UserContext";
 import { unfollow, follow } from "../context/users/UserActions";
 import { useNavigate } from "react-router-dom";
+import {HiOutlineUserAdd} from "react-icons/hi";
+import {HiOutlineUserRemove} from "react-icons/hi";
+
 
 function ConnectBtns({ foundUser, followingList }) {
   const isfollowing = followingList.includes(foundUser._id);
@@ -62,11 +65,11 @@ function ConnectBtns({ foundUser, followingList }) {
           <div
             onClick={onFollow}
             style={{
-              backgroundColor: following && "#1778F2",
+              backgroundColor: following && "#547DDE",
               color: following && "white",
             }}
           >
-            {following ? "Following" : "Follow"}
+            {following ? <HiOutlineUserRemove/> : <HiOutlineUserAdd/>}
           </div>
         </div>
       )}

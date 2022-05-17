@@ -21,7 +21,7 @@ function LanguageProgress({ native, foreign, nativeLevel, foreignLevel }) {
         {native}
         {native && (
           <div className="level">
-            <div className="level-fill" style={{ width: nativeProgress }}></div>
+            <div className="nlevel-fill" style={{ width: nativeProgress }}></div>
           </div>
         )}
       </div>
@@ -30,7 +30,7 @@ function LanguageProgress({ native, foreign, nativeLevel, foreignLevel }) {
         {foreign && (
           <div className="level">
             <div
-              className="level-fill"
+              className="flevel-fill"
               style={{ width: foreignProgress }}
             ></div>
           </div>

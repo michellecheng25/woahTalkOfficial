@@ -7,6 +7,7 @@ import UserContext from "../context/users/UserContext";
 import axios from "axios";
 import baseUrl from "../utils/baseUrl";
 import { io } from "socket.io-client";
+import { BiSend } from "react-icons/bi";
 
 function MessageScreen() {
   const [conversations, setConversations] = useState([]);
@@ -178,13 +179,14 @@ function MessageScreen() {
                     value={newMessage}
                   ></textarea>
                   <button className="chatBoxSubmit" onClick={handleSubmit}>
-                    Send
+                    <BiSend/> 
                   </button>
                 </div>
               </>
             ) : (
-              <h3 className="noConvoText">Start a conversation!</h3>
-            )}
+              <h3 className="noConvoText">Start a conversation<br></br>
+              </h3>
+            )} 
           </div>
         </div>
       </div>

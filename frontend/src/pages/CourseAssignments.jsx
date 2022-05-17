@@ -306,31 +306,44 @@ function CourseAssignments() {
               >
                 <div
                   style={{
-                    display: "flex",
-                    padding: "15px 0px 15px 0px",
+                    display: "block",
                     borderRadius: "10px",
                     border: "1px dashed black",
-                    marginBottom: "10px",
                     fontSize: "20px",
+                    cursor: "pointer",
                     color: "black",
+                    margin: "25px 0px 20px 0px",
+                    padding: "5px",
                     // backgroundColor: "#f2f2f2",
-                    marginTop: "25px",
                   }}
                 >
-                  <div style={{ display: "flex 6", width:"100%", textAlign: "center" }}>
+                  <div style={{ 
+                    margin: "20px auto",
+                display: "block",
+                width: "fit-content",
+                  }}>
                     
-                    <p
+                    <div
                       style={{
                         marginLeft: "10px",
                         letterSpacing: "1px",
                         textAlign: "center",
-                        fontSize: "16px"
+                        fontSize: "16px",
+                        display: "flex"
                       }}
                     >
                     <MdAddToPhotos
                         size={22}
-                        /> Create a new assignment
-                    </p>
+                        style={{
+                    marginTop: "5px"
+                  }}
+                        /> 
+                        
+                        <div style={{
+                          marginTop: "8px", marginLeft: "5px"
+                        }}> 
+                        Create a new assignment</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -506,7 +519,7 @@ function CourseAssignments() {
             />
             {assignments == 0 && user.role === "Student" && (
               <p style={{ textAlign: "center", marginTop: "120px", fontWeight: "bold", color: "#58716C", fontSize: "13px" }}>
-                <span style={{fontWeight: "bolder", fontSize: "24px", color: "#2C4733"}}>
+                <span style={{fontWeight: "bolder", fontSize: "24px", color: "#465544"}}>
                 No Assignments Due Yet
                 </span> <br></br>
                 Your teacher haven't created any assignment
@@ -516,7 +529,7 @@ function CourseAssignments() {
 
             {assignments == 0 && user.role === "Teacher" && (
               <p style={{ textAlign: "center", marginTop: "120px", fontWeight: "bold", color: "#58716C", fontSize: "13px" }}>
-                <span style={{fontWeight: "bolder", fontSize: "24px", color: "#2C4733"}}>
+                <span style={{fontWeight: "bolder", fontSize: "24px", color: "#465544"}}>
                 No Assignments Created Yet
                 </span> <br></br>
                 Click "Create a new assignment" to create an assignment
@@ -537,6 +550,8 @@ function CourseAssignments() {
                     border: "1px solid black",
                     marginBottom: "10px",
                     fontSize: "20px",
+                    backgroundColor: "#F4F4F4",
+
                   }}
                 >
                   <Link

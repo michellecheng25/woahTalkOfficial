@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../context/users/UserContext";
 import NotFound from "./NotFound";
-import { MdNoteAdd } from "react-icons/md";
+import { RiFileAddLine } from "react-icons/ri";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import CourseHeader from "../components/CourseHeader";
 import { dateConversionNums } from "../utils/dateConversion";
@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import uploadFile from "../utils/uploadFile";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Button } from "@material-ui/core";
+import { fontWeight } from "@mui/system";
 
 Modal.setAppElement("body");
 
@@ -284,32 +285,38 @@ function CourseMaterials() {
          
             <div
               style={{
-                marginTop: "25px",
-                marginBottom: "10px",
-                // marginRight: "auto",
+                margin: "25px 0px 20px 0px",
                 cursor: "pointer",
                 height: "68px",
                 borderRadius: "10px",
                 padding: "5px",
-                width: "324",
                 border: "1px dashed #234831",
-                display: "flex",
-                color: "black"
+                display: "block",
+                color: "black",
+                height: "80px",
+
               }}
               onClick={openModal}
             >
-              <div style={{ marginTop: "10px",display: "flex 6", width:"100%", textAlign: "center" }}>
-              <p
+              <div style={{  margin: "20px auto",
+                display: "block",
+                width: "fit-content", }}>
+              <div
                 style={{
                   fontSize: "16px",
                   letterSpacing: "1px",
+                  display: "flex"
                 }}
-              ><MdNoteAdd
+              ><RiFileAddLine
                   size={25}
                   style={{
+                    marginTop: "5px"
                   }}
-                /> Add a course file
-              </p>
+                /> 
+                <div style={{
+                    marginTop: "8px", marginLeft: "5px"
+                  }}> Add a course file </div>
+              </div>
               </div>
             </div>
         
@@ -404,7 +411,7 @@ function CourseMaterials() {
 
         {courseMaterials == 0 && user.role === "Student" && (
               <p style={{ textAlign: "center", marginTop: "120px", fontWeight: "bold", color: "#58716C", fontSize: "13px" }}>
-                <span style={{fontWeight: "bolder", fontSize: "24px", color: "#2C4733"}}>
+                <span style={{fontWeight: "bolder", fontSize: "24px", color: "#465544"}}>
                 No Files Yet
                 </span> <br></br>
                 Your teacher haven't uploaded any material
@@ -414,7 +421,7 @@ function CourseMaterials() {
 
             {courseMaterials == 0 && user.role === "Teacher" && (
               <p style={{ textAlign: "center", marginTop: "120px", fontWeight: "bold", color: "#58716C", fontSize: "13px" }}>
-                <span style={{fontWeight: "bolder", fontSize: "24px", color: "#2C4733"}}>
+                <span style={{fontWeight: "bolder", fontSize: "24px", color: "#465544"}}>
                 No Files Uploaded Yet
                 </span> <br></br>
                 Click "Add a course file" to upload a PNG, JPG or PDF file 
@@ -445,7 +452,7 @@ function CourseMaterials() {
                       marginRight: "5px",
                       border: "1px solid black",
                       maxHeight: "190px",
-                      backgroundColor: "#D7E0D5",
+                      backgroundColor: "#F4F4F4",
                       display: "flex",
                       
                     }}

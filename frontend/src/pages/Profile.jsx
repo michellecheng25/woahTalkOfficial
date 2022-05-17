@@ -11,7 +11,7 @@ import PostInput from "../components/PostInput";
 import Post from "../components/Post";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { toast } from "react-toastify";
-import { GiTeacher } from "react-icons/gi";
+import { FaChalkboardTeacher } from "react-icons/fa";
 
 function Profile() {
   let { username } = useParams();
@@ -106,12 +106,19 @@ function Profile() {
               {foundUser.role === "Teacher" && courses.length > 0 && (
                 <div>
                   <h3 style={{ margin: "10px 0px" }}>
-                    <GiTeacher size={20} style={{ marginRight: "10px" }} />
+                    <FaChalkboardTeacher size={22} style={{ marginRight: "10px" }} />
                     Teaching
                   </h3>
                   {courses.map((course) => {
                     return (
-                      <div key={course._id}>
+                      <div 
+                        style= {{ border: "1px solid black", 
+                        padding: "7px",
+                        margin: "5px 0px 8px",
+                        // width: "200px",
+                        fontSize: "15px",
+                        borderRadius: "10px"}}
+                        key={course._id}>
                         <Link to={"/courses/" + course._id}>
                           {course.courseName}
                         </Link>
