@@ -1,5 +1,6 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ImBubbles } from "react-icons/im";
+import { FiSearch } from "react-icons/fi";
 import {
   MdTravelExplore,
   MdAccountCircle,
@@ -53,14 +54,13 @@ function Navbar({ searchText }) {
         </div>
         <div className="navbarCenter">
           <form className="searchbar" onSubmit={onSearch}>
-            <BsSearch />
             <input
               onChange={onChange}
               placeholder="Search"
               className="searchInput"
               value={searchInput}
             />
-            <button type="submit">Search</button>
+            <button type="submit" className="logo"> <FiSearch size= {20}  style={{color:"black"}}/></button>
           </form>
         </div>
         <div className="navbarRight" styles={{ paddingRight: "50px" }}>

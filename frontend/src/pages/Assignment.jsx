@@ -306,6 +306,17 @@ function Assignment() {
           !isEditing && (
             <>
               <div style={{ marginTop: "10px", }}>
+              <hr
+              style={{
+                color: "black",
+                borderRadius: "10px",
+                border: "3px solid black",
+                marginTop: "10px",
+                marginBottom: "10px"
+
+              }}
+            >
+            </hr>
                 <span style={{fontWeight: "bold", fontSize: "18px"}}>
                   Submitted: 
                 </span>
@@ -336,7 +347,7 @@ function Assignment() {
             <div style={{ marginTop: "15px", fontWeight: "bold" }}>All Students Submissions</div>
             {studentSubmissions.length == 0 && 
               <p style={{ textAlign: "center", marginTop: "120px", fontWeight: "bold", color: "#58716C", fontSize: "13px" }}>
-                  <span style={{fontWeight: "bolder", fontSize: "24px", color: "#2C4733"}}>
+                  <span style={{fontWeight: "bolder", fontSize: "24px", color: "#465544"}}>
                   No Submissions Made Yet
                   </span> <br></br>
                   Your students haven't submitted their assignment yet

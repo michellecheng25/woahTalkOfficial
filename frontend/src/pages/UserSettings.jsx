@@ -146,7 +146,11 @@ function UserSettings() {
                   name="username"
                   value={userSettingData.username}
                   disabled={true}
-                  className= "inputText"
+                  style ={{border: "none", 
+                  color: "#58716C",
+                  fontSize: "15px",
+                  backgroundColor: "transparent"}}
+
                 />
               </div>
               <div className="userSetting-form-info">

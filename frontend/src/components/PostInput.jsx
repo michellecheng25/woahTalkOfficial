@@ -1,5 +1,5 @@
-import { BiImageAdd } from "react-icons/bi";
-import { MdSend } from "react-icons/md";
+import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import { BiSend } from "react-icons/bi";
 import "./postInput.css";
 import { useContext, useState, useRef } from "react";
 import UserContext from "../context/users/UserContext";
@@ -87,7 +87,7 @@ function PostInput({ resetFeed }) {
 
         <div>
           <label htmlFor="file" className="leftBtn">
-            <BiImageAdd size={30} />
+            <MdOutlineAddPhotoAlternate size={24} style={{marginTop: "10px"}}/>
             <input
               type="file"
               id="file"
@@ -101,7 +101,7 @@ function PostInput({ resetFeed }) {
               <CircularProgress />
             ) : (
               <button type="submit" className="postBtn">
-                <MdSend size={30} />
+                <BiSend size={22} style={{marginTop: "11px"}}/>
               </button>
             )}
           </div>

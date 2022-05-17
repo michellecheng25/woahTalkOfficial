@@ -432,7 +432,7 @@ function CoursePage() {
 
                 {courseAnnouncements == 0 && user.role === "Student" && (
                 <p style={{ textAlign: "center", marginTop: "120px", fontWeight: "bold", color: "#58716C", fontSize: "13px" }}>
-                  <span style={{fontWeight: "bolder", fontSize: "24px", color: "#2C4733"}}>
+                  <span style={{fontWeight: "bolder", fontSize: "24px", color: "#465544"}}>
                   No Announcements Made Yet
                   </span> <br></br>
                   Your teacher haven't made any annoucement
@@ -442,7 +442,7 @@ function CoursePage() {
 
               {courseAnnouncements == 0 && user.role === "Teacher" && (
                 <p style={{ textAlign: "center", marginTop: "120px", fontWeight: "bold", color: "#58716C", fontSize: "13px" }}>
-                  <span style={{fontWeight: "bolder", fontSize: "24px", color: "#2C4733"}}>
+                  <span style={{fontWeight: "bolder", fontSize: "24px", color: "#465544"}}>
                   No Announcements Made Yet
                   </span> <br></br>
                   Click above to make an annoucement 

@@ -50,7 +50,7 @@ function Comment({ comment, setComments }) {
         &#183; {"  "}
         {commentDate}
         {user && user._id === comment.userId._id && (
-          <MdDelete size={25} className="deleteComment" onClick={onDelete} />
+          <MdDelete size={22} className="deleteComment" onClick={onDelete} />
         )}
         <div className="comment-text">{comment.comment}</div>
       </div>

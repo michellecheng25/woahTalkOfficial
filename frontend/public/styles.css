@@ -36,3 +36,7 @@ textarea::-webkit-scrollbar {
 img {
   object-fit: cover;
 }
+
+a{
+  color: black;
+}

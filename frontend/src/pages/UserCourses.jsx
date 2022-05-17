@@ -8,6 +8,7 @@ import Modal from "react-modal";
 import { toast } from "react-toastify";
 import { Button } from "@material-ui/core";
 import { joinCourse } from "../context/users/UserActions";
+import "./userSettings.css";
 
 Modal.setAppElement("body");
 
@@ -83,17 +84,17 @@ function UserCourses() {
             alignItems: "center",
             margin: "20px auto",
             maxWidth: "310px",
-            border: "1px solid #152E34",
+            border: "1px dashed #152E34",
             borderRadius: "10px",
             padding: "15px",
-            backgroundColor: "rgb(245, 250, 250)",
+            // backgroundColor: "#f4f4f4",
             cursor: "pointer",
             textAlign: "center",
           }}
           onClick={openModal}
         >
           <CgAddR size={30} style={{ color: "#152E34", marginLeft: "32px" }} />
-          <span style={{ marginLeft: "10px", fontWeight: "bold" }}>
+          <span style={{ marginLeft: "10px", fontWeight: "normal", letterSpacing: "1px" }}>
             Create New Course{" "}
           </span>
         </div>
@@ -213,14 +214,12 @@ function UserCourses() {
           <Button
             type="submit"
             variant="contained"
-            style={{
-              margin: "10px auto",
-              display: "block",
-              backgroundColor: "#152e34",
-              color: "white",
-              borderRadius: "10px",
-              width: "293.33px",
-            }}
+            style={{margin: "10px auto",
+                    display: "block",
+                    backgroundColor: "#234831",
+                    color: "white",
+                    borderRadius: "10px",
+                    width: "293.33px"}} 
           >
             Publish
           </Button>

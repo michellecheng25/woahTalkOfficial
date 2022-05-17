@@ -41,13 +41,14 @@
 }
 
 .chatBoxInput {
-  width: 92.5%;
+  width: 94.5%;
   height: 100%;
   padding: 10px;
+  margin-top: 20px;
 }
 
 .chatBoxSubmit {
-  width: 70px;
+  width: 50px;
   background-color: #3485f7;
   color: white;
   border: none;
@@ -63,8 +64,10 @@
 }
 
 .noConvoText {
-  font-size: 50px;
-  color: #ccc;
+  font-size: 30px;
+  color: #aaa;
   text-align: center;
   cursor: default;
+  margin: 100px 0px 0px;
+
 }

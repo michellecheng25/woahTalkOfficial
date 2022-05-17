@@ -2,12 +2,13 @@ import { useState, useContext } from "react";
 import "./post.css";
 import { Link, useNavigate } from "react-router-dom";
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
-import { GoComment } from "react-icons/go";
+import { FaRegCommentAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import UserContext from "../context/users/UserContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import dateConversion from "../utils/dateConversion";
+import { BiBorderRadius } from "react-icons/bi";
 
 function Post({ post, resetFeed }) {
   const userLink = "/profile/" + post.userId.username;
@@ -69,15 +70,15 @@ function Post({ post, resetFeed }) {
           </Link>
           <div>
             <Link to={userLink}>
-              <h2>{post.userId.username}</h2>
+              <h2 style= {{fontSize: "19px", color: "black !important",}}>{post.userId.username}</h2>
             </Link>
-            <h4>{postDate}</h4>
+            <h4 style={{fontSize: "13px", fontWeight: "normal", marginTop: "3px"}}>{postDate}</h4>
           </div>
 
           {user && user._id === post.userId._id && (
             <MdDelete
               className="delete-post"
-              size={30}
+              size={23}
               onClick={() => {
                 onDelete(post._id);
               }}
@@ -86,7 +87,7 @@ function Post({ post, resetFeed }) {
         </div>
 
         <div className="content">
-          <p>{post.post}</p>
+          <p style={{fontSize: "15px",}}>{post.post}</p>
           {post.upload && (
             <a href={post.upload} target="_blank">
               <img
@@ -97,10 +98,12 @@ function Post({ post, resetFeed }) {
             </a>
           )}
         </div>
+        <hr style={{border:"0.75px solid #b2b2b2", backgroundColor: "#495556", borderRadius: "10px"}}></hr>
+
         <div className="postInteractions">
           {user && (
             <div className="likeBtn" onClick={onLike}>
-              {like ? <FcLike size={30} /> : <FcLikePlaceholder size={30} />}
+              {like ? <FcLike size={23} /> : <FcLikePlaceholder size={23} />}
             </div>
           )}
 
@@ -110,7 +113,7 @@ function Post({ post, resetFeed }) {
               navigate(postLink);
             }}
           >
-            <GoComment size={30} />
+            <FaRegCommentAlt size={20} style={{marginBottom:"6px"}} />
           </div>
         </div>
       </div>

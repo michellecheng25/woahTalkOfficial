@@ -12,8 +12,16 @@
   vertical-align: bottom;
 }
 
-.level-fill {
-  background-color: #26af44;
+.nlevel-fill {
+  background-color: #9D65F1;
+  border-radius: 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.flevel-fill {
+  background-color: #4F399F;
   border-radius: 20px;
   height: 100%;
   display: flex;
